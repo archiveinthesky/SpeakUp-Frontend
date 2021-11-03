@@ -1,9 +1,16 @@
 module.exports = {
-  mode: 'jit',
+  //mode: 'jit',
   purge: ['./src/**/*.{js,jsx,ts,tsx}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'accent-blue': '#458ECC',
+      }
+    },
+    fontFamily: {
+      'std': ['Hiragino Maru'],
+    }
   },
   variants: {
     extend: {},
