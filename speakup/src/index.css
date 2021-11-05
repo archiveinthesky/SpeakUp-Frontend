@@ -2,10 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/*@layer base {
+@layer base {
     @font-face {
       font-family: Hiragino Maru;
       font-weight: 400;
-      src: url(localhost:8080/Assets/Fonts/Hiragino-Maru.otf) format("otf");
+      src: local('Hiragino Maru Gothic ProN W4'),
+            url(localhost:8080/Assets/Fonts/Hiragino-Maru.otf) format("otf");
     }
-}*/
+}
+
+.grid-w-40-1fr {
+  grid-template-columns: min-content 1fr;
+}
