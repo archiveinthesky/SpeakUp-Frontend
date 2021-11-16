@@ -28,7 +28,7 @@ const DiscussionHeader = ({ boardid }) => {
             .catch(error => {
                 console.log(error)
             })
-    }, [])
+    }, [boardid])
 
     return (
         <div className="bg-white w-11/12 mx-auto py-3">
@@ -40,12 +40,13 @@ const DiscussionHeader = ({ boardid }) => {
                 {isLoading ?
                     <div className="w-20 h-8 my-1 rounded-xl animate-pulse bg-gray-300"></div> :
                     <div className="flex justify-start gap-4">
-                        <div className="w-20 h-8 rounded-2xl bg-red-500 bg-opacity-50">
-                            <p className="leading-8 text-center text-red-500 font-bold">＃媒體</p>
-                        </div>
-                        <div className="w-20 h-8 rounded-2xl bg-yellow-500 bg-opacity-50">
-                            <p className="leading-8 text-center text-yellow-600 font-bold">＃自由</p>
-                        </div>
+                        {
+                            pageContent[1].map((tag) => {
+                                return <div key={pageContent[1].indexOf(tag)} className="w-20 h-8 rounded-2xl bg-blue-300 bg-opacity-50">
+                                    <p className="leading-8 text-center text-blue-500 font-bold">{`#${tag}`}</p>
+                                </div>
+                            })
+                        }
                     </div>
                 }
                 <div className="mt-8 grid grid-w-40-1fr content-start gap-x-8 gap-y-5">
@@ -79,13 +80,15 @@ const DiscussionHeader = ({ boardid }) => {
                         }
                     </div>
                     <div className="w-32 h-10 rounded-3xl bg-gray-300 bg-opacity-50">
-                        <p className="leading-10 text-center text-black text-xl">參考資料</p>
+                        <p className="leading-10 text-center text-black text-xl">延伸資料</p>
                     </div>
                     <div>
                         {
                             showReference ?
                                 <div>
-                                    <p className="text-blue-600 text-xl"><a href="http://localhost:3000" rel="noreferrer" target="_blank">https://ericabuteau.com/2017/08/01/pros-cons-online-anonymity/</a></p>
+                                    {pageContent[5].map((link) => {
+                                        return <p key={pageContent[5].indexOf(link)} className="text-blue-600 text-xl"><a href={link} rel="noreferrer" target="_blank">{link}</a></p>
+                                    })}
                                     <button onClick={() => { setShowReference(false) }}><p className="leading-10 text-gray-400 text-xl">收合</p></button>
                                 </div> :
                                 <div>

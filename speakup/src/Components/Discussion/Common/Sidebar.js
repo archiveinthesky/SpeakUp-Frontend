@@ -1,6 +1,8 @@
 import React from 'react'
 
 const Sidebar = ({ showSidebar, toggleSidebar }) => {
+    const tags = ['娛樂', '環境', '司法', '國家發展', '經濟', '少數族群', '媒體', '醫藥', '道德', '政治', '教育', '家庭', '女性', '自由', '宗教', '科技', '社會政策', '社會運動', '體育'];
+
     return (
         <div className={`fixed h-screen top-16 w-80 border-r-2 border-gray-200 bg-white flex flex-col transition-left duration-1000 ease-out ${showSidebar ? "left-0" : "-left-80"}`}>
 
@@ -42,25 +44,7 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
                 <hr className="border-t-2 border-gray-300 w-5/6 mx-auto" />
             </div>
             <ul className="list-none h-3/5 pl-24 overflow-auto">
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">Def</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">ABC</li>
-                <li className="py-2 text-xl">Defg</li>
+                {tags.map((tag) => { return <li key={tags.indexOf(tag)} className="py-2 text-xl">{tag}</li> })}
             </ul>
             <div className={`absolute top-80 left-80 w-20 h-20 overflow-hidden`}>
                 <button className="absolute bg-accent-blue rounded-r-full w-20 h-20 -left-8 flex"
