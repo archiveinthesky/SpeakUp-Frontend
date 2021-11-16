@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Sidebar = ({ showSidebar, setShowSidebar }) => {
+const Sidebar = ({ showSidebar, toggleSidebar }) => {
     return (
-        <div className={`fixed h-screen top-16 w-80 border-r-2 border-gray-200 bg-white flex flex-col transition-all duration-1000 ease-out ${showSidebar ? "left-0" : "-left-80"}`}>
+        <div className={`fixed h-screen top-16 w-80 border-r-2 border-gray-200 bg-white flex flex-col transition-left duration-1000 ease-out ${showSidebar ? "left-0" : "-left-80"}`}>
 
             <div className="h-6" />
             <div className="flex">
@@ -64,9 +64,9 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
             </ul>
             <div className={`absolute top-80 left-80 w-20 h-20 overflow-hidden`}>
                 <button className="absolute bg-accent-blue rounded-r-full w-20 h-20 -left-8 flex"
-                    onClick={() => { setShowSidebar(!showSidebar) }}>
+                    onClick={toggleSidebar}>
                     <div className="ml-10 my-auto">
-                        <svg className={`w-6 h-10 transform ${showSidebar ? "rotate-0" : "rotate-180"}`} viewBox="0 0 23.783 41.595">
+                        <svg className={`w-6 h-10 transform ${showSidebar ? "rotate-180" : "rotate-0"}`} viewBox="0 0 23.783 41.595">
                             <path id="Icon_ionic-ios-arrow-forward" data-name="Icon ionic-ios-arrow-forward" d="M27.86,26.986,12.12,11.258a2.96,2.96,0,0,1,0-4.2,3,3,0,0,1,4.211,0L34.163,24.881a2.967,2.967,0,0,1,.087,4.1L16.343,46.925a2.973,2.973,0,1,1-4.211-4.2Z" transform="translate(-11.246 -6.196)" fill="#fff" />
                         </svg>
                     </div>

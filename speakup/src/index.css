@@ -14,3 +14,11 @@
 .grid-w-40-1fr {
   grid-template-columns: min-content 1fr;
 }
+
+.transition-padding {
+  transition-property: padding;
+}
+
+.transition-left {
+  transition-property: left;
+}
