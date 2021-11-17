@@ -26,8 +26,8 @@ const CommentField = ({ onSide }) => {
     }, [])
 
     return (
-        <div>
-            <div className="mx-auto mt-4 mb-2 w-11/12 bg-white flex justify-between">
+        <div className="bg-white">
+            <div className="mx-auto mt-4 mb-2 w-11/12 flex justify-between">
                 <div className={`w-40 h-16 my-auto rounded-2xl ${onSide === "支持方" && "bg-green-400"} ${onSide === "反對方" && "bg-red-500"} bg-opacity-50 flex justify-center`}>
                     <div className="my-auto">
                         <h2 className={`text-3xl ${onSide === "支持方" && "text-green-600"} ${onSide === "反對方" && "text-red-500"}`}>{onSide}</h2>
@@ -41,7 +41,7 @@ const CommentField = ({ onSide }) => {
                     </div>
                 </button>
             </div>
-            <div className="w-full bg-white mb-4 flex flex-col">
+            <div className="w-full mb-4 flex flex-col">
                 {comments.map((cmt) => {
                     return (cmt.cmtReplies > 0) ?
                         <div>

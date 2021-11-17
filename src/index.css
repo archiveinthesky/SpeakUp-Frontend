@@ -22,3 +22,7 @@
 .transition-left {
   transition-property: left;
 }
+
+.filter-blue {
+  filter: invert(26%) sepia(96%) saturate(2158%) hue-rotate(216deg) brightness(95%) contrast(93%);
+}
