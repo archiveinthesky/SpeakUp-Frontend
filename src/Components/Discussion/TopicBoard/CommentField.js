@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import CommentCard from './CommentCard'
+import CommentResponseField from './CommentResponseField';
 
 const CommentField = ({ onSide }) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -16,7 +17,6 @@ const CommentField = ({ onSide }) => {
         })
             .then(response => { return response.json() })
             .then(response => {
-                console.log(response)
                 let cmtarray = []
                 for (let i in response) {
                     cmtarray.push(response[i])
@@ -27,7 +27,7 @@ const CommentField = ({ onSide }) => {
 
     return (
         <div>
-            <div className="mx-auto mt-4 mb-2 w-11/12 flex justify-between">
+            <div className="mx-auto mt-4 mb-2 w-11/12 bg-white flex justify-between">
                 <div className={`w-40 h-16 my-auto rounded-2xl ${onSide === "支持方" && "bg-green-400"} ${onSide === "反對方" && "bg-red-500"} bg-opacity-50 flex justify-center`}>
                     <div className="my-auto">
                         <h2 className={`text-3xl ${onSide === "支持方" && "text-green-600"} ${onSide === "反對方" && "text-red-500"}`}>{onSide}</h2>
@@ -41,8 +41,15 @@ const CommentField = ({ onSide }) => {
                     </div>
                 </button>
             </div>
-            <div className="w-full  bg-white mb-4 flex flex-col">
-                {comments.map((cmt) => { return <CommentCard key={comments.indexOf(cmt)} cmtdata={cmt} /> })}
+            <div className="w-full bg-white mb-4 flex flex-col">
+                {comments.map((cmt) => {
+                    return (cmt.cmtReplies > 0) ?
+                        <div>
+                            <CommentCard key={comments.indexOf(cmt)} cmtdata={cmt} />
+                            <CommentResponseField key={"r" + comments.indexOf(cmt).toString()} onSide={onSide} commentId={comments.indexOf(cmt)} />
+                        </div> :
+                        <CommentCard key={comments.indexOf(cmt)} cmtdata={cmt} />
+                })}
             </div >
         </div>
     )
