@@ -4,9 +4,11 @@ import CommentResponseField from './CommentResponseField';
 import SubmitComment from './SubmitComment';
 
 const CommentField = ({ onSide }) => {
+    // eslint-disable-next-line
     const [isLoading, setIsLoading] = useState(true);
     const [comments, setComments] = useState([])
     const [typeComment, setTypeComment] = useState(false)
+    const [typeReply, setTypeReply] = useState(false)
     const [userComments, setUserComments] = useState([])
 
     useEffect(() => {
@@ -29,7 +31,38 @@ const CommentField = ({ onSide }) => {
                 }
                 setComments(cmtarray)
             })
-    }, [])
+    }, [onSide])
+
+    const postComment = async (cmtcontent) => {
+        await fetch('http://127.0.0.1:5500/comments/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "boardId": 0,
+                "accToken": 1234,
+                "onSide": (onSide === "支持方") ? "sup" : "agn",
+                "cmtContent": cmtcontent,
+                "replyTo": null
+            })
+        })
+            .then((response) => { return response.json() })
+            .then((response) => {
+                setUserComments([response, ...userComments])
+                setTypeComment(false)
+                console.log(cmtcontent)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    const postReply = (cmtcontent) => {
+        console.log(cmtcontent)
+        setTypeReply(false)
+    }
 
     return (
         <div className="bg-white">
@@ -51,10 +84,10 @@ const CommentField = ({ onSide }) => {
                 {comments.map((cmt) => {
                     return (cmt.cmtReplies > 0) ?
                         <div key={"div" + comments.indexOf(cmt).toString()}>
-                            <CommentCard key={comments.indexOf(cmt)} cmtdata={cmt} />
+                            <CommentCard key={comments.indexOf(cmt)} cmtdata={cmt} replyFunction={setTypeReply} />
                             <CommentResponseField key={"r" + comments.indexOf(cmt).toString()} onSide={onSide} commentId={comments.indexOf(cmt)} />
                         </div> :
-                        <CommentCard key={comments.indexOf(cmt)} cmtdata={cmt} />
+                        <CommentCard key={comments.indexOf(cmt)} cmtdata={cmt} replyFunction={setTypeReply} />
                 })}
             </div >
             <div>
@@ -62,9 +95,16 @@ const CommentField = ({ onSide }) => {
                     <SubmitComment
                         onSideProp={onSide}
                         closeSubmitComment={() => { setTypeComment(!typeComment) }}
-                        userComments={userComments}
-                        setUserComments={setUserComments}
+                        clickhandler={postComment}
                     />}
+                {typeReply &&
+                    <SubmitComment
+                        onSideProp={onSide}
+                        closeSubmitComment={() => { setTypeReply(!typeReply) }}
+                        isreply={true}
+                        clickhandler={postReply}
+                    />
+                }
             </div>
         </div>
     )

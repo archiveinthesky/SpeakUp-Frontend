@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
-const CommentCard = ({ cmtdata }) => {
+
+const CommentCard = ({ cmtdata, replyFunction = null }) => {
     const [supported, setSupported] = useState(cmtdata.userSupported)
     const [liked, setLiked] = useState(cmtdata.userLiked)
     const [disliked, setDisliked] = useState(cmtdata.userDisliked)
@@ -61,14 +62,23 @@ const CommentCard = ({ cmtdata }) => {
                         </button>
                     </div>
                 </div>
-                <div className="my-auto ml-4">
-                    <svg className="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 33">
+                <button className="my-auto ml-4">
+                    <svg className="w-7 h-7 inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 33">
                         <g id="Icon_feather-flag" data-name="Icon feather-flag" transform="translate(-4.5 -1.5)">
                             <path id="Path_5" data-name="Path 5" d="M6,22.5S7.5,21,12,21s7.5,3,12,3,6-1.5,6-1.5V4.5S28.5,6,24,6,16.5,3,12,3,6,4.5,6,4.5Z" fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
                             <path id="Path_6" data-name="Path 6" d="M6,33V22.5" fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
                         </g>
                     </svg>
-                </div>
+                    <h3 className="text-gray-400 pl-1 inline">檢舉</h3>
+                </button>
+                {replyFunction != null &&
+                    <button className="my-auto ml-4" onClick={() => { replyFunction(true) }}>
+                        <svg className="w-7 h-7 inline" xmlns="http://www.w3.org/2000/svg" width="33.38" height="27.817" viewBox="0 0 33.38 27.817">
+                            <path id="Icon_material-reply" data-name="Icon material-reply" d="M17.481,14.918V7.5L4.5,20.481,17.481,33.462v-7.6c9.272,0,15.763,2.967,20.4,9.458C36.025,26.044,30.462,16.772,17.481,14.918Z" transform="translate(-4.5 -7.5)" />
+                        </svg>
+                        <h3 className="text-gray-400 pl-1 inline">回覆</h3>
+                    </button>
+                }
             </div>
         </div>
     )

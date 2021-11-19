@@ -24,11 +24,16 @@ const CommentResponseField = ({ onSide, commentId }) => {
                 }
                 setComments(cmtarray)
             })
-    }, [])
+    }, [onSide])
 
     return (
         <div className="w-11/12 bg-white ml-auto flex flex-col">
-            {comments.map((cmt) => { return <CommentCard key={"r" + commentId.toString() + "-" + comments.indexOf(cmt).toString()} cmtdata={cmt} /> })}
+            {comments.map((cmt) => {
+                return <CommentCard
+                    key={"r" + commentId.toString() + "-" + comments.indexOf(cmt).toString()}
+                    cmtdata={cmt}
+                    replyFunction={null} />
+            })}
         </div >
     )
 }
