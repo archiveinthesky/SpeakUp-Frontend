@@ -3,6 +3,7 @@ import Header from '../Common/Header'
 import Sidebar from '../Common/Sidebar'
 import CommentField from './CommentField'
 import DiscussionHeader from './DiscussionHeader'
+import SubmitComment from './SubmitComment'
 
 const MainBoard = () => {
     const [showSidebar, setShowSidebar] = useState(true)
@@ -19,7 +20,7 @@ const MainBoard = () => {
     }, [showSidebar])
 
     return (
-        <div className="w-screen h-screen bg-gray-50">
+        <div className="w-screen h-screen overflow-x-hidden bg-gray-50">
             <Header />
             <Sidebar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
             <div className={`w-full pt-24 ${enableAnim ? "transition-padding" : "transition-none"} duration-1000 ease-out ${showSidebar ? "pl-72" : "pl-0"}`}>
@@ -31,6 +32,7 @@ const MainBoard = () => {
                     <CommentField onSide="反對方" />
                 </div>
             </div>
+            {/* <SubmitComment setTypeComment={() => { console.log("Clicked") }} /> */}
         </div>
     )
 }

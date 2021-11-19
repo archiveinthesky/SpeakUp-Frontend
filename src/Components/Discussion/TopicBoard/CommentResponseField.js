@@ -5,11 +5,13 @@ const CommentResponseField = ({ onSide, commentId }) => {
     const [comments, setComments] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:5500/cmtresponses/', {
+        fetch('http://127.0.0.1:5500/comments/', {
+            method: 'GET',
             headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
                 "boardid": 0,
                 "onside": (onSide === "支持方") ? "sup" : "agn",
-                "commentId": commentId,
                 "startNum": 1,
                 "endNum": 10
             }
@@ -26,7 +28,7 @@ const CommentResponseField = ({ onSide, commentId }) => {
 
     return (
         <div className="w-11/12 bg-white ml-auto flex flex-col">
-            {comments.map((cmt) => { return <CommentCard key={comments.indexOf(cmt)} cmtdata={cmt} /> })}
+            {comments.map((cmt) => { return <CommentCard key={"r" + commentId.toString() + "-" + comments.indexOf(cmt).toString()} cmtdata={cmt} /> })}
         </div >
     )
 }
