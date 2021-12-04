@@ -7,6 +7,7 @@ import DiscussionHeader from './DiscussionHeader'
 const MainBoard = () => {
     const [showSidebar, setShowSidebar] = useState(true)
     const [enableAnim, setEnableAnim] = useState(false)
+    const [flowDisplay, setFlowDisplay] = useState(false);
     const [boardid, setBoardid] = useState()
 
     useEffect(() => {
@@ -16,6 +17,11 @@ const MainBoard = () => {
     const toggleSidebar = () => {
         setEnableAnim(true)
         setShowSidebar(!showSidebar)
+    }
+
+    const changeCmtViewMethod = (e) => {
+
+        setFlowDisplay(e.target.value === "byflow")
     }
 
     useEffect(() => {
@@ -31,11 +37,19 @@ const MainBoard = () => {
                     <div className={`w-full pt-24 ${enableAnim ? "transition-padding" : "transition-none"} duration-1000 ease-out ${showSidebar ? "pl-72" : "pl-0"}`}>
                         <DiscussionHeader boardid={boardid} />
                     </div>
-                    <div className={`w-full pt-12 ${enableAnim ? "transition-padding" : "transition-none"} duration-1000 ease-out ${showSidebar ? "pl-72" : "pl-0"}`}>
-                        <div className="grid grid-cols-2 gap-12 w-11/12 mx-auto">
-                            <CommentField onSide="支持方" />
-                            <CommentField onSide="反對方" />
-                        </div>
+                    <div className="w-11/12 mx-auto my-6 flex justify-end">
+                        <select className="px-4 h-10 rounded-3xl border-2 border-black" name="viewmethod" onChange={changeCmtViewMethod}>
+                            <option value="byside">區分立場</option>
+                            <option value="byflow">不區分立場</option>
+                        </select>
+                    </div>
+                    <div className={`w-full ${enableAnim ? "transition-padding" : "transition-none"} duration-1000 ease-out ${showSidebar ? "pl-72" : "pl-0"}`}>
+                        {flowDisplay ? <CommentField onSide={null} /> :
+                            <div className="grid grid-cols-2 gap-12 w-11/12 mx-auto">
+                                <CommentField onSide="支持方" />
+                                <CommentField onSide="反對方" />
+                            </div>
+                        }
                     </div>
                 </div>
             }

@@ -67,11 +67,18 @@ const CommentField = ({ onSide }) => {
     return (
         <div className="bg-white">
             <div className="mx-auto mt-4 mb-2 w-11/12 flex justify-between">
-                <div className={`w-40 h-16 my-auto rounded-2xl ${onSide === "支持方" && "bg-green-400"} ${onSide === "反對方" && "bg-red-500"} bg-opacity-50 flex justify-center`}>
-                    <div className="my-auto">
-                        <h2 className={`text-3xl ${onSide === "支持方" && "text-green-600"} ${onSide === "反對方" && "text-red-500"}`}>{onSide}</h2>
+                {onSide == null ?
+                    <div className={`w-32 h-16 my-auto rounded-2xl bg-gray-300 flex justify-center`}>
+                        <div className="my-auto">
+                            <h2 className="text-3xl">留言</h2>
+                        </div>
+                    </div> :
+                    <div className={`w-40 h-16 my-auto rounded-2xl ${onSide === "支持方" && "bg-green-400"} ${onSide === "反對方" && "bg-red-500"} bg-opacity-50 flex justify-center`}>
+                        <div className="my-auto">
+                            <h2 className={`text-3xl ${onSide === "支持方" && "text-green-600"} ${onSide === "反對方" && "text-red-500"}`}>{onSide}</h2>
+                        </div>
                     </div>
-                </div>
+                }
                 <button className="w-full ml-4" onClick={() => { setTypeComment(true) }}>
                     <div className="w-full h-14 flex rounded-3xl border-2 border-gray-500">
                         <div className="my-auto ml-5">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import ReportComment from './ReportComment'
 
 const CommentCard = ({ cmtdata, replyFunction = null }) => {
@@ -52,13 +52,13 @@ const CommentCard = ({ cmtdata, replyFunction = null }) => {
     }
 
     return (
-        <div className="w-11/12 mx-auto my-2 border-2 border-gray-200 rounded-3xl">
-            <div className="w-11/12 mx-auto mt-2 flex justify-start">
+        <div className=" w-11/12 mx-auto my-2 border-2 border-gray-200 rounded-3xl">
+            <div className="w-full px-8 mx-auto mt-2 flex justify-start">
                 <img className="p-2 rounded-full overflow-hidden w-14 h-14" src={cmtdata.accPic} alt="Profile" />
                 <div className="my-auto pl-2"><h3 className=" text-black text-2xl">{cmtdata.accName}</h3></div>
             </div>
-            <p className="w-10/12 mt-2 mb-4 mx-auto text-xl">{cmtdata.cmtContent}</p>
-            <div className="w-10/12 mx-auto flex justify-between mt-2 mb-2">
+            <p className="w-full px-16 mt-2 mb-4 mx-auto text-xl">{cmtdata.cmtContent}</p>
+            <div className="w-full px-16 mx-auto flex justify-between mt-2 mb-2">
                 <div className="flex">
                     <div className="flex min-w-max border-2 border-gray-200 rounded-3xl">
                         <div className="ml-2 my-1">
