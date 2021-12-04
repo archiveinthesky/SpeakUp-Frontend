@@ -39,7 +39,6 @@ const MainBoard = () => {
                     </div>
                 </div>
             }
-            {/* <SubmitComment setTypeComment={() => { console.log("Clicked") }} /> */}
         </div>
     )
 }

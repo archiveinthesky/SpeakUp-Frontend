@@ -3,7 +3,7 @@ import logo from '../../../Assets/Common/logo.svg'
 
 const Header = () => {
     return (
-        <div className="fixed w-screen h-16 bg-accent-blue flex justify-between">
+        <div className="fixed w-screen h-16 bg-accent-blue z-10 flex justify-between">
             <div className="flex h-16 w-screen">
                 <img className="pl-14 my-auto h-14" src={logo} alt="logo" />
                 <div className="pl-24 my-auto h-11 w-5/12 max-w-2xl flex">

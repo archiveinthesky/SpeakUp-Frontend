@@ -5,7 +5,7 @@ const CommentResponseField = ({ onSide, commentId }) => {
     const [comments, setComments] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:5500/comments/', {
+        fetch('http://127.0.0.1:5500/cmtresponses/', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
