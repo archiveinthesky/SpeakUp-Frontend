@@ -9,6 +9,7 @@ const CommentField = ({ onSide }) => {
     const [comments, setComments] = useState([])
     const [typeComment, setTypeComment] = useState(false)
     const [typeReply, setTypeReply] = useState(false)
+    const [cmtContent, setCmtContent] = useState({ side: onSide === null ? "支持方" : onSide, text: "" })
     const [userComments, setUserComments] = useState([])
 
     useEffect(() => {
@@ -64,28 +65,63 @@ const CommentField = ({ onSide }) => {
         setTypeReply(false)
     }
 
+    const detectTypeComment = (e) => {
+        setTypeComment(e.target.value !== "")
+        setCmtContent({ side: cmtContent.side, text: e.target.value })
+    }
+
     return (
-        <div className="bg-white">
+        <div className="bg-white" >
+            <div className="h-1" />
             <div className="mx-auto mt-4 mb-2 w-11/12 flex justify-between">
                 {onSide == null ?
-                    <div className={`w-32 h-16 my-auto rounded-2xl bg-gray-300 flex justify-center`}>
-                        <div className="my-auto">
-                            <h2 className="text-3xl">留言</h2>
-                        </div>
-                    </div> :
-                    <div className={`w-40 h-16 my-auto rounded-2xl ${onSide === "支持方" && "bg-green-400"} ${onSide === "反對方" && "bg-red-500"} bg-opacity-50 flex justify-center`}>
+                    <>
+                        {typeComment ?
+                            <div className="flex flex-col justify-between">
+                                <button
+                                    className={`w-32 h-12 my-auto rounded-2xl bg-green-400 bg-opacity-50 flex justify-center ${cmtContent.side === "支持方" && "border-4 border-green-600"}`}
+                                    onClick={() => { setCmtContent({ side: "支持方", text: cmtContent.text }) }}
+                                >
+                                    <div className="my-auto">
+                                        <h2 className="text-2xl text-green-600">支持方</h2>
+                                    </div>
+                                </button>
+                                <button
+                                    className={`w-32 h-12 my-auto rounded-2xl bg-red-500 bg-opacity-50 flex justify-center ${cmtContent.side === "反對方" && "border-4 border-red-500"}`}
+                                    onClick={() => { setCmtContent({ side: "反對方", text: cmtContent.text }) }}
+                                >
+                                    <div className="my-auto">
+                                        <h2 className="text-2xl text-red-500">反對方</h2>
+                                    </div>
+                                </button>
+                            </div> :
+                            <div className={`w-32 h-14 my-auto rounded-2xl bg-gray-300 flex justify-center`}>
+                                <div className="my-auto">
+                                    <h2 className="text-3xl">留言</h2>
+                                </div>
+                            </div>
+                        }
+                    </> :
+                    <div className={`w-40 h-14 my-auto rounded-2xl ${onSide === "支持方" && "bg-green-400"} ${onSide === "反對方" && "bg-red-500"} bg-opacity-50 flex justify-center`}>
                         <div className="my-auto">
                             <h2 className={`text-3xl ${onSide === "支持方" && "text-green-600"} ${onSide === "反對方" && "text-red-500"}`}>{onSide}</h2>
                         </div>
                     </div>
                 }
-                <button className="w-full ml-4" onClick={() => { setTypeComment(true) }}>
-                    <div className="w-full h-14 flex rounded-3xl border-2 border-gray-500">
-                        <div className="my-auto ml-5">
-                            <p className="text-2xl text-gray-400">新增一則留言</p>
-                        </div>
-                    </div>
-                </button>
+                <div className="w-full ml-4 flex">
+                    <textarea
+                        className={`w-full ${typeComment ? "h-28" : "h-14"} my-auto px-5 py-3 text-xl border-2 border-gray-500 rounded-3xl resize-none `}
+                        placeholder="新增一則留言"
+                        onChange={detectTypeComment}>
+                    </textarea>
+                    <button className={`inline relative -left-12 ${typeComment && "self-end pb-2"}`}>
+                        <svg className="w-7 h-7"
+                            fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <line x1="22" x2="11" y1="2" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        </svg>
+                    </button>
+                </div>
             </div>
             <div className="w-full mb-4 flex flex-col">
                 {comments.map((cmt) => {
@@ -98,12 +134,6 @@ const CommentField = ({ onSide }) => {
                 })}
             </div >
             <div>
-                {typeComment &&
-                    <SubmitComment
-                        onSideProp={onSide}
-                        closeSubmitComment={() => { setTypeComment(!typeComment) }}
-                        clickhandler={postComment}
-                    />}
                 {typeReply &&
                     <SubmitComment
                         onSideProp={onSide}
@@ -113,7 +143,7 @@ const CommentField = ({ onSide }) => {
                     />
                 }
             </div>
-        </div>
+        </div >
     )
 }
 

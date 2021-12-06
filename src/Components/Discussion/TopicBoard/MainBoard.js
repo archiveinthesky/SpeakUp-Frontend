@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import '../Styles/discussion.css'
 import Header from '../Common/Header'
 import Sidebar from '../Common/Sidebar'
 import CommentField from './CommentField'
@@ -20,7 +21,6 @@ const MainBoard = () => {
     }
 
     const changeCmtViewMethod = (e) => {
-
         setFlowDisplay(e.target.value === "byflow")
     }
 
@@ -29,7 +29,7 @@ const MainBoard = () => {
     }, [showSidebar])
 
     return (
-        <div className="w-screen h-screen overflow-x-hidden bg-gray-50">
+        <div className="w-screen h-screen overflow-x-hidden overflow-y-auto bg-gray-50" onScroll={() => { console.log("scrolling") }}>
             <Header />
             {boardid != null &&
                 <div>
