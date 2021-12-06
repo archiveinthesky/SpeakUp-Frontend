@@ -1,15 +1,35 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import ReportComment from './ReportComment'
 
-const CommentCard = ({ cmtdata, replyFunction = null }) => {
+const CommentCard = ({ cmtdata, isLast, replyable, fetchComments }) => {
+
     const [supported, setSupported] = useState(cmtdata.userSupported)
     const [liked, setLiked] = useState(cmtdata.userLiked)
     const [disliked, setDisliked] = useState(cmtdata.userDisliked)
     const [showReportMenu, setShowReportMenu] = useState(false)
     const [showReportBtn, setshowReportBtn] = useState(false)
     const [showReplyBox, setShowReplyBox] = useState(false)
+    const [fetchInCd, setFetchInCd] = useState(false)
 
+    const thiscard = useRef(null)
     const cardmenu = useRef(null);
+
+    var incd = false;
+
+    useEffect(() => {
+        if (isLast) {
+            const loadCmtCheck = () => {
+                if (window.innerHeight - thiscard.current.getBoundingClientRect().y > 0 && !incd) {
+                    console.log("stopping cd" + incd)
+                    incd = true
+                    fetchComments()
+                    setInterval(() => { incd = false }, 1000)
+                }
+            }
+            document.getElementById("scrollTrigger").addEventListener('click', loadCmtCheck)
+            return () => { document.getElementById("scrollTrigger").removeEventListener('click', loadCmtCheck) }
+        }
+    }, [isLast])
 
     const updateUserStatus = (updatevar) => {
         if (updatevar === "supported") {
@@ -88,7 +108,7 @@ const CommentCard = ({ cmtdata, replyFunction = null }) => {
 
     return (
         <>
-            <div className=" w-11/12 mx-auto my-2 border-2 border-gray-200 rounded-3xl">
+            <div className=" w-11/12 mx-auto my-2 border-2 border-gray-200 rounded-3xl" ref={thiscard}>
                 <div className="w-full px-8 mx-auto mt-2 flex justify-start">
                     <img className="p-2 rounded-full overflow-hidden w-14 h-14" src={cmtdata.accPic} alt="Profile" />
                     <div className="my-auto pl-2"><h3 className=" text-black text-2xl">{cmtdata.accName}</h3></div>
@@ -122,7 +142,7 @@ const CommentCard = ({ cmtdata, replyFunction = null }) => {
                                 </button>
                             </div>
                         </div>
-                        {replyFunction != null &&
+                        {replyable &&
                             <button className="my-auto ml-4" onClick={() => { setShowReplyBox(!showReplyBox) }}>
                                 {showReplyBox ?
                                     <svg className="w-7 h-7 inline" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">

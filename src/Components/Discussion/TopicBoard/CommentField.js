@@ -1,38 +1,62 @@
 import React, { useState, useEffect } from 'react'
 import CommentCard from './CommentCard'
 import CommentResponseField from './CommentResponseField';
-import SubmitComment from './SubmitComment';
 
 const CommentField = ({ onSide }) => {
-    // eslint-disable-next-line
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [comments, setComments] = useState([])
     const [typeComment, setTypeComment] = useState(false)
-    const [typeReply, setTypeReply] = useState(false)
     const [cmtContent, setCmtContent] = useState({ side: onSide === null ? "支持方" : onSide, text: "" })
     const [userComments, setUserComments] = useState([])
+    const [furthestCmt, setFurthestCmt] = useState(10)
+    const [canFetchMoreCmt, setCanFetchMoreCmt] = useState(true)
 
     useEffect(() => {
-        fetch('http://127.0.0.1:5500/comments/', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                "boardid": 0,
-                "onside": (onSide === "支持方") ? "sup" : "agn",
-                "startNum": 1,
-                "endNum": 10
-            }
-        })
-            .then(response => { return response.json() })
-            .then(response => {
-                let cmtarray = []
-                for (let i in response) {
-                    cmtarray.push(response[i])
-                }
-                setComments(cmtarray)
-            })
+        fetchComments(1, 10)
     }, [onSide])
+
+    const fetchComments = async (start, end) => {
+        if (canFetchMoreCmt) {
+            setIsLoading(true)
+            // console.log("fetch start")
+            fetch('http://127.0.0.1:5500/comments/', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "boardId": 0,
+                    "onSide": (onSide === null) ? "all" : (onSide === "支持方") ? "sup" : "agn",
+                    "startNum": start,
+                    "endNum": end
+                }
+            })
+                .then(response => { return response.json() })
+                .then(response => {
+                    let cmtarray = []
+                    for (let i in response) {
+                        cmtarray.push(response[i])
+                        if (response[i].hasMore == false) {
+                            setCanFetchMoreCmt(false)
+                        }
+                    }
+                    setFurthestCmt(comments.length + cmtarray.length)
+                    setIsLoading(false)
+                    setComments([...comments, ...cmtarray])
+                    // console.log("Fetch Done")
+                })
+                .catch(error => { console.log(error) })
+        }
+    }
+
+    const fetchMoreComments = () => {
+        if (canFetchMoreCmt) {
+            setIsLoading(true)
+            if (!isLoading) {
+                fetchComments(furthestCmt + 1, furthestCmt + 10)
+            }
+
+        }
+    }
 
     const postComment = async (cmtcontent) => {
         await fetch('http://127.0.0.1:5500/comments/', {
@@ -60,14 +84,22 @@ const CommentField = ({ onSide }) => {
             })
     }
 
-    const postReply = (cmtcontent) => {
-        console.log(cmtcontent)
-        setTypeReply(false)
-    }
-
     const detectTypeComment = (e) => {
         setTypeComment(e.target.value !== "")
         setCmtContent({ side: cmtContent.side, text: e.target.value })
+    }
+
+    const LoadingSkeleton = () => {
+        return (
+            <div className=" w-11/12 mx-auto my-2 border-2 border-gray-200 rounded-3xl" >
+                <div className="w-full px-8 mx-auto mt-6 flex justify-start">
+                    <div className="p-2 bg-gray-300 rounded-full overflow-hidden w-10 h-10 animate-pulse" />
+                    <div className="w-28 h-10 ml-4 my-auto pl-2 rounded-2xl bg-gray-300 animate-pulse"></div>
+                </div>
+                <div className="w-5/6 h-9 px-16 mt-4 mb-2 mx-auto bg-gray-300 rounded-2xl animate-pulse"></div>
+                <div className="w-5/6 h-9 px-16 mt-2 mb-4 mx-auto bg-gray-300 rounded-2xl animate-pulse"></div>
+            </div>
+        )
     }
 
     return (
@@ -124,25 +156,16 @@ const CommentField = ({ onSide }) => {
                 </div>
             </div>
             <div className="w-full mb-4 flex flex-col">
-                {comments.map((cmt) => {
+                {comments.map((cmt, i) => {
                     return (cmt.cmtReplies > 0) ?
                         <div key={"div" + comments.indexOf(cmt).toString()}>
-                            <CommentCard key={comments.indexOf(cmt)} cmtdata={cmt} replyFunction={setTypeReply} />
+                            <CommentCard key={comments.indexOf(cmt)} cmtdata={cmt} isLast={i + 1 === comments.length} replyable={true} fetchComments={fetchMoreComments} />
                             <CommentResponseField key={"r" + comments.indexOf(cmt).toString()} onSide={onSide} commentId={comments.indexOf(cmt)} />
                         </div> :
-                        <CommentCard key={comments.indexOf(cmt)} cmtdata={cmt} replyFunction={setTypeReply} />
+                        <CommentCard key={comments.indexOf(cmt)} cmtdata={cmt} isLast={i + 1 === comments.length} replyable={true} fetchComments={fetchMoreComments} />
                 })}
+                {isLoading && <LoadingSkeleton />}
             </div >
-            <div>
-                {typeReply &&
-                    <SubmitComment
-                        onSideProp={onSide}
-                        closeSubmitComment={() => { setTypeReply(!typeReply) }}
-                        isreply={true}
-                        clickhandler={postReply}
-                    />
-                }
-            </div>
         </div >
     )
 }

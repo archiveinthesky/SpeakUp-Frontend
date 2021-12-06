@@ -20,7 +20,8 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "server": "json-server --watch db.json --port 5500"
+    "server": "json-server --watch db.json --port 5500",
+    "delayserver": "json-server --watch db.json --delay 500 --port 5500"
   },
   "eslintConfig": {
     "extends": [
