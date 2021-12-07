@@ -11,10 +11,6 @@ const CommentField = ({ onSide }) => {
     const [furthestCmt, setFurthestCmt] = useState(10)
     const [canFetchMoreCmt, setCanFetchMoreCmt] = useState(true)
 
-    useEffect(() => {
-        fetchComments(1, 10)
-    }, [onSide])
-
     const fetchComments = async (start, end) => {
         if (canFetchMoreCmt) {
             setIsLoading(true)
@@ -35,7 +31,7 @@ const CommentField = ({ onSide }) => {
                     let cmtarray = []
                     for (let i in response) {
                         cmtarray.push(response[i])
-                        if (response[i].hasMore == false) {
+                        if (response[i].hasMore === false) {
                             setCanFetchMoreCmt(false)
                         }
                     }
@@ -58,6 +54,12 @@ const CommentField = ({ onSide }) => {
         }
     }
 
+    useEffect(() => {
+        fetchComments(1, 10)
+    }, [onSide])
+
+
+    //eslint-disable-next-line
     const postComment = async (cmtcontent) => {
         await fetch('http://127.0.0.1:5500/comments/', {
             method: 'POST',

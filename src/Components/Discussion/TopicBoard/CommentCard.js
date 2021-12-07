@@ -9,7 +9,6 @@ const CommentCard = ({ cmtdata, isLast, replyable, fetchComments }) => {
     const [showReportMenu, setShowReportMenu] = useState(false)
     const [showReportBtn, setshowReportBtn] = useState(false)
     const [showReplyBox, setShowReplyBox] = useState(false)
-    const [fetchInCd, setFetchInCd] = useState(false)
 
     const thiscard = useRef(null)
     const cardmenu = useRef(null);
