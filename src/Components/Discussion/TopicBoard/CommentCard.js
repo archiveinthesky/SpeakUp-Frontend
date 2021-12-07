@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import ReportComment from './ReportComment'
+import ReportContent from './ReportContent'
 
 const CommentCard = ({ cmtdata, isLast, replyable, fetchComments }) => {
 
@@ -185,7 +185,11 @@ const CommentCard = ({ cmtdata, isLast, replyable, fetchComments }) => {
                         <button className="text-3xl" onClick={() => { setshowReportBtn(true) }} ref={cardmenu}> ⋮ </button>
                         {showReportBtn && <ReportButton />}
                     </div>
-                    {showReportMenu && <ReportComment closeReportComment={() => { setShowReportMenu(false) }} />}
+                    {showReportMenu && <ReportContent
+                        rHeader="請問此留言有什麼問題？"
+                        rQuestions={["留言內容惡意攻擊其他使用者", "留言內容與此討論無關", "留言內容含有騷擾、廣告內容", "其他"]}
+                        closeReportContent={() => { setShowReportMenu(false) }}
+                    />}
                 </div>
             </div>
             {showReplyBox && <ReplyTextField />}
