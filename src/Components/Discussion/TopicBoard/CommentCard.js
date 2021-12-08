@@ -118,15 +118,15 @@ const CommentCard = ({ cmtdata, isLast, replyable, fetchComments }) => {
                         <div className="flex min-w-max border-2 border-gray-200 rounded-3xl">
                             <div className="ml-2 my-1">
                                 <button onClick={() => { updateUserStatus("supported") }}>
-                                    <svg className={`inline mx-2 w-7 ${supported ? "filter-blue" : "filter-none"}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.501 22.501">
-                                        <path id="Icon_awesome-arrow-circle-up" data-name="Icon awesome-arrow-circle-up" d="M.563,11.813a11.25,11.25,0,1,1,11.25,11.25A11.248,11.248,0,0,1,.563,11.813Zm6.514,1.311L10.361,9.7v8.284a1.086,1.086,0,0,0,1.089,1.089h.726a1.086,1.086,0,0,0,1.089-1.089V9.7l3.284,3.425a1.09,1.09,0,0,0,1.556.018l.494-.5a1.084,1.084,0,0,0,0-1.538l-6.015-6.02a1.084,1.084,0,0,0-1.538,0l-6.024,6.02a1.084,1.084,0,0,0,0,1.538l.494.5A1.1,1.1,0,0,0,7.077,13.124Z" transform="translate(-0.563 -0.563)" />
+                                    <svg className={`inline mx-2 w-7 overflow-hidden ${supported ? "filter-blue " : "filter-none"}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.501 22.501">
+                                        <path className={`${supported && "animate-fly-up "}`} d="M.563,11.813a11.25,11.25,0,1,1,11.25,11.25A11.248,11.248,0,0,1,.563,11.813Zm6.514,1.311L10.361,9.7v8.284a1.086,1.086,0,0,0,1.089,1.089h.726a1.086,1.086,0,0,0,1.089-1.089V9.7l3.284,3.425a1.09,1.09,0,0,0,1.556.018l.494-.5a1.084,1.084,0,0,0,0-1.538l-6.015-6.02a1.084,1.084,0,0,0-1.538,0l-6.024,6.02a1.084,1.084,0,0,0,0,1.538l.494.5A1.1,1.1,0,0,0,7.077,13.124Z" transform="translate(-0.563 -0.563)" />
                                     </svg>
                                 </button>
                                 <span className="align-middle"><p className="inline text-lg mr-2">{cmtdata.cmtSupport + (supported ? 1 : 0)}</p></span>
                             </div>
                             <div className="ml-2 my-1">
                                 <button onClick={() => { updateUserStatus("liked") }}>
-                                    <svg className={`inline mx-2 w-7 ${liked ? "filter-green" : "filter-none"}`} xmlns="http://www.w3.org/2000/svg" width="25.149" height="25.501" viewBox="0 0 25.149 25.501">
+                                    <svg className={`inline mx-2 w-7 ${liked ? "filter-green animate-jump-up ease-in" : "filter-none"}`} xmlns="http://www.w3.org/2000/svg" width="25.149" height="25.501" viewBox="0 0 25.149 25.501">
                                         <path id="Icon_feather-thumbs-up" data-name="Icon feather-thumbs-up" d="M16.5,10.875v-4.5A3.375,3.375,0,0,0,13.125,3l-4.5,10.125V25.5h12.69a2.25,2.25,0,0,0,2.25-1.913l1.553-10.125a2.25,2.25,0,0,0-2.25-2.588ZM8.625,25.5H5.25A2.25,2.25,0,0,1,3,23.251V15.375a2.25,2.25,0,0,1,2.25-2.25H8.625" transform="translate(-1.5 -1.5)" fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
                                     </svg>
                                 </button>
@@ -134,7 +134,7 @@ const CommentCard = ({ cmtdata, isLast, replyable, fetchComments }) => {
                             </div>
                             <div className="mx-2 my-1">
                                 <button onClick={() => { updateUserStatus("disliked") }}>
-                                    <svg className={`inline mx-2 w-7 ${disliked ? "filter-red" : "filter-none"}`} xmlns="http://www.w3.org/2000/svg" width="22.934" height="23.251" viewBox="0 0 22.934 23.251">
+                                    <svg className={`inline mx-2 w-7 ${disliked ? "filter-red animate-jump-down ease-in" : "filter-none"}`} xmlns="http://www.w3.org/2000/svg" width="22.934" height="23.251" viewBox="0 0 22.934 23.251">
                                         <path id="Icon_feather-thumbs-down" data-name="Icon feather-thumbs-down" d="M11.255,16.162v4.05a3.037,3.037,0,0,0,3.037,3.037l4.05-9.112V3H6.921A2.025,2.025,0,0,0,4.9,4.721L3.5,13.834a2.025,2.025,0,0,0,2.025,2.329ZM18.342,3h2.7A2.339,2.339,0,0,1,23.4,5.025v7.087a2.339,2.339,0,0,1-2.359,2.025h-2.7" transform="translate(-1.971 -1.499)" fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
                                     </svg>
                                     <span className="align-middle"><p className="inline text-lg mr-2">{cmtdata.cmtDislikes + (disliked ? 1 : 0)}</p></span>
