@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Sidebar = ({ showSidebar, toggleSidebar }) => {
+const Sidebar = ({ showSidebar, toggleSidebar = null }) => {
     const tags = ['娛樂', '環境', '司法', '國家發展', '經濟', '少數族群', '媒體', '醫藥', '道德', '政治', '教育', '家庭', '女性', '自由', '宗教', '科技', '社會政策', '社會運動', '體育'];
 
     return (
@@ -47,15 +47,16 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
                 {tags.map((tag) => { return <li key={tags.indexOf(tag)} className="py-2 text-xl">{tag}</li> })}
             </ul>
             <div className={`absolute top-80 left-80 w-20 h-20 overflow-hidden`}>
-                <button className="absolute bg-accent-blue rounded-r-full w-20 h-20 -left-8 flex"
-                    onClick={toggleSidebar}>
-                    <div className="ml-10 my-auto">
-                        <svg className={`w-6 h-10 transform ${showSidebar ? "rotate-180" : "rotate-0"}`} viewBox="0 0 23.783 41.595">
-                            <path id="Icon_ionic-ios-arrow-forward" data-name="Icon ionic-ios-arrow-forward" d="M27.86,26.986,12.12,11.258a2.96,2.96,0,0,1,0-4.2,3,3,0,0,1,4.211,0L34.163,24.881a2.967,2.967,0,0,1,.087,4.1L16.343,46.925a2.973,2.973,0,1,1-4.211-4.2Z" transform="translate(-11.246 -6.196)" fill="#fff" />
-                        </svg>
-                    </div>
-
-                </button>
+                {toggleSidebar !== null &&
+                    <button className="absolute bg-accent-blue rounded-r-full w-20 h-20 -left-8 flex"
+                        onClick={toggleSidebar}>
+                        <div className="ml-10 my-auto">
+                            <svg className={`w-6 h-10 transform ${showSidebar ? "rotate-180" : "rotate-0"}`} viewBox="0 0 23.783 41.595">
+                                <path id="Icon_ionic-ios-arrow-forward" data-name="Icon ionic-ios-arrow-forward" d="M27.86,26.986,12.12,11.258a2.96,2.96,0,0,1,0-4.2,3,3,0,0,1,4.211,0L34.163,24.881a2.967,2.967,0,0,1,.087,4.1L16.343,46.925a2.973,2.973,0,1,1-4.211-4.2Z" transform="translate(-11.246 -6.196)" fill="#fff" />
+                            </svg>
+                        </div>
+                    </button>
+                }
             </div>
         </div>
     )
