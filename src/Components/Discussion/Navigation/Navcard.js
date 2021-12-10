@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Navcard = ({ carddata }) => {
-    const [isSaved, setIsSaved] = useState(false)
+    const [isSaved, setIsSaved] = useState("true" == carddata.saved)
+
+    console.log(carddata)
 
     const toggleSaved = () => {
         setIsSaved(!isSaved)
@@ -29,7 +31,7 @@ const Navcard = ({ carddata }) => {
                             <p className="w-full mt-2 mb-4 mx-auto text-lg text-gray-600">{carddata.content}</p>
                         </div>
                     </Link>
-
+                    {/* {setIsSaved(carddata.saved)} */}
                     <button className="absolute right-2 bottom-2" onClick={toggleSaved}>
                         <svg className="w-7 h-7" viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect className={`transition-all duration-200 ease-out ${isSaved ? "opacity-100" : "opacity-0"}`} x="1" y="1" width="14" height="15" fill="#FCD34D" />

@@ -21,8 +21,8 @@ const ReportContent = ({ rHeader, rQuestions, closeReportContent }) => {
                                 rQuestions.map((violation, i) => {
                                     return (
                                         <li key={i} className="py-1">
-                                            <input className="inline" type="radio" name="report-type" onClick={() => { setSelection(i) }} />
-                                            <p className="inline text-xl pl-2">{violation}</p>
+                                            <input className="inline" type="radio" name="report-type" id={`report-${i}`} onClick={() => { setSelection(i) }} />
+                                            <label className="inline text-xl pl-2" htmlFor={`report-${i}`} >{violation}</label>
                                         </li>
                                     )
                                 })

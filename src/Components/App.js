@@ -9,6 +9,8 @@ function App() {
     <Router>
       <Routes>
         <Route path={"/home"} element={<NavBoard mode="home" />} />
+        <Route path={"/search"} element={<NavBoard mode="search" />} />
+        <Route path={"/collections"} element={<NavBoard mode="collections" />} />
         <Route path={"/discussions/:boardId"} element={<MainBoard />} />
       </Routes>
     </Router>

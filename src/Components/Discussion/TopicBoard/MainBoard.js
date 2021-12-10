@@ -14,15 +14,10 @@ const MainBoard = () => {
     const [enableAnim, setEnableAnim] = useState(false)
     const [flowDisplay, setFlowDisplay] = useState(false);
     const [flowDisplatOpt, setFlowDisplayOpt] = useState("留言顯示方式")
-    const [boardid, setBoardid] = useState(boardId)
 
     const toggleSidebar = () => {
         setEnableAnim(true)
         setShowSidebar(!showSidebar)
-    }
-
-    const changeCmtViewMethod = (e) => {
-        setFlowDisplay(e.target.value === "byflow")
     }
 
     useEffect(() => {
@@ -85,11 +80,11 @@ const MainBoard = () => {
     return (
         <div className="w-screen h-screen overflow-x-hidden overflow-y-auto bg-gray-50" onScroll={() => { document.getElementById("scrollTrigger").click() }}>
             <Header />
-            {boardid != null &&
+            {boardId != null &&
                 <div>
                     <Sidebar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
                     <div className={`w-full pt-24 ${enableAnim ? "transition-padding" : "transition-none"} duration-1000 ease-out ${showSidebar ? "pl-72" : "pl-0"}`}>
-                        <DiscussionHeader boardid={boardid} />
+                        <DiscussionHeader boardid={boardId} />
                     </div>
                     <div className="w-11/12 mx-auto my-6 flex justify-end">
                         <DropdownSelector />
