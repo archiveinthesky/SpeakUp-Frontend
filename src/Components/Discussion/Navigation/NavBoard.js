@@ -28,7 +28,9 @@ const MainBoard = ({ mode }) => {
             })
                 .then(response => { return response.json() })
                 .then(response => {
-                    setTitleText(`${response.username}早安，以下是你有可能感興趣的議題`)
+                    let d = new Date()
+                    let timegreeting = (d.getHours() > 19 || d.getHours() <= 4) ? "晚安" : (d.getHours() < 12) ? "早安" : "午安"
+                    setTitleText(`${response.username}${timegreeting}，以下是你有可能感興趣的議題`)
                     setTracks(response.content.replaceAll("'", '"'))
                     setIsLoading(false)
                 })
@@ -54,6 +56,8 @@ const MainBoard = ({ mode }) => {
                         setTracks(response.cards.replaceAll("'", '"'))
                         setIsLoading(false)
                     })
+            } else {
+                window.location.href = "/searcherror"
             }
         }
         if (mode === "collections") {

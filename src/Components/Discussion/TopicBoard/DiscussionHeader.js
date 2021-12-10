@@ -26,6 +26,7 @@ const DiscussionHeader = ({ boardid }) => {
                     response.isSaved
                 ]
                 setPageContent(pagedata)
+                setUserSaved(response.isSaved)
                 setIsLoading(false)
             })
             .catch(error => {

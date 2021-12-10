@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 const Navcard = ({ carddata }) => {
     const [isSaved, setIsSaved] = useState("true" == carddata.saved)
 
-    console.log(carddata)
-
     const toggleSaved = () => {
         setIsSaved(!isSaved)
     }
