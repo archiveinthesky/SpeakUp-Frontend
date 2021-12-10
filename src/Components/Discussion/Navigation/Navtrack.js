@@ -5,7 +5,18 @@ const Navtrack = ({ title, cardsUrl }) => {
     const [cardsList, setCardsList] = useState("")
 
     useEffect(() => {
-        setCardsList('"title":"abc","content":"def","link":"ghi";l1"title":"abc","content":"def","link":"ghi"')
+        fetch(`http://127.0.0.1:5500/topictracks/${cardsUrl}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => { return response.json() })
+            .then(response => {
+                setCardsList(response.cards.replaceAll("'", '"'))
+            })
+        // setCardsList('"title":"網路自由","tags":"自由;l2媒體","content":"我喜歡123","link":"ghi";l1"title":"abc","tags":"自由;l2媒體","content":"def","link":"ghi"')
     }, [])
 
     return (
@@ -14,9 +25,7 @@ const Navtrack = ({ title, cardsUrl }) => {
             <div className="mt-4 overflow-x-auto flex gap-6">
                 {cardsList.split(";l1").map((card, i) => {
                     return (
-                        <>
-                            <Navcard key={i} carddata={JSON.parse(`{${card}}`)} />
-                        </>
+                        <Navcard key={i} carddata={JSON.parse(`{${card}}`)} />
                     )
                 })}
             </div>

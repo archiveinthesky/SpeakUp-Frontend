@@ -1,12 +1,17 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import MainBoard from "./Discussion/TopicBoard/MainBoard";
 import NavBoard from "./Discussion/Navigation/NavBoard"
 
 function App() {
   return (
-    <div className="App">
-      <NavBoard />
-    </div>
+    <Router>
+      <Routes>
+        <Route path={"/home"} element={<NavBoard mode="home" />} />
+        <Route path={"/discussions/:boardId"} element={<MainBoard />} />
+      </Routes>
+    </Router>
   );
 }
 

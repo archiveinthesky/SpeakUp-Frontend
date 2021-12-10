@@ -26,7 +26,7 @@ const CommentCard = ({ cmtdata, isLast, replyable, fetchComments }) => {
                 }
             }
             document.getElementById("scrollTrigger").addEventListener('click', loadCmtCheck)
-            return () => { document.getElementById("scrollTrigger").removeEventListener('click', loadCmtCheck) }
+            return () => { try { document.getElementById("scrollTrigger").removeEventListener('click', loadCmtCheck) } catch { } }
         }
     }, [isLast])
 

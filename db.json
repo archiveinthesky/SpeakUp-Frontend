@@ -6,6 +6,20 @@
       "author": "typicode"
     }
   ],
+  "homeboard": {
+    "username": "使用者",
+    "content": "'title': '熱門議題','endpoint':'trending';l1'title': '您可能有興趣','endpoint': 'recommend'"
+  },
+  "topictracks": [
+    {
+      "id": "trending",
+      "cards": "'title':'網路自由','tags':'自由;l2媒體','content':'在社群網站、論壇等網路平台上，使用者留言或發文時往往不需要顯示真實身分...','link':'../discussions/1';l1'title':'心跳法案','tags':'女性;l2道德;l2自由;l2醫藥','content':'2021/05/19德州心跳法案通過，只要超過懷孕超過六周而墮胎，任何人皆可在州立法院對協助...','link':'../discussions/2'"
+    },
+    {
+      "id": "recommend",
+      "cards": "'title':'網路自由','tags':'自由;l2媒體','content':'在社群網站、論壇等網路平台上，使用者留言或發文時往往不需要顯示真實身分...','link':'../discussions/1';l1'title':'心跳法案','tags':'女性;l2道德;l2自由;l2醫藥','content':'2021/05/19德州心跳法案通過，只要超過懷孕超過六周而墮胎，任何人皆可在州立法院對協助...','link':'../discussions/2'"
+    }
+  ],
   "boards": [
     {
       "id": 1,

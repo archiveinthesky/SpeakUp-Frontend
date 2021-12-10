@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react'
+import { useParams } from 'react-router-dom'
 import '../Styles/discussion.css'
 import Header from '../Common/Header'
 import Sidebar from '../Common/Sidebar'
@@ -8,16 +9,12 @@ import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
 const MainBoard = () => {
-
+    var { boardId } = useParams()
     const [showSidebar, setShowSidebar] = useState(true)
     const [enableAnim, setEnableAnim] = useState(false)
     const [flowDisplay, setFlowDisplay] = useState(false);
     const [flowDisplatOpt, setFlowDisplayOpt] = useState("留言顯示方式")
-    const [boardid, setBoardid] = useState()
-
-    useEffect(() => {
-        setBoardid(1)
-    }, [])
+    const [boardid, setBoardid] = useState(boardId)
 
     const toggleSidebar = () => {
         setEnableAnim(true)
@@ -95,10 +92,6 @@ const MainBoard = () => {
                         <DiscussionHeader boardid={boardid} />
                     </div>
                     <div className="w-11/12 mx-auto my-6 flex justify-end">
-                        {/* <select className="px-4 h-10 rounded-3xl border-2 border-black" name="viewmethod" onChange={changeCmtViewMethod}>
-                            <option value="byside">區分立場</option>
-                            <option value="byflow">不區分立場</option>
-                        </select> */}
                         <DropdownSelector />
                     </div>
                     <div className={`w-full ${enableAnim ? "transition-padding" : "transition-none"} duration-1000 ease-out ${showSidebar ? "pl-72" : "pl-0"}`}>
