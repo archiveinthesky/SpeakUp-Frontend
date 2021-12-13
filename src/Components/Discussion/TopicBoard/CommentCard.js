@@ -21,7 +21,6 @@ const CommentCard = ({ cmtdata, isLast, replyable, fetchComments }) => {
         if (isLast) {
             const loadCmtCheck = () => {
                 if (window.innerHeight - thiscard.current.getBoundingClientRect().y > 0 && !incd) {
-                    console.log("stopping cd" + incd)
                     incd = true
                     fetchComments()
                     setInterval(() => { incd = false }, 1000)

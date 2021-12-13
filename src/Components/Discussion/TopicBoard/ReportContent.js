@@ -5,7 +5,6 @@ const ReportContent = ({ rHeader, rQuestions, closeReportContent }) => {
 
     const reportSubmit = (e) => {
         e.preventDefault()
-        console.log(selection)
         closeReportContent();
     }
 

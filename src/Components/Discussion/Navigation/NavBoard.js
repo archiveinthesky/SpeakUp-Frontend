@@ -75,7 +75,7 @@ const MainBoard = ({ mode }) => {
                     setIsLoading(false)
                 })
         }
-    }, [])
+    }, [location.search, mode])
 
 
     return (

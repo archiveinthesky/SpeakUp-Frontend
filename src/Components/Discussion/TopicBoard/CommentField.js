@@ -79,7 +79,6 @@ const CommentField = ({ onSide }) => {
             .then((response) => {
                 setUserComments([response, ...userComments])
                 setTypeComment(false)
-                console.log(cmtcontent)
             })
             .catch((error) => {
                 console.log(error)
