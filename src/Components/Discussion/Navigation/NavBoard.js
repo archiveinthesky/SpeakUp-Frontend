@@ -11,12 +11,24 @@ const MainBoard = ({ mode }) => {
     const location = useLocation()
 
     const [isLoading, setIsLoading] = useState(true)
-    const [showSidebar, setShowSidebar] = useState(true)
     const [titleText, setTitleText] = useState("")
     const [tracks, setTracks] = useState("")
     const [searchKw, setSearchKw] = useState("")
+    const [smallScreen, setSmallScreen] = useState(true)
+    const [errorOccured, setErrorOccured] = useState(false)
+
+    const updateScreen = () => {
+        setSmallScreen(window.innerWidth < 1280)
+    }
 
     useEffect(() => {
+        updateScreen()
+        window.onresize = updateScreen
+        return window.onresize = null
+    }, [])
+
+    useEffect(() => {
+
         setSearchKw("")
         if (mode === "home") {
             fetch('http://127.0.0.1:5500/homeboard', {
@@ -33,6 +45,10 @@ const MainBoard = ({ mode }) => {
                     setTitleText(`${response.username}${timegreeting}，以下是你有可能感興趣的議題`)
                     setTracks(response.content.replaceAll("'", '"'))
                     setIsLoading(false)
+                })
+                .catch(error => {
+                    let errtxt = `獲取頁面資料時發生錯誤(${error.message})，請重新整理網頁。若錯誤持續發生，請稍待片刻，我們將盡快修復。`
+                    setErrorOccured(errtxt)
                 })
         }
         if (mode === "search") {
@@ -56,6 +72,10 @@ const MainBoard = ({ mode }) => {
                         setTracks(response.cards.replaceAll("'", '"'))
                         setIsLoading(false)
                     })
+                    .catch(error => {
+                        let errtxt = `獲取頁面資料時發生錯誤(${error.message})，請重新整理網頁。若錯誤持續發生，請稍待片刻，我們將盡快修復。`
+                        setErrorOccured(errtxt)
+                    })
             } else {
                 window.location.href = "/searcherror"
             }
@@ -74,40 +94,58 @@ const MainBoard = ({ mode }) => {
                     setTracks(response.cards.replaceAll("'", '"'))
                     setIsLoading(false)
                 })
+                .catch(error => {
+                    let errtxt = `獲取頁面資料時發生錯誤(${error.message})，請重新整理網頁。若錯誤持續發生，請稍待片刻，我們將盡快修復。`
+                    setErrorOccured(errtxt)
+                })
         }
     }, [location.search, mode])
 
 
     return (
+
         <div className="w-screen h-screen overflow-x-hidden overflow-y-auto bg-gray-50" >
             <Header />
-            <Sidebar showSidebar={showSidebar} />
-            <div className="pt-24 pl-80">
-                {searchKw !== "" ?
-                    <h1 className="w-11/12 mx-auto py-8 text-4xl">以下是<p className={`inline ${searchKw.charAt(0) === "#" && "text-blue-600"}`}>{searchKw}</p>的搜尋結果</h1> :
-                    <h1 className="w-11/12 mx-auto py-8 text-4xl">{titleText}</h1>
-                }
-                {(mode === "home" && !isLoading) && tracks.split(";l1").map((track, i) => {
-                    var thistrack = JSON.parse(`{${track}}`)
-                    return (<Navtrack key={i} title={thistrack.title} cardsUrl={thistrack.endpoint} />)
-                })}
-                {(mode === "search" && !isLoading) &&
-                    <div className="w-11/12 mx-auto flex flex-col gap-4">
-                        {tracks.split(";l1").map((track, i) => {
-                            return (<WideNavCard key={i} carddata={JSON.parse(`{${track}}`)} />)
+            {console.log(!smallScreen)}
+            <Sidebar defualtState={!smallScreen} toggleIndent={smallScreen ? (status) => { } : null} />
+            <div className={`pt-24 ${smallScreen ? "pl-4" : "pl-80"}`}>
+                {errorOccured === false ?
+                    <>
+                        {searchKw !== "" ?
+                            <h1 className="w-11/12 mx-auto py-8 text-4xl">以下是<p className={`inline ${searchKw.charAt(0) === "#" && "text-blue-600"}`}>{searchKw}</p>的搜尋結果</h1> :
+                            <h1 className="w-11/12 mx-auto py-8 text-4xl">{titleText}</h1>
+                        }
+                        {(mode === "home" && !isLoading) && tracks.split(";l1").map((track, i) => {
+                            var thistrack = JSON.parse(`{${track}}`)
+                            return (<Navtrack key={i} title={thistrack.title} cardsUrl={thistrack.endpoint} />)
                         })}
-                    </div>
-                }
-                {(mode === "collections" && !isLoading) &&
-                    <div className="w-11/12 mx-auto flex flex-col gap-4">
-                        {tracks.split(";l1").map((track, i) => {
-                            return (<WideNavCard key={i} carddata={JSON.parse(`{${track}}`)} />)
-                        })}
+                        {(mode === "search" && !isLoading) &&
+                            <div className="w-11/12 mx-auto flex flex-col gap-4">
+                                {tracks.split(";l1").map((track, i) => {
+                                    return (<WideNavCard key={i} carddata={JSON.parse(`{${track}}`)} />)
+                                })}
+                            </div>
+                        }
+                        {(mode === "collections" && !isLoading) &&
+                            <div className="w-11/12 mx-auto flex flex-col gap-4">
+                                {tracks.split(";l1").map((track, i) => {
+                                    return (<WideNavCard key={i} carddata={JSON.parse(`{${track}}`)} />)
+                                })}
+                            </div>
+                        }
+                    </> :
+
+                    <div className="bg-red-200 w-11/12 h-[85vh] mx-auto py-3 flex rounded-xl">
+                        <div className='m-auto'>
+                            <h1 className='text-center text-3xl text-red-500 font-medium'>錯誤</h1>
+                            <p className='my-2 px-6 text-center text-xl text-red-500'>{errorOccured}</p>
+                        </div>
                     </div>
                 }
 
             </div>
         </div >
+
     )
 }
 

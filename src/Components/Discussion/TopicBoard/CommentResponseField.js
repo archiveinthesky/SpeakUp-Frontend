@@ -5,6 +5,10 @@ const CommentResponseField = ({ onSide, commentId }) => {
     const [comments, setComments] = useState([])
 
     useEffect(() => {
+        getResponses()
+    }, [onSide])
+
+    const getResponses = () => {
         fetch('http://127.0.0.1:5500/cmtresponses/', {
             method: 'GET',
             headers: {
@@ -24,7 +28,7 @@ const CommentResponseField = ({ onSide, commentId }) => {
                 }
                 setComments(cmtarray)
             })
-    }, [onSide])
+    }
 
     return (
         <div className="w-11/12 bg-white ml-auto flex flex-col">

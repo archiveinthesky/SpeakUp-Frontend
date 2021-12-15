@@ -57,18 +57,62 @@ const CommentCard = ({ cmtdata, isLast, replyable, fetchComments }) => {
     const ReportButton = () => {
         return (
             <span className="absolute top-0 left-0 w-screen h-screen" onClick={() => { setshowReportBtn(false) }}>
-                <button style={{ top: cardmenu.current.getBoundingClientRect().y + 15, left: cardmenu.current.getBoundingClientRect().x + 15 }}
-                    className="absolute bg-white hover:bg-gray-200 px-4 py-2 filter drop-shadow-md transition-colors duration-200 z-10"
-                    onClick={() => { setShowReportMenu(true) }}
-                >
-                    <svg className="w-7 h-7 inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 33">
-                        <g id="Icon_feather-flag" data-name="Icon feather-flag" transform="translate(-4.5 -1.5)">
-                            <path id="Path_5" data-name="Path 5" d="M6,22.5S7.5,21,12,21s7.5,3,12,3,6-1.5,6-1.5V4.5S28.5,6,24,6,16.5,3,12,3,6,4.5,6,4.5Z" fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
-                            <path id="Path_6" data-name="Path 6" d="M6,33V22.5" fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
-                        </g>
-                    </svg>
-                    <h3 className="text-gray-400 pl-1 inline">檢舉</h3>
-                </button>
+                <div className="absolute flex flex-col"
+                    style={{ top: cardmenu.current.getBoundingClientRect().y + 15, left: cardmenu.current.getBoundingClientRect().x + 15 }}>
+                    <button
+                        className=" bg-white hover:bg-gray-200 px-4 py-2 filter drop-shadow-md transition-colors duration-200 z-10"
+                        onClick={() => { setShowReportMenu(true) }}
+                    >
+                        <svg className="w-7 h-7 inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 33">
+                            <g id="Icon_feather-flag" data-name="Icon feather-flag" transform="translate(-4.5 -1.5)">
+                                <path id="Path_5" data-name="Path 5" d="M6,22.5S7.5,21,12,21s7.5,3,12,3,6-1.5,6-1.5V4.5S28.5,6,24,6,16.5,3,12,3,6,4.5,6,4.5Z" fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
+                                <path id="Path_6" data-name="Path 6" d="M6,33V22.5" fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
+                            </g>
+                        </svg>
+                        <h3 className="text-gray-400 pl-1 inline">檢舉</h3>
+                    </button>
+
+                    {replyable &&
+                        <button
+                            className="visible 2xl:hidden bg-white hover:bg-gray-200 px-4 py-2 filter drop-shadow-md transition-colors duration-200 z-10"
+                            onClick={() => { setShowReplyBox(!showReplyBox) }}
+                        >
+                            {showReplyBox ?
+                                <svg className="w-7 h-7 inline" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g filter="url(#filter0_d_15_475)">
+                                        <path d="M2 11L11.8995 1.10051" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
+                                    </g>
+                                    <g filter="url(#filter1_d_15_475)">
+                                        <path d="M2 1.00001L11.8995 10.8995" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
+                                    </g>
+                                    <defs>
+                                        <filter id="filter0_d_15_475" x="0.5" y="0.60051" width="12.8995" height="12.8995" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                                            <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                                            <feOffset dy="1" />
+                                            <feGaussianBlur stdDeviation="0.5" />
+                                            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0" />
+                                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_15_475" />
+                                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_15_475" result="shape" />
+                                        </filter>
+                                        <filter id="filter1_d_15_475" x="0.5" y="0.500008" width="12.8995" height="12.8995" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                                            <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                                            <feOffset dy="1" />
+                                            <feGaussianBlur stdDeviation="0.5" />
+                                            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0" />
+                                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_15_475" />
+                                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_15_475" result="shape" />
+                                        </filter>
+                                    </defs>
+                                </svg>
+                                :
+                                <svg className="w-7 h-7 inline" xmlns="http://www.w3.org/2000/svg" width="33.38" height="27.817" viewBox="0 0 33.38 27.817">
+                                    <path id="Icon_material-reply" data-name="Icon material-reply" d="M17.481,14.918V7.5L4.5,20.481,17.481,33.462v-7.6c9.272,0,15.763,2.967,20.4,9.458C36.025,26.044,30.462,16.772,17.481,14.918Z" transform="translate(-4.5 -7.5)" />
+                                </svg>}
+                            <h3 className="text-gray-400 pl-1 inline">{showReplyBox ? "取消" : "回覆"}</h3>
+                        </button>}
+                </div>
             </span>
         )
     }
@@ -110,12 +154,12 @@ const CommentCard = ({ cmtdata, isLast, replyable, fetchComments }) => {
     return (
         <>
             <div className=" w-11/12 mx-auto my-2 border-2 border-gray-200 rounded-3xl duration-300" ref={thiscard}>
-                <div className="w-full px-8 mx-auto mt-2 flex justify-start">
+                <div className="w-full px-4 2xl:px-8 mx-auto mt-2 flex justify-start">
                     <img className="p-2 rounded-full overflow-hidden w-14 h-14" src={cmtdata.accPic} alt="Profile" />
                     <div className="my-auto pl-2"><h3 className=" text-black text-2xl">{cmtdata.accName}</h3></div>
                 </div>
-                <p className="w-full px-16 mt-2 mb-4 mx-auto text-xl">{cmtdata.cmtContent}</p>
-                <div className="w-full px-16 mx-auto flex justify-between mt-2 mb-2">
+                <p className="w-full px-8 2xl:px-16 mt-2 mb-4 mx-auto text-xl">{cmtdata.cmtContent}</p>
+                <div className="w-full px-8 2xl:px-16 mx-auto flex justify-between mt-2 mb-2">
                     <div className="flex">
                         <div className="flex min-w-max border-2 border-gray-200 rounded-3xl">
                             <div className="ml-2 my-1">
@@ -144,7 +188,7 @@ const CommentCard = ({ cmtdata, isLast, replyable, fetchComments }) => {
                             </div>
                         </div>
                         {replyable &&
-                            <button className="my-auto ml-4" onClick={() => { setShowReplyBox(!showReplyBox) }}>
+                            <button className=" invisible 2xl:visible my-auto ml-4" onClick={() => { setShowReplyBox(!showReplyBox) }}>
                                 {showReplyBox ?
                                     <svg className="w-7 h-7 inline" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g filter="url(#filter0_d_15_475)">
