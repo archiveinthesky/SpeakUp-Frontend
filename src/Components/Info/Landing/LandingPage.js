@@ -36,7 +36,12 @@ const LandingPage = () => {
             if (!hasNumber(userPwd)) pwderrors.push("密碼至少需要一個數字")
             console.log(pwderrors)
             setPwdError(pwderrors)
-            if (!re.test(userPwd) && pwderrors.length === 0) console.log("nice")
+            if (!re.test(userPwd) && pwderrors.length === 0) {
+                let lcs = window.localStorage
+                lcs.setItem('usremail', userEmail)
+                lcs.setItem('usrpwd', userPwd)
+                window.location.href = "/signup?filledData=true"
+            }
         }
 
         return (
@@ -44,6 +49,7 @@ const LandingPage = () => {
                 <h2 className='my-3 text-4xl text-white font-rounded'>註冊一個帳號</h2>
                 <form onSubmit={onEmailReg}>
                     <input type='email'
+                        value={userEmail}
                         onChange={(e) => { setUserEmail(e.target.value) }}
                         className={`w-full h-16 ${emailError ? "mt-3 mb-1" : "my-3"} rounded-3xl px-6 text-2xl hover:drop-shadow-lg`} placeholder='您的電子郵件'
                     />
@@ -62,7 +68,7 @@ const LandingPage = () => {
                     {pwdError.length !== 0 &&
                         <ul>
                             {pwdError.map((eacherror, i) => {
-                                return (<p key={i} className='font-rounded text-red-500 text-lg'>{eacherror}</p>)
+                                return (<p key={i} className='font-rounded text-red-600 text-xl'>{eacherror}</p>)
                             })}
                         </ul>
                     }

@@ -1,90 +1,282 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import LoginTopic from './LoginTopic'
 import closedEye from './Images/closed-eye.svg'
 import openEye from './Images/open-eye.svg'
 
 const SignUpForm = () => {
-    const [userEmail, setUserEmail] = useState("")
-    const [userPwd, setUserPwd] = useState("")
-    const [showPwd, setShowPwd] = useState(false)
-    const [emailError, setEmailError] = useState(false)
-    const [pwdError, setPwdError] = useState([])
+    const location = useLocation()
 
-    const onEmailReg = (e) => {
-        console.log("yo")
-        e.preventDefault()
-        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        setEmailError(!re.test(userEmail))
-        let pwderrors = [];
-        function hasUpperCase(str) {
-            console.log(str.toLowerCase())
-            return str.toLowerCase() !== str;
+    const [regStage, setRegStage] = useState(1);
+    const [regEmail, setRegEmail] = useState("")
+    const [stage1data, setStage1data] = useState([])
+
+    useEffect(() => {
+        let searchparams = new URLSearchParams(location.search)
+        let onstage = searchparams.has("filledData") ? searchparams.get("filledData") : null
+        if (onstage === "true") {
+            let lcs = window.localStorage
+            let email = lcs.getItem('usremail')
+            let pwd = lcs.getItem('usrpwd')
+            if (email !== null && pwd !== null) {
+                console.log([email, pwd])
+                setStage1data([email, pwd])
+            } else {
+
+                window.location.href = "/signup"
+            }
         }
-        function hasLowerCase(str) {
-            return str.toUpperCase() !== str;
+    }, [location.search])
+
+    const RegStage1 = () => {
+        const [userEmail, setUserEmail] = useState("")
+        const [userPwd, setUserPwd] = useState("")
+        const [showPwd, setShowPwd] = useState(false)
+        const [emailError, setEmailError] = useState(false)
+        const [pwdError, setPwdError] = useState([])
+        const [disableReg, setDisableReg] = useState(false)
+
+        useEffect(() => {
+            if (stage1data.length !== 0) {
+                setUserEmail(stage1data[0])
+                setUserPwd(stage1data[1])
+                setDisableReg(true)
+                // postRegData()
+                setTimeout(() => { postRegData() }, 2000)
+            }
+        }, [])
+
+        const postRegData = () => {
+            setDisableReg(true)
+            setRegEmail(userEmail)
+            setRegStage(2)
         }
-        function hasNumber(myString) {
-            return /\d/.test(myString);
+
+        const onEmailReg = (e) => {
+            e.preventDefault()
+            let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            setEmailError(!re.test(userEmail))
+            let pwderrors = [];
+            function hasUpperCase(str) {
+                console.log(str.toLowerCase())
+                return str.toLowerCase() !== str;
+            }
+            function hasLowerCase(str) {
+                return str.toUpperCase() !== str;
+            }
+            function hasNumber(myString) {
+                return /\d/.test(myString);
+            }
+            if (!hasUpperCase(userPwd)) pwderrors.push("密碼至少需要一個大寫英文字母")
+            if (!hasLowerCase(userPwd)) pwderrors.push("密碼至少需要一個小寫英文字母")
+            if (!hasNumber(userPwd)) pwderrors.push("密碼至少需要一個數字")
+            console.log(pwderrors)
+            setPwdError(pwderrors)
+            if (!re.test(userPwd) && pwderrors.length === 0) {
+                postRegData()
+            }
         }
-        if (!hasUpperCase(userPwd)) pwderrors.push("密碼至少需要一個大寫英文字母")
-        if (!hasLowerCase(userPwd)) pwderrors.push("密碼至少需要一個小寫英文字母")
-        if (!hasNumber(userPwd)) pwderrors.push("密碼至少需要一個數字")
-        console.log(pwderrors)
-        setPwdError(pwderrors)
-        if (!re.test(userPwd) && pwderrors.length === 0) console.log("nice")
+
+        return (
+            <>
+                <form onSubmit={onEmailReg}>
+                    <input type='email'
+                        value={userEmail}
+                        onChange={(e) => { setUserEmail(e.target.value) }}
+                        className="w-full h-16 my-3 px-6 border-2 border-black rounded-3xl text-black text-2xl hover:drop-shadow-lg" placeholder='您的電子郵件'
+                    />
+                    {emailError && <p className='font-rounded text-red-500 text-lg'>請輸入一個有效的信箱</p>}
+                    <div className='relative'>
+                        <input type={showPwd ? 'text' : 'password'}
+                            value={userPwd}
+                            onChange={(e) => { setUserPwd(e.target.value) }}
+                            className='w-full h-16 my-3 px-6 border-2 border-black rounded-3xl text-black text-2xl shrink-0 hover:drop-shadow-lg' placeholder='您的密碼'
+                        >
+                        </input>
+                        <button type='button' onClick={() => { setShowPwd(!showPwd) }} className="absolute top-7 right-6">
+                            <img className="w-7 h-7" src={showPwd ? openEye : closedEye}></img>
+                        </button>
+                    </div>
+                    {pwdError.length !== 0 &&
+                        <ul>
+                            {pwdError.map((eacherror, i) => {
+                                return (<p key={i} className='font-rounded text-red-500 text-lg'>{eacherror}</p>)
+                            })}
+                        </ul>
+                    }
+                    <button className='w-full h-16 my-3 bg-blue-600 rounded-3xl hover:drop-shadow-lg disabled:bg-blue-300 disabled:drop-shadow-none' type='submit' disabled={disableReg}>
+                        <div className='m-auto'>
+                            <p className='text-center text-white text-2xl font-rounded'>使用電子郵件信箱註冊</p>
+                        </div>
+                    </button>
+                </form>
+                <div className='w-full my-3 flex justify-center items-center'>
+                    <hr className='w-48 bg-black h-[2px]' />
+                    <p className='mx-2 text-black text-2xl font-rounded'>或</p>
+                    <hr className='w-48 bg-black h-[2px]' />
+                </div>
+                <button className='w-full h-16 bg-white border-2 rounded-3xl hover:drop-shadow-lg disabled:drop-shadow-none' type='submit' disabled={disableReg} >
+                    <div className='m-auto flex justify-center'>
+                        <svg className=' w-11 h-11' viewBox="0 0 47 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M46.06 23.678C46.0614 22.0901 45.9184 20.5052 45.6328 18.9424H23.5V27.898H36.1473C35.6025 30.792 33.9469 33.244 31.458 34.8856V40.6946H39.0528C43.4964 36.6641 46.06 30.7288 46.06 23.678Z" fill="#4285F4" />
+                            <path d="M23.5 46.3036C29.845 46.3036 35.1646 44.2304 39.0527 40.6945L31.458 34.8855C29.3536 36.2746 26.6618 37.0954 23.5 37.0954C17.3793 37.0954 12.1986 33.0228 10.3507 27.5505H2.49951V33.549C6.36632 41.1155 14.3136 46.3036 23.5 46.3036Z" fill="#34A853" />
+                            <path d="M10.3507 27.5507C9.36798 24.698 9.36798 21.6057 10.3507 18.753V12.7545H2.49956C0.85592 15.9812 0 19.5416 0 23.1518C0 26.7621 0.85592 30.3224 2.49956 33.5491L10.3507 27.5507Z" fill="#FBBC05" />
+                            <path d="M23.5 9.20812C26.9502 9.20812 30.0479 10.3762 32.4834 12.6704L39.2236 6.03C35.1538 2.29412 29.8342 0 23.4999 0C14.3136 0 6.36632 5.18815 2.49951 12.7545L10.3507 18.7531C12.1986 13.2808 17.3793 9.20816 23.5 9.20816V9.20812Z" fill="#EA4335" />
+                        </svg>
+                        <p className='mx-4 my-auto text-center text-black text-xl'>Continue with Google</p>
+                    </div>
+                </button>
+            </>
+        )
+    }
+
+    const RegStage2 = () => {
+        const [valcode, setValcode] = useState("")
+        const [valcodeError, setValcodeError] = useState(false)
+        const [resendCd, setResendCd] = useState(30)
+
+        useEffect(() => {
+            if (stage1data.length !== 0) {
+                let lcs = window.localStorage
+                lcs.removeItem("usremail")
+                lcs.removeItem("usrpwd")
+                setStage1data([])
+            }
+        }, [])
+
+        const submitValcode = (e) => {
+            e.preventDefault()
+            if (valcode.length !== 6) setValcode(true)
+            else setValcode(false)
+
+            setRegStage(3)
+        }
+
+        const resendValCode = () => {
+            setResendCd(30)
+        }
+
+        useEffect(() => {
+            if (resendCd >= 0) {
+                setTimeout(() => { setResendCd(resendCd - 1) }, 1000)
+            }
+        }, [resendCd])
+
+        return (
+            <div>
+                <p className='my-2 text-2xl font-rounded'>我們已經將驗證碼傳送至{regEmail}，請輸入信件中的六位數驗證碼。若您未收到驗證信，請檢查您的垃圾郵件資料夾</p>
+                <p className='my-2 text-xl font-rounded'>
+                    未收到驗證信？{resendCd > 0 ? `請於${resendCd}秒後重試一次` : <button className='text-blue-500' onClick={resendValCode}>重新寄送</button>}
+                </p>
+                <form onSubmit={submitValcode}>
+                    <input type='text'
+                        onChange={(e) => { setValcode(e.target.value) }}
+                        className="w-full h-16 my-3 px-6 border-2 border-black rounded-3xl text-black text-2xl hover:drop-shadow-lg" placeholder='六位數驗證碼'
+                    />
+                    {valcodeError && <p className='font-rounded text-red-500 text-lg'>驗證碼錯誤，請再次確認</p>}
+                    <button className='w-full h-16 my-3 bg-blue-600 rounded-3xl transition-colors duration-150 hover:drop-shadow-lg disabled:bg-blue-300 disabled:drop-shadow-none'
+                        type='submit' disabled={valcode.length !== 6} >
+                        <div className='m-auto'>
+                            <p className='text-center text-white text-2xl font-rounded'>驗證</p>
+                        </div>
+                    </button>
+                </form>
+            </div>
+        )
+    }
+
+    const RegStage3 = () => {
+        const [userName, setUserName] = useState("")
+        const [userNameError, setUserNameError] = useState([])
+        const [ageRange, setAgeRange] = useState("0")
+        const [ageError, setAgeError] = useState(false)
+        const [gender, setGender] = useState("gender")
+        const [genderError, setGenderError] = useState(false)
+
+        const validateUserName = () => {
+            let usernameerrors = []
+            if (userName.length < 2) usernameerrors.push("請輸入兩個字以上的使用者名稱")
+            if (userName.length > 20) usernameerrors.push("請輸入二十個字以下的使用者名稱")
+            if (userName === "hey") usernameerrors.push("此使用者名稱已被註冊，請換一個使用者名稱")
+            setUserNameError(usernameerrors)
+        }
+
+        const submitUserData = (e) => {
+            e.preventDefault()
+            let cansubmit = true
+            validateUserName()
+            if (userNameError.length !== 0) cansubmit = false
+            if (ageRange === "0") {
+                setAgeError(true)
+                cansubmit = false
+            }
+            if (gender === "gender") {
+                setGenderError(true)
+                cansubmit = false
+            }
+            if (cansubmit === true) window.location.href = "/home"
+        }
+
+        return (
+            <div>
+                <form onSubmit={submitUserData}>
+                    <p className='mt-8 font-rounded text-black text-2xl'>您的使用者名稱</p>
+                    <input type='text'
+                        onChange={(e) => { setUserName(e.target.value) }}
+                        onBlur={validateUserName}
+                        className="w-full h-16 mt-3 mb-2 px-6 border-2 border-black rounded-3xl text-black text-2xl hover:drop-shadow-lg" placeholder='使用者名稱'
+                    />
+                    {userNameError.map((error) => { return <p className='font-rounded text-red-500 text-lg'>{error}</p> })}
+                    <p className='mt-4 font-rounded text-black text-2xl'>您的年齡</p>
+                    <select
+                        onChange={(e) => { setAgeRange(e.target.value); setAgeError(false) }}
+                        value={ageRange}
+                        className="w-full h-16 mt-3 mb-2 px-6 border-2 border-black rounded-3xl text-black text-2xl hover:drop-shadow-lg"
+                    >
+                        <option value="0" disabled>您的年齡</option>
+                        <option value="1">13-18歲</option>
+                        <option value="2">19-30歲</option>
+                        <option value="3">31-40歲</option>
+                        <option value="4">41-50歲</option>
+                        <option value="5">51-60歲</option>
+                        <option value="6">61歲以上</option>
+                    </select>
+                    {ageError && <p className='font-rounded text-red-500 text-lg'>請選擇您的年齡</p>}
+                    <p className='mt-4 font-rounded text-black text-2xl'>您的性別</p>
+                    <select
+                        onChange={(e) => { setGender(e.target.value); setGenderError(false) }}
+                        value={gender}
+                        className="w-full h-16 mt-3 mb-2 px-6 border-2 border-black rounded-3xl text-black text-2xl hover:drop-shadow-lg"
+                    >
+                        <option value={"gender"} disabled>您的性別</option>
+                        <option value={"male"}>男性</option>
+                        <option value={"female"}>女性</option>
+                        <option value={"neither"}>非二元性別</option>
+                        <option value={"noexpress"}>不願透露</option>
+                    </select>
+                    {genderError && <p className='font-rounded text-red-500 text-lg'>請選擇您的性別</p>}
+                    <button className='w-full h-16 my-3 bg-blue-600 rounded-3xl transition-colors duration-150 hover:drop-shadow-lg disabled:bg-blue-300 disabled:drop-shadow-none'
+                        type='submit' >
+                        <div className='m-auto'>
+                            <p className='text-center text-white text-2xl font-rounded'>開始使用Speakup</p>
+                        </div>
+                    </button>
+                </form>
+            </div>
+        )
     }
 
     return (
         <div className='w-full h-full overflow-y-auto px-14 '>
-            <h2 className='my-3 text-4xl text-black font-rounded'>歡迎回來！</h2>
-            <p className='text-lg text-black'>已經有帳號了？<Link className='text-blue-600' to="../login">登入</Link></p>
-            <form onSubmit={onEmailReg}>
-                <input type='email'
-                    onChange={(e) => { setUserEmail(e.target.value) }}
-                    className="w-full h-16 my-3 px-6 border-2 border-black rounded-3xl text-black text-2xl hover:drop-shadow-lg" placeholder='您的電子郵件'
-                />
-                {emailError && <p className='font-rounded text-red-500 text-lg'>請輸入一個有效的信箱</p>}
-                <div className='relative'>
-                    <input type={showPwd ? 'text' : 'password'}
-                        value={userPwd}
-                        onChange={(e) => { setUserPwd(e.target.value) }}
-                        className='w-full h-16 my-3 px-6 border-2 border-black rounded-3xl text-black text-2xl shrink-0 hover:drop-shadow-lg' placeholder='您的密碼'
-                    >
-                    </input>
-                    <button type='button' onClick={() => { setShowPwd(!showPwd) }} className="absolute top-7 right-6">
-                        <img className="w-7 h-7" src={showPwd ? openEye : closedEye}></img>
-                    </button>
-                </div>
-                {pwdError.length !== 0 &&
-                    <ul>
-                        {pwdError.map((eacherror, i) => {
-                            return (<p key={i} className='font-rounded text-red-500 text-lg'>{eacherror}</p>)
-                        })}
-                    </ul>
-                }
-                <button className='w-full h-16 my-3 bg-blue-600 rounded-3xl hover:drop-shadow-lg' type='submit' >
-                    <div className='m-auto'>
-                        <p className='text-center text-white text-2xl font-rounded'>使用電子郵件信箱註冊</p>
-                    </div>
-                </button>
-            </form>
-            <div className='w-full my-3 flex justify-center items-center'>
-                <hr className='w-48 bg-black h-[2px]' />
-                <p className='mx-2 text-black text-2xl font-rounded'>或</p>
-                <hr className='w-48 bg-black h-[2px]' />
-            </div>
-            <button className='w-full h-16 bg-white border-2 rounded-3xl hover:drop-shadow-lg' type='submit' >
-                <div className='m-auto flex justify-center'>
-                    <svg className=' w-11 h-11' viewBox="0 0 47 47" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M46.06 23.678C46.0614 22.0901 45.9184 20.5052 45.6328 18.9424H23.5V27.898H36.1473C35.6025 30.792 33.9469 33.244 31.458 34.8856V40.6946H39.0528C43.4964 36.6641 46.06 30.7288 46.06 23.678Z" fill="#4285F4" />
-                        <path d="M23.5 46.3036C29.845 46.3036 35.1646 44.2304 39.0527 40.6945L31.458 34.8855C29.3536 36.2746 26.6618 37.0954 23.5 37.0954C17.3793 37.0954 12.1986 33.0228 10.3507 27.5505H2.49951V33.549C6.36632 41.1155 14.3136 46.3036 23.5 46.3036Z" fill="#34A853" />
-                        <path d="M10.3507 27.5507C9.36798 24.698 9.36798 21.6057 10.3507 18.753V12.7545H2.49956C0.85592 15.9812 0 19.5416 0 23.1518C0 26.7621 0.85592 30.3224 2.49956 33.5491L10.3507 27.5507Z" fill="#FBBC05" />
-                        <path d="M23.5 9.20812C26.9502 9.20812 30.0479 10.3762 32.4834 12.6704L39.2236 6.03C35.1538 2.29412 29.8342 0 23.4999 0C14.3136 0 6.36632 5.18815 2.49951 12.7545L10.3507 18.7531C12.1986 13.2808 17.3793 9.20816 23.5 9.20816V9.20812Z" fill="#EA4335" />
-                    </svg>
-                    <p className='mx-4 my-auto text-center text-black text-xl'>Continue with Google</p>
-                </div>
-            </button>
+            <h2 className='my-3 text-4xl text-black font-rounded'>{regStage === 1 ? "歡迎回來" : regStage === 2 ? "信箱驗證" : "您的資料"}</h2>
+            {regStage === 1 &&
+                <>
+                    <p className='text-lg text-black'>已經有帳號了？<Link className='text-blue-600' to="../login">登入</Link></p>
+                    <RegStage1 />
+                </>
+            }
+            {regStage === 2 && <RegStage2 />}
+            {regStage === 3 && <RegStage3 />}
         </div>
     )
 }
