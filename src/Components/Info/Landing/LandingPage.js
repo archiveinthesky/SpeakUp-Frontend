@@ -40,7 +40,7 @@ const LandingPage = () => {
         }
 
         return (
-            <div className='invisible xl:visible xl:w-11/12 2xl:w-5/6 h-[520px] overflow-y-auto px-14 py-8 rounded-[60px] bg-sky-500 justify-self-end'>
+            <div className='hidden xl:block xl:w-11/12 2xl:w-5/6 h-[520px] overflow-y-auto px-14 py-8 rounded-[60px] bg-sky-500 justify-self-end'>
                 <h2 className='my-3 text-4xl text-white font-rounded'>註冊一個帳號</h2>
                 <form onSubmit={onEmailReg}>
                     <input type='email'
@@ -93,19 +93,19 @@ const LandingPage = () => {
     }
 
     return (
-        <div className='w-screen h-screen overflow-x-hidden'>
+        <div className='w-screen h-screen overflow-x-hidden overflow-y-scroll'>
             <Header />
             <div className='mt-44 mx-auto w-11/12 2xl:w-10/12' >
                 <div className='relative w-full lg:h-[500px] xl:h-[600px] xl:grid xl:grid-cols-2 xl:gap-10 items-center'>
                     <div>
                         <h1 className='
                             text-6xl 2xl:text-7xl 
-                            lg:leading-[88px] 2xl:leading-[108px] 
+                            md:leading-[80px] lg:leading-[88px] 2xl:leading-[108px] 
                             font-rounded'>
                             為世界上的理性交流<br />
                             提供一個自由的空間
                         </h1>
-                        <p className='lg:mt-2 xl:mt-8 text-3xl lg:leading-[48px] font-rounded'>
+                        <p className='md:mt-2 xl:mt-8 text-3xl md:leading-[48px] font-rounded'>
                             在Speakup，我們相信每個議題都值得被討論 <br />
                             每個人的意見都應該能被聽到<br />
                             因此，我們決定創建一個自由的平台空間<br />
@@ -118,57 +118,62 @@ const LandingPage = () => {
                         </a>
                     </div>
                     <OnPageRegComponent />
-                    <div className='invisible lg:visible xl:invisible'>
+                    <div className='hidden lg:block xl:hidden'>
                         <img className='absolute w-[600px] h-[600px] opacity-100 -right-80 -top-20' src={logo} alt="" />
                     </div>
                 </div>
+
                 <div className='mx-auto my-32 flex justify-between'>
                     <h1 className='
-                    lg:text-[2.25rem] xl:text-[2.75rem] 2xl:text-5xl 
+                    md:text-[2.25rem] xl:text-[2.75rem] 2xl:text-5xl 
                     my-auto font-rounded lg:leading-[60px] xl:leading-[72px] 2xl:leading-[72px]'>
-                        每週精選重點議題<br />
-                        快速了解焦點內容、雙方立場
+                        每週精選重點議題 <br />
+                        快速了解焦點內容、<br className='block lg:hidden' />雙方立場
                     </h1>
-                    <img className='lg:w-[45%] xl:w-1/2' src={TopicSample} alt="主題範本"></img>
+                    <img className='md:w-[45%] xl:w-1/2' src={TopicSample} alt="主題範本"></img>
                 </div>
+
                 <div className='mx-auto my-32 flex justify-between'>
-                    <img className='lg:w-[45%] xl:w-1/2' src={TopicSample} alt="主題範本"></img>
+                    <img className='md:w-[45%] xl:w-1/2' src={TopicSample} alt="主題範本"></img>
                     <h1 className='
-                    lg:text-[2.25rem] xl:text-[2.75rem] 2xl:text-5xl 
+                    md:text-[2.25rem] xl:text-[2.75rem] 2xl:text-5xl text-right
                     my-auto font-rounded lg:leading-[60px] xl:leading-[72px] 2xl:leading-[72px]'>
-                        專門為議題討論設計的介面<br />
+                        專門為<p className='hidden lg:inline'>議題</p>討論設計的介面<br />
                         更容易的表達意見
                     </h1>
                 </div>
+
                 <div className='mx-auto my-32 flex justify-between'>
                     <h1 className='
-                    lg:text-[2.25rem] xl:text-[2.75rem] 2xl:text-5xl 
+                    md:text-[2.25rem] xl:text-[2.75rem] 2xl:text-5xl 
                     my-auto font-rounded lg:leading-[60px] xl:leading-[72px] 2xl:leading-[72px]'>
                         明確的留言管理<br />
-                        保障所有人自由討論的權利
+                        保障<p className='hidden lg:inline'>所有人</p>自由討論的權利
                     </h1>
-                    <img className='lg:w-[45%] xl:w-1/2' src={CommentReport} alt="留言檢舉"></img>
+                    <img className='md:w-[45%] xl:w-1/2' src={CommentReport} alt="留言檢舉"></img>
                 </div>
             </div>
-            <div className='w-screen lg:h-60 xl:h-72 bg-sky-500 flex justify-between'>
+
+            <div className='w-screen md:h-60 xl:h-72 bg-sky-500 flex justify-between'>
                 <div className='w-10/12 mx-auto flex justify-between'>
-                    <h1 className='lg:text-4xl xl:text-5xl my-auto text-white font-rounded lg:leading-[60px] xl:leading-[72px]'>
+                    <h1 className='md:text-4xl xl:text-5xl my-auto text-white font-rounded md:leading-[48px] lg:leading-[60px] xl:leading-[72px]'>
                         準備好了嗎？<br />
                         馬上開始討論吧</h1>
                     <a className='my-auto' href="/signup">
-                        <button className='lg:w-44 lg:h-16 xl:w-52 xl:h-20 bg-blue-600 hover:drop-shadow-md rounded-[40px]'>
-                            <h1 className='m-auto text-white lg:text-3xl xl:text-4xl font-rounded'>開始使用</h1>
+                        <button className='md:w-44 md:h-16 xl:w-52 xl:h-20 bg-blue-600 hover:drop-shadow-md rounded-[40px]'>
+                            <h1 className='m-auto text-white md:text-3xl xl:text-4xl font-rounded'>開始使用</h1>
                         </button>
                     </a>
                 </div>
             </div>
-            <div className='w-screen h-80 bg-gray-100'>
+
+            <div className='w-screen md:h-56 lg:h-80 bg-gray-100'>
                 <div className='mx-auto w-10/12 h-full grid grid-cols-2'>
                     <div className='font-rounded self-center'>
-                        <h1 className='lg:text-4xl 2xl:text-5xl my-4 text-gray-500'>Speakup</h1>
-                        <h1 className='lg:text-2xl xl:text-3xl 2xl:text-4xl my-4 text-gray-500'>致力於營造一個更理性的討論空間</h1>
+                        <h1 className='md:text-3xl lg:text-4xl 2xl:text-5xl md:my-2 lg:my-4 text-gray-500'>Speakup</h1>
+                        <h1 className='md:text-md lg:text-2xl xl:text-3xl 2xl:text-4xl md:my-2 lg:my-4 text-gray-500'>致力於營造一個更理性的討論空間</h1>
                     </div>
-                    <div className='mt-16 flex lg:gap-16 xl:gap-24'>
+                    <div className='md:mt-8 lg:mt-16 flex md:gap-10 lg:gap-16 xl:gap-24'>
                         <div>
                             <h2 className='text-gray-400 lg:text-2xl 2xl:text-3xl'>平台簡介</h2>
                             <ul className='mt-6 font-rounded xl:text-xl 2xl:text-2xl'>
@@ -194,9 +199,11 @@ const LandingPage = () => {
                         </div>
                     </div>
                 </div>
+
                 <hr className='w-screen border-t-2 border-gray-500 bg-gray-100 pt-3 pb-2 h-[1px]' />
-                <div className='w-screen pt-4 pb-6 bg-gray-100'>
-                    <h2 className='w-full text-center text-lg text-gray-500'>&copy; 2021 Speakup開發團隊 版權所有</h2>
+
+                <div className='w-screen md:pb-4 lg:pt-4 lg:pb-6 bg-gray-100'>
+                    <h2 className='w-full text-center md:text-base lg:text-lg text-gray-500'>&copy; 2021 Speakup開發團隊 版權所有</h2>
                 </div>
                 <div className='h-1'></div>
             </div>
