@@ -5,10 +5,12 @@ module.exports = {
     extend: {
       colors: {
         'accent-blue': '#458ECC',
+        'logo-aqua': '#409CBE',
       }
     },
     fontFamily: {
-      'std': ['Hiragino Maru'],
+      'sans': ['Helvetica', 'Arial', 'sans-serif'],
+      'rounded': 'HiraginoMaru'
     }
   },
   variants: {

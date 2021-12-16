@@ -2,17 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-    @font-face {
-      font-family: Hiragino Maru;
-      font-weight: 400;
-      src: local('Hiragino Maru Gothic ProN W4'),
-            url(localhost:8080/Assets/Fonts/Hiragino-Maru.otf) format("otf");
-    }
+
+@font-face {
+  font-family: 'HiraginoMaru';
+  font-weight: normal;
+  src: url('/src/Fonts/HiraMaruProN.woff2') format("woff2");
 }
 
-.grid-w-40-1fr {
-  grid-template-columns: min-content 1fr;
+.overflow-scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.overflow-scrollbar-hide {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
 }
 
 .transition-padding {
@@ -21,16 +24,4 @@
 
 .transition-left {
   transition-property: left;
-}
-
-.filter-blue {
-  filter: invert(26%) sepia(96%) saturate(2158%) hue-rotate(216deg) brightness(95%) contrast(93%);
-}
-
-.filter-green { 
-  filter: invert(76%) sepia(10%) saturate(2784%) hue-rotate(104deg) brightness(92%) contrast(87%);
-}
-
-.filter-red {
-  filter: invert(33%) sepia(81%) saturate(4298%) hue-rotate(343deg) brightness(117%) contrast(89%);
 }
