@@ -4,7 +4,7 @@ import LoginTopic from './LoginTopic'
 import closedEye from './Images/closed-eye.svg'
 import openEye from './Images/open-eye.svg'
 
-const SignUpForm = () => {
+const SignUpForm = ({ updateRegStage }) => {
     const location = useLocation()
 
     const [regStage, setRegStage] = useState(1);
@@ -22,11 +22,14 @@ const SignUpForm = () => {
                 console.log([email, pwd])
                 setStage1data([email, pwd])
             } else {
-
                 window.location.href = "/signup"
             }
         }
     }, [location.search])
+
+    useEffect(() => {
+        updateRegStage(regStage)
+    }, [regStage])
 
     const RegStage1 = () => {
         const [userEmail, setUserEmail] = useState("")
@@ -282,14 +285,21 @@ const SignUpForm = () => {
 }
 
 const SignupPage = () => {
+    const [signupStage, setSignupStage] = useState(0)
+    const signupstage2 = ["您的驗證信正在寄出的路上", ["如果您沒有收到驗證信，請檢查您的垃圾郵件資料夾。", "若您還是沒有收到，請等待30秒後點選右方的重新寄送按鈕"]]
+    const signupstage3 = ["我們會如何使用您的資料", ["在封閉測試結束之後，所有資料會全數刪除，僅留各位同學的回饋給我們",
+        "如果有留言或使用者帳戶有不雅言語，我們也會透過電子郵件來確定您的身份，因此在留言時請勿發表不適當的言論"]]
+
     return (
         <div className='w-screen h-screen bg-accent-blue flex'>
             <div className='w-10/12 py-[5vh] xl:py-0 xl:w-11/12 2xl:w-5/6 xl:h-5/6 m-auto bg-white rounded-[40px] flex'>
                 <div className='w-5/6 xl:w-11/12 2xl:w-5/6 xl:h-4/6 m-auto xl:grid xl:grid-cols-2 xl:justify-center'>
                     <div className='hidden xl:block'>
-                        <LoginTopic />
+                        <LoginTopic title={signupStage === 2 ? signupstage2[0] : (signupStage === 3) ? signupstage3[0] : null}
+                            contents={signupStage === 2 ? signupstage2[1] : (signupStage === 3) ? signupstage3[1] : null}
+                        />
                     </div>
-                    <SignUpForm />
+                    <SignUpForm updateRegStage={setSignupStage} />
                 </div>
             </div>
         </div>
