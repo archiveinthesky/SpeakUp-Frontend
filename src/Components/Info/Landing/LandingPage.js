@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Header from '../Common/Header'
 import logo from './Images/logomic.svg'
 import TopicSample from './Images/Topic-Sample.png'
+import CommentCard from './Images/Comment-Card.png'
 import CommentReport from './Images/Comment-Report.png'
 import closedEye from './Images/closed-eye.svg'
 import openEye from './Images/open-eye.svg'
@@ -58,7 +59,7 @@ const LandingPage = () => {
                         <input type={showPwd ? 'text' : 'password'}
                             value={userPwd}
                             onChange={(e) => { setUserPwd(e.target.value) }}
-                            className='w-full h-16 my-3 px-6 border-2 border-black rounded-3xl text-black text-2xl shrink-0 hover:drop-shadow-lg' placeholder='您的密碼'
+                            className='w-full h-16 my-3 px-6 rounded-3xl text-black text-2xl shrink-0 hover:drop-shadow-lg' placeholder='您的密碼'
                         >
                         </input>
                         <button type='button' onClick={() => { setShowPwd(!showPwd) }} className="absolute top-7 right-6">
@@ -140,7 +141,7 @@ const LandingPage = () => {
                 </div>
 
                 <div className='mx-auto my-32 flex justify-between'>
-                    <img className='md:w-[45%] xl:w-1/2' src={TopicSample} alt="主題範本"></img>
+                    <img className='md:w-[45%] xl:w-1/2' src={CommentCard} alt="主題範本"></img>
                     <h1 className='
                     md:text-[2.25rem] xl:text-[2.75rem] 2xl:text-5xl text-right
                     my-auto font-rounded lg:leading-[60px] xl:leading-[72px] 2xl:leading-[72px]'>
