@@ -73,6 +73,7 @@ const SignUpForm = ({ updateRegStage }) => {
             if (!hasUpperCase(userPwd)) pwderrors.push("密碼至少需要一個大寫英文字母")
             if (!hasLowerCase(userPwd)) pwderrors.push("密碼至少需要一個小寫英文字母")
             if (!hasNumber(userPwd)) pwderrors.push("密碼至少需要一個數字")
+            if (userPwd.length < 8) pwderrors.push("密碼至少需要八個字")
             console.log(pwderrors)
             setPwdError(pwderrors)
             if (!re.test(userPwd) && pwderrors.length === 0) {
@@ -270,7 +271,7 @@ const SignUpForm = ({ updateRegStage }) => {
     }
 
     return (
-        <div className='w-full h-full overflow-y-auto px-14 '>
+        <div className='w-full h-full overflow-y-auto sm:px-14 '>
             <h2 className='my-3 text-4xl text-black font-rounded'>{regStage === 1 ? "歡迎回來" : regStage === 2 ? "信箱驗證" : "您的資料"}</h2>
             {regStage === 1 &&
                 <>
@@ -293,7 +294,7 @@ const SignupPage = () => {
     return (
         <div className='w-screen h-screen bg-accent-blue flex'>
             <div className='w-10/12 py-[5vh] xl:py-0 xl:w-11/12 2xl:w-5/6 xl:h-5/6 m-auto bg-white rounded-[40px] flex'>
-                <div className='w-5/6 xl:w-11/12 2xl:w-5/6 xl:h-4/6 m-auto xl:grid xl:grid-cols-2 xl:justify-center'>
+                <div className='w-11/12 md:w-5/6 xl:w-11/12 2xl:w-5/6 xl:h-4/6 m-auto xl:grid xl:grid-cols-2 xl:justify-center'>
                     <div className='hidden xl:block'>
                         <LoginTopic title={signupStage === 2 ? signupstage2[0] : (signupStage === 3) ? signupstage3[0] : null}
                             contents={signupStage === 2 ? signupstage2[1] : (signupStage === 3) ? signupstage3[1] : null}

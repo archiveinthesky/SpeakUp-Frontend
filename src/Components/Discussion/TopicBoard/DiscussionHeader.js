@@ -61,7 +61,7 @@ const DiscussionHeader = ({ boardid }) => {
                                 }
                             </div>
                         }
-                        <div className="mt-8 grid grid-w-40-1fr content-start gap-x-8 gap-y-5">
+                        <div className="mt-8 grid grid-cols-1 md:grid-w-40-1fr content-start gap-x-8 gap-y-5">
                             <div className="w-20 h-10 rounded-3xl bg-gray-300 bg-opacity-50">
                                 <p className="leading-10 text-center text-black text-xl">內容</p>
                             </div>
