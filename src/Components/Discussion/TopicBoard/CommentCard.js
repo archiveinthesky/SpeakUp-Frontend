@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReportContent from './ReportContent'
 
-const CommentCard = ({ cmtdata, isLast, replyable, APIPostReply, fetchComments }) => {
+const CommentCard = ({
+    boardId, onSide,
+    cmtdata,
+    isLast,
+    motherComment = null, APIPostReply,
+    fetchComments
+}) => {
 
     const [supported, setSupported] = useState(cmtdata.userSupported)
     const [liked, setLiked] = useState(cmtdata.userLiked)
@@ -11,6 +17,7 @@ const CommentCard = ({ cmtdata, isLast, replyable, APIPostReply, fetchComments }
     const [showReplyBox, setShowReplyBox] = useState(false)
     const [enableAnim, setEnableAnim] = useState(false)
 
+    const firstRender = useRef(true)
     const thiscard = useRef(null)
     const cardmenu = useRef(null)
 
@@ -30,6 +37,34 @@ const CommentCard = ({ cmtdata, isLast, replyable, APIPostReply, fetchComments }
             return () => { try { document.getElementById("scrollTrigger").removeEventListener('click', loadCmtCheck) } catch { } }
         }
     }, [isLast])
+
+    useEffect(() => {
+        let onside
+        if (onSide === "支持方") onside = "sup"
+        else if (onSide === "反對方") onside = "agn"
+        else if (onSide === null) onside = "all"
+        if (!firstRender.current) {
+            fetch(`http://localhost:8000/api/comments/${boardId}/${onside}${motherComment !== null && "/" + motherComment}/${cmtdata.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "supported": supported,
+                    "liked": liked,
+                    "disliked": disliked,
+                    "reported": false
+                })
+            })
+                .then((response) => { return response.json() })
+                .catch((error) => {
+
+                })
+        }
+    }, [supported, liked, disliked])
+
+    useEffect(() => { firstRender.current = false }, [])
 
     const updateUserStatus = (updatevar) => {
         if (!enableAnim) setEnableAnim(true)
@@ -52,6 +87,7 @@ const CommentCard = ({ cmtdata, isLast, replyable, APIPostReply, fetchComments }
                 setLiked(false)
             }
         }
+
     }
 
     const ReportButton = () => {
@@ -72,7 +108,7 @@ const CommentCard = ({ cmtdata, isLast, replyable, APIPostReply, fetchComments }
                         <h3 className="text-gray-400 pl-1 inline">檢舉</h3>
                     </button>
 
-                    {replyable &&
+                    {motherComment === null &&
                         <button
                             className="visible 2xl:hidden bg-white hover:bg-gray-200 px-4 py-2 filter drop-shadow-md transition-colors duration-200 z-10"
                             onClick={() => { setShowReplyBox(!showReplyBox) }}
@@ -125,29 +161,30 @@ const CommentCard = ({ cmtdata, isLast, replyable, APIPostReply, fetchComments }
             setReplyData(e.target.value)
         }
 
-        const postReply = () => {
+        const postReply = (e) => {
+            e.preventDefault()
             setShowReplyBox(false)
             APIPostReply(cmtdata.id, replyData)
             setReplyData("")
         }
 
         return (
-            <div className="w-11/12 ml-10 flex" >
-                <textarea
-                    className={`w-full h-28 my-auto pl-5 py-3 text-xl border-2 border-gray-500 rounded-3xl resize-none `}
+            <form className="w-11/12 ml-10 flex" onSubmit={postReply} >
+                <input
+                    className={`w-full h-14 my-auto pl-5 pr-14 py-3 text-xl border-2 border-gray-500 rounded-3xl resize-none `}
                     placeholder="回覆"
                     onChange={typeReplyUpdate}
                     value={replyData}
                 >
-                </textarea>
-                <button className={`relative -left-12 self-end pb-2`} onClick={postReply}>
+                </input>
+                <button className={`relative -left-12 self-end pb-2`} >
                     <svg className="w-7 h-7"
                         fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"
                     >
                         <line x1="22" x2="11" y1="2" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
                     </svg>
                 </button>
-            </div>
+            </form>
         )
     }
 
@@ -188,7 +225,7 @@ const CommentCard = ({ cmtdata, isLast, replyable, APIPostReply, fetchComments }
                                 </button>
                             </div>
                         </div>
-                        {replyable &&
+                        {motherComment === null &&
                             <button className=" invisible 2xl:visible my-auto ml-4" onClick={() => { setShowReplyBox(!showReplyBox) }}>
                                 {showReplyBox ?
                                     <svg className="w-7 h-7 inline" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">

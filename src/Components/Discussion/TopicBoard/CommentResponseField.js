@@ -36,8 +36,11 @@ const CommentResponseField = ({ boardId, onSide, commentId, hasComments }) => {
         <div className="w-11/12 bg-white ml-auto flex flex-col">
             {comments.map((cmt) => {
                 return <CommentCard
+                    boardId={boardId}
+                    onSide={onSide}
                     key={"r" + commentId.toString() + "-" + comments.indexOf(cmt).toString()}
                     cmtdata={cmt}
+                    motherComment={commentId}
                     replyFunction={null} />
             })}
         </div >

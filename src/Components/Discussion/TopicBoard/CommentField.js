@@ -62,7 +62,6 @@ const CommentField = ({ boardId, onSide }) => {
 
 
     const postReply = async (commentid, cmtcontent) => {
-        console.log("Yo")
         let onside = ""
         if (onSide === "支持方") onside = "sup"
         else if (onSide === "反對方") onside = "agn"
@@ -239,10 +238,11 @@ const CommentField = ({ boardId, onSide }) => {
             (cmt.cmtReplies > 0) ?
                 <div key={"div" + comments.indexOf(cmt).toString()}>
                     <CommentCard
+                        boardId={boardId}
+                        onSide={onSide}
                         key={comments.indexOf(cmt)}
                         cmtdata={cmt}
                         isLast={i + 1 === comments.length}
-                        replyable={true}
                         APIPostReply={postReply}
                         fetchComments={fetchMoreComments}
                     />
@@ -255,10 +255,11 @@ const CommentField = ({ boardId, onSide }) => {
                     />
                 </div> :
                 <CommentCard
+                    boardId={boardId}
+                    onSide={onSide}
                     key={comments.indexOf(cmt)}
                     cmtdata={cmt}
                     isLast={i + 1 === comments.length}
-                    replyable={true}
                     APIPostReply={postReply}
                     fetchComments={fetchMoreComments}
                 />
