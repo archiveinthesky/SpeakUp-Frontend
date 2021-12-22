@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import CommentCard from './CommentCard'
 
-const CommentResponseField = ({ onSide, commentId }) => {
+const CommentResponseField = ({ boardId, onSide, commentId, hasComments }) => {
     const [comments, setComments] = useState([])
 
     useEffect(() => {
@@ -9,15 +9,17 @@ const CommentResponseField = ({ onSide, commentId }) => {
     }, [onSide])
 
     const getResponses = () => {
-        fetch('http://127.0.0.1:5500/cmtresponses/', {
+        let onside
+        if (onSide === "支持方") onside = "sup"
+        else if (onSide === "反對方") onside = "agn"
+        else if (onSide === null) onside = "all"
+        fetch(`http://localhost:8000/api/comments/${boardId}/${onside}/${commentId}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                "boardid": 0,
-                "onside": (onSide === "支持方") ? "sup" : "agn",
-                "startNum": 1,
-                "endNum": 10
+                "Start-Pos": 1,
+                "End-Pos": hasComments
             }
         })
             .then(response => { return response.json() })

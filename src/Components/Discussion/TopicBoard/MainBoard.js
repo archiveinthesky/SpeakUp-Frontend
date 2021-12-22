@@ -135,14 +135,14 @@ const MainBoard = () => {
                         <DropdownSelector />
                     </div>
                     <div className={`w-full ${enableAnim ? "transition-padding" : "transition-none"} duration-1000 ease-out ${indentDiscussion ? "pl-72" : "pl-0"}`}>
-                        {flowDisplay === 3 ? <CommentField onSide={null} /> :
+                        {flowDisplay === 3 ? <CommentField boardId={boardId} onSide={null} /> :
                             <>
                                 {flowDisplay === 0 ?
                                     <div className="grid grid-cols-2 gap-12 w-11/12 mx-auto">
-                                        <CommentField onSide="支持方" />
-                                        <CommentField onSide="反對方" />
+                                        <CommentField boardId={boardId} onSide="支持方" />
+                                        <CommentField boardId={boardId} onSide="反對方" />
                                     </div> :
-                                    <CommentField onSide={flowDisplay === 1 ? "支持方" : "反對方"} />
+                                    <CommentField boardId={boardId} onSide={flowDisplay === 1 ? "支持方" : "反對方"} />
                                 }
                             </>
                         }

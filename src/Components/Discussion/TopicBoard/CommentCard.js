@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReportContent from './ReportContent'
 
-const CommentCard = ({ cmtdata, isLast, replyable, fetchComments }) => {
+const CommentCard = ({ cmtdata, isLast, replyable, APIPostReply, fetchComments }) => {
 
     const [supported, setSupported] = useState(cmtdata.userSupported)
     const [liked, setLiked] = useState(cmtdata.userLiked)
@@ -127,6 +127,7 @@ const CommentCard = ({ cmtdata, isLast, replyable, fetchComments }) => {
 
         const postReply = () => {
             setShowReplyBox(false)
+            APIPostReply(cmtdata.id, replyData)
             setReplyData("")
         }
 

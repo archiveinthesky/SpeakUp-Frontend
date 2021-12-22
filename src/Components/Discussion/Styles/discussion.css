@@ -1,6 +1,9 @@
-.grid-w-40-1fr {
-    grid-template-columns: min-content 1fr;
+@media (min-width: 768px) {
+    .md\:grid-w-40-1fr {
+        grid-template-columns: min-content 1fr;
+    }
 }
+
 
 .filter-blue {
     filter: invert(26%) sepia(96%) saturate(2158%) hue-rotate(216deg) brightness(95%) contrast(93%);
