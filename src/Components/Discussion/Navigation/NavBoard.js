@@ -55,21 +55,33 @@ const MainBoard = ({ mode }) => {
             let searchparams = new URLSearchParams(location.search)
             let keyword = searchparams.has("keyword") ? searchparams.get("keyword") : null
             let tags = searchparams.has("tags") ? searchparams.get("tags") : null
-
+            let searchData = {}
+            if (keyword !== null) searchData['keyword'] = keyword
+            if (tags !== null) searchData['tags'] = tags
+            console.log(searchData)
             if (keyword !== null || tags !== null) {
-                fetch('http://127.0.0.1:5500/searchres', {
-                    method: 'GET',
+                fetch('http://127.0.0.1:8000/api/search/', {
+                    method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
-                    }
+                    },
+                    body: JSON.stringify(searchData)
                 })
                     .then(response => { return response.json() })
                     .then(response => {
-                        if (keyword !== null) setSearchKw(keyword)
+                        if (response.length === 0) setTitleText("很抱歉，找不到符合您搜尋條件的結果")
+                        else if (keyword !== null) setSearchKw(keyword)
                         else if (tags !== null) setSearchKw(`#${tags}`)
-                        else if (response.cards !== "") setTitleText("很抱歉，找不到符合您搜尋條件的結果")
-                        setTracks(response.cards.replaceAll("'", '"'))
+                        setTracks(response.map((board) => {
+                            return {
+                                "title": board.title,
+                                "tags": board.tags.replaceAll(",", ";l2"),
+                                "content": board.brief,
+                                "link": `../discussions/${board.boardId}`,
+                                "saved": board.saved
+                            }
+                        }))
                         setIsLoading(false)
                     })
                     .catch(error => {
@@ -106,7 +118,6 @@ const MainBoard = ({ mode }) => {
 
         <div className="w-screen h-screen overflow-x-hidden overflow-y-auto bg-gray-50" >
             <Header />
-            {console.log(!smallScreen)}
             <Sidebar defualtState={!smallScreen} toggleIndent={smallScreen ? (status) => { } : null} />
             <div className={`pt-24 ${smallScreen ? "pl-4" : "pl-80"}`}>
                 {errorOccured === false ?
@@ -115,14 +126,14 @@ const MainBoard = ({ mode }) => {
                             <h1 className="w-11/12 mx-auto py-8 text-4xl">以下是<p className={`inline ${searchKw.charAt(0) === "#" && "text-blue-600"}`}>{searchKw}</p>的搜尋結果</h1> :
                             <h1 className="w-11/12 mx-auto py-8 text-4xl">{titleText}</h1>
                         }
-                        {(mode === "home" && !isLoading) && tracks.split(";l1").map((track, i) => {
+                        {(mode === "home" && !isLoading) && tracks.map((track, i) => {
                             var thistrack = JSON.parse(`{${track}}`)
                             return (<Navtrack key={i} title={thistrack.title} cardsUrl={thistrack.endpoint} />)
                         })}
                         {(mode === "search" && !isLoading) &&
                             <div className="w-11/12 mx-auto flex flex-col gap-4">
-                                {tracks.split(";l1").map((track, i) => {
-                                    return (<WideNavCard key={i} carddata={JSON.parse(`{${track}}`)} />)
+                                {tracks.map((track, i) => {
+                                    return (<WideNavCard key={i} carddata={track} />)
                                 })}
                             </div>
                         }

@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const WideNavCard = ({ carddata }) => {
-    const [isSaved, setIsSaved] = useState("true" == carddata.saved)
+
+    console.log(carddata.link)
+    const [isSaved, setIsSaved] = useState(carddata.saved)
 
     const toggleSaved = () => {
         setIsSaved(!isSaved)

@@ -11,7 +11,11 @@ const Header = ({ accprofile = dfprofile }) => {
 
     const searchSubmit = (e) => {
         e.preventDefault()
-        if (e.target[0].value !== null) window.location.href = `/search?keyword=${e.target[0].value}`
+        let keyword = e.target[0].value
+        if (keyword !== null) {
+            if (keyword.charAt(0) == "#") window.location.href = `/search?tags=${keyword.substring(1)}`
+            else window.location.href = `/search?keyword=${keyword}`
+        }
     }
 
     const AccountOptions = () => {
