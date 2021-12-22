@@ -106,6 +106,19 @@ const CommentField = ({ boardId, onSide }) => {
         )
     }
 
+    const NoCommentsDisplay = () => {
+        return (
+            <div className=" w-11/12 h-40 mx-auto my-2 border-2 border-gray-200 rounded-3xl flex" >
+                <div className='m-auto'>
+                    <h1 className='text-xl text-center'>
+                        目前還沒有留言呢 <br />
+                        成為第一個留言的人吧
+                    </h1>
+                </div>
+            </div>
+        )
+    }
+
     const CmtFieldHeader = () => {
 
         const [typingCmt, setTypingCmt] = useState(false)
@@ -180,9 +193,15 @@ const CommentField = ({ boardId, onSide }) => {
                         </div>
                     </div>
                 }
-                <div className="w-full ml-4 flex">
-                    <textarea
-                        className={`w-full ${typingCmt ? "h-28" : "h-14"} my-auto px-5 py-3 text-xl border-2 border-gray-500 rounded-3xl resize-none`}
+                <form
+                    className="w-full ml-4 flex"
+                    onSubmit={(e) => {
+                        e.preventDefault()
+                        if (cmtContent != "") postComment(newCmtSide, cmtContent)
+                    }}
+                >
+                    <input
+                        className="w-full h-14 my-auto pl-5 pr-14 py-3 text-xl border-2 border-gray-500 rounded-3xl resize-none"
                         placeholder="新增一則留言"
                         onChange={(e) => { setCmtContent(e.target.value) }}
                         value={cmtContent}
@@ -196,10 +215,11 @@ const CommentField = ({ boardId, onSide }) => {
                             }
                         }}
                     >
-                    </textarea >
+                    </ input>
                     <button
-                        className={`inline relative -left-12 ${typingCmt && "self-end pb-2"}`}
-                        onMouseDown={() => { postComment(newCmtSide, cmtContent) }}
+                        className="inline relative -left-12"
+                        type='submit'
+                        onMouseDown={() => { setSwitchedSides(true) }}
                     >
                         <svg className="w-7 h-7"
                             fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"
@@ -207,7 +227,7 @@ const CommentField = ({ boardId, onSide }) => {
                             <line x1="22" x2="11" y1="2" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
                         </svg>
                     </button>
-                </div>
+                </form>
 
             </>
         )
@@ -279,6 +299,7 @@ const CommentField = ({ boardId, onSide }) => {
                             )
                         })}
                         {isLoading && <LoadingSkeleton />}
+                        {(userComments.length + comments.length) === 0 && <NoCommentsDisplay />}
                     </div >
                 </div > :
                 <div className="bg-red-200 w-full h-48 mx-auto py-3 flex rounded-xl">
