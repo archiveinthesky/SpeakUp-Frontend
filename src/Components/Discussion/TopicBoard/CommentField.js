@@ -77,14 +77,26 @@ const CommentField = ({ boardId, onSide }) => {
         })
             .then((response) => { return response.json() })
             .then((response) => {
-                let newCmts = comments.map((x) => JSON.parse(JSON.stringify(x)))
-                for (let i = 0; i < newCmts.length; i++) {
-                    if (newCmts[i].id === commentid) {
-                        newCmts[i].cmtReplies += 1
-                        break
+                if (userComments.some(cmt => cmt.id === commentid)) {
+                    let newCmts = userComments.map((x) => JSON.parse(JSON.stringify(x)))
+                    for (let i = 0; i < newCmts.length; i++) {
+                        if (newCmts[i].id === commentid) {
+                            newCmts[i].cmtReplies += 1
+                            break
+                        }
                     }
+                    setUserComments(newCmts)
                 }
-                setComments(newCmts)
+                else {
+                    let newCmts = comments.map((x) => JSON.parse(JSON.stringify(x)))
+                    for (let i = 0; i < newCmts.length; i++) {
+                        if (newCmts[i].id === commentid) {
+                            newCmts[i].cmtReplies += 1
+                            break
+                        }
+                    }
+                    setComments(newCmts)
+                }
             })
             .catch((error) => {
 
