@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import homeIcon from './Images/homeIcon.png'
-import trendingIcon from './Images/trendingIcon.png'
+import globeIcon from './Images/globeIcon.png'
 import collectionIcon from './Images/collectionIcon.png'
 
 const Sidebar = ({ defualtState = true, toggleIndent = null }) => {
     const [showSidebar, setShowSidebar] = useState(defualtState)
     const [enableAnim, setEnableAnim] = useState(false)
 
-    const tags = ['娛樂', '環境', '司法', '國家發展', '經濟', '少數族群', '媒體', '醫藥', '道德', '政治', '教育', '家庭', '女性', '自由', '宗教', '科技', '社會政策', '社會運動', '體育'];
+    const tags = [] //['娛樂', '環境', '司法', '國家發展', '經濟', '少數族群', '媒體', '醫藥', '道德', '政治', '教育', '家庭', '女性', '自由', '宗教', '科技', '社會政策', '社會運動', '體育'];
 
     useEffect(() => {
         setEnableAnim(false)
@@ -37,12 +37,12 @@ const Sidebar = ({ defualtState = true, toggleIndent = null }) => {
                             <p className="text-black text-2xl leading-8">首頁</p>
                         </li>
                     </a>
-                    {/* <a href="/search?tags=熱門話題">
+                    <a href="/search?tags=封測議題">
                         <li className="flex list-none py-3 gap-4">
-                            <img className='w-8 h-8 inline' src={trendingIcon} alt="首頁"></img>
-                            <p className="text-black text-2xl leading-8">熱門話題</p>
+                            <img className='w-8 h-8 inline' src={globeIcon} alt="封測議題"></img>
+                            <p className="text-black text-2xl leading-8">封測議題</p>
                         </li>
-                    </a> */}
+                    </a>
                     <a href="/collections">
                         <li className="flex list-none py-3 gap-4">
                             <img className='w-8 h-8 inline' src={collectionIcon} alt="首頁"></img>

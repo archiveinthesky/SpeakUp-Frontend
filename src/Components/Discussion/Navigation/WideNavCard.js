@@ -5,6 +5,7 @@ import SaveBoard from '../Common/SaveBoards'
 
 const WideNavCard = ({ carddata }) => {
 
+    console.log(carddata)
     const [isSaved, setIsSaved] = useState(carddata.saved)
 
     const toggleSaved = () => {
@@ -21,7 +22,7 @@ const WideNavCard = ({ carddata }) => {
                         <div className="flex my-2 justify-start gap-2">
                             {
                                 carddata.tags.split(",").map((tag, i) => {
-                                    return <div key={i} className="w-14 h-5 rounded-2xl bg-blue-300 bg-opacity-50">
+                                    return <div key={i} className="px-2 h-5 rounded-2xl bg-blue-300 bg-opacity-50">
                                         <p className="leading-5 text-center text-xs text-blue-500 font-bold">{`#${tag}`}</p>
                                     </div>
                                 })

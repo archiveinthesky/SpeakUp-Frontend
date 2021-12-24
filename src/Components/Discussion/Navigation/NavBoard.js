@@ -77,7 +77,7 @@ const MainBoard = ({ mode }) => {
                                 "title": board.title,
                                 "tags": board.tags,
                                 "content": board.brief,
-                                "boardid": board.boardid,
+                                "boardid": board.boardId,
                                 "saved": board.saved
                             }
                         }))
@@ -101,7 +101,7 @@ const MainBoard = ({ mode }) => {
             })
                 .then(response => { return response.json() })
                 .then(response => {
-                    setTitleText("您的收藏")
+                    setTitleText(response.length > 0 ? "您的收藏" : "您目前沒有收藏")
                     setTracks(response)
                     setIsLoading(false)
                 })
