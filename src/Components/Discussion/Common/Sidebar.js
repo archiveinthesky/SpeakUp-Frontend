@@ -7,7 +7,7 @@ const Sidebar = ({ defualtState = true, toggleIndent = null }) => {
     const [showSidebar, setShowSidebar] = useState(defualtState)
     const [enableAnim, setEnableAnim] = useState(false)
 
-    const tags = [] //['娛樂', '環境', '司法', '國家發展', '經濟', '少數族群', '媒體', '醫藥', '道德', '政治', '教育', '家庭', '女性', '自由', '宗教', '科技', '社會政策', '社會運動', '體育'];
+    const tags = ['教育', '娛樂', '媒體', '科技']; //['娛樂', '環境', '司法', '國家發展', '經濟', '少數族群', '媒體', '醫藥', '道德', '政治', '教育', '家庭', '女性', '自由', '宗教', '科技', '社會政策', '社會運動', '體育'];
 
     useEffect(() => {
         setEnableAnim(false)

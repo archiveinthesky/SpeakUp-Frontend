@@ -57,6 +57,9 @@ const CommentField = ({ boardId, onSide }) => {
     }
 
     useEffect(() => {
+        setCanFetchMoreCmt(true)
+        setUserComments([])
+        setComments([])
         fetchComments(1, 10)
     }, [onSide])
 

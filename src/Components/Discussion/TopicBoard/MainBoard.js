@@ -142,7 +142,10 @@ const MainBoard = () => {
                                         <CommentField boardId={boardId} onSide="支持方" />
                                         <CommentField boardId={boardId} onSide="反對方" />
                                     </div> :
-                                    <CommentField boardId={boardId} onSide={flowDisplay === 1 ? "支持方" : "反對方"} />
+                                    <>
+                                        {console.log(flowDisplay)}
+                                        <CommentField boardId={boardId} onSide={flowDisplay === 3 ? null : (flowDisplay === 1 ? "支持方" : "反對方")} />
+                                    </>
                                 }
                             </>
                         }

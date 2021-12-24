@@ -59,7 +59,7 @@ const DiscussionHeader = ({ boardid }) => {
                                 {
                                     pageContent[1].map((tag) => {
                                         return <div key={pageContent[1].indexOf(tag)} className="px-4 h-8 rounded-2xl bg-blue-300 bg-opacity-50">
-                                            <p className="leading-8 text-center text-blue-500 font-bold">{`#${tag}`}</p>
+                                            <a href={`/search?tags=${tag}`}><p className="leading-8 text-center text-blue-500 font-bold">{`#${tag}`}</p></a>
                                         </div>
                                     })
                                 }

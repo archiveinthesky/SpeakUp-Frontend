@@ -198,8 +198,8 @@ const CommentCard = ({
                 </div>
                 <p className="w-full px-8 2xl:px-16 mt-2 mb-4 mx-auto text-xl">{cmtdata.cmtContent}</p>
                 <div className="w-full px-8 2xl:px-16 mx-auto flex justify-between mt-2 mb-2">
-                    <div className="flex">
-                        <div className="flex min-w-max border-2 border-gray-200 rounded-3xl">
+                    <div className="flex h-10">
+                        <div className="flex min-w-max h-10 border-2 border-gray-200 rounded-3xl">
                             <div className="ml-2 my-1">
                                 <button onClick={() => { updateUserStatus("supported") }}>
                                     <svg className={`inline mx-2 w-7 overflow-hidden ${supported ? "filter-blue " : "filter-none"}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.501 22.501">
