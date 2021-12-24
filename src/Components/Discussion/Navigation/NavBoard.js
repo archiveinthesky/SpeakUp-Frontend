@@ -31,7 +31,7 @@ const MainBoard = ({ mode }) => {
 
         setSearchKw("")
         if (mode === "home") {
-            fetch('http://127.0.0.1:5500/homeboard', {
+            fetch('http://127.0.0.1:8000/api/userhome', {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -43,7 +43,7 @@ const MainBoard = ({ mode }) => {
                     let d = new Date()
                     let timegreeting = (d.getHours() > 19 || d.getHours() <= 4) ? "晚安" : (d.getHours() < 12) ? "早安" : "午安"
                     setTitleText(`${response.username}${timegreeting}，以下是你有可能感興趣的議題`)
-                    setTracks(response.content.replaceAll("'", '"'))
+                    setTracks(response.tracks)
                     setIsLoading(false)
                 })
                 .catch(error => {
@@ -51,7 +51,7 @@ const MainBoard = ({ mode }) => {
                     setErrorOccured(errtxt)
                 })
         }
-        if (mode === "search") {
+        else if (mode === "search") {
             let searchparams = new URLSearchParams(location.search)
             let keyword = searchparams.has("keyword") ? searchparams.get("keyword") : null
             let tags = searchparams.has("tags") ? searchparams.get("tags") : null
@@ -92,7 +92,7 @@ const MainBoard = ({ mode }) => {
                 window.location.href = "/searcherror"
             }
         }
-        if (mode === "collections") {
+        else if (mode === "collections") {
             fetch('http://127.0.0.1:5500/collections', {
                 method: 'GET',
                 headers: {
@@ -127,8 +127,7 @@ const MainBoard = ({ mode }) => {
                             <h1 className="w-11/12 mx-auto py-8 text-4xl">{titleText}</h1>
                         }
                         {(mode === "home" && !isLoading) && tracks.map((track, i) => {
-                            var thistrack = JSON.parse(`{${track}}`)
-                            return (<Navtrack key={i} title={thistrack.title} cardsUrl={thistrack.endpoint} />)
+                            return (<Navtrack key={i} title={track.title} cardsUrl={track.endpoint} />)
                         })}
                         {(mode === "search" && !isLoading) &&
                             <div className="w-11/12 mx-auto flex flex-col gap-4">
