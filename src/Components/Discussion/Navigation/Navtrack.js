@@ -20,7 +20,6 @@ const Navtrack = ({ title, cardsUrl }) => {
 
     return (
         <div className="w-11/12 mx-auto" >
-            {console.log(cardsList)}
             <h1 className="text-3xl ml-2">{title}</h1>
             <div className="mt-4 overflow-x-auto flex gap-6">
                 {cardsList.map((card, i) => {

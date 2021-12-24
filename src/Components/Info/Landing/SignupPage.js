@@ -19,7 +19,6 @@ const SignUpForm = ({ updateRegStage }) => {
             let email = lcs.getItem('usremail')
             let pwd = lcs.getItem('usrpwd')
             if (email !== null && pwd !== null) {
-                console.log([email, pwd])
                 setStage1data([email, pwd])
             } else {
                 window.location.href = "/signup"
@@ -61,7 +60,6 @@ const SignUpForm = ({ updateRegStage }) => {
             setEmailError(!re.test(userEmail))
             let pwderrors = [];
             function hasUpperCase(str) {
-                console.log(str.toLowerCase())
                 return str.toLowerCase() !== str;
             }
             function hasLowerCase(str) {
@@ -74,7 +72,6 @@ const SignUpForm = ({ updateRegStage }) => {
             if (!hasLowerCase(userPwd)) pwderrors.push("密碼至少需要一個小寫英文字母")
             if (!hasNumber(userPwd)) pwderrors.push("密碼至少需要一個數字")
             if (userPwd.length < 8) pwderrors.push("密碼至少需要八個字")
-            console.log(pwderrors)
             setPwdError(pwderrors)
             if (!re.test(userPwd) && pwderrors.length === 0) {
                 postRegData()

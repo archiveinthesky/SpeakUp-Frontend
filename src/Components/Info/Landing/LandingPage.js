@@ -27,7 +27,6 @@ const LandingPage = () => {
             setEmailError(!re.test(userEmail))
             let pwderrors = [];
             function hasUpperCase(str) {
-                console.log(str.toLowerCase())
                 return str.toLowerCase() !== str;
             }
             function hasLowerCase(str) {
@@ -40,7 +39,6 @@ const LandingPage = () => {
             if (!hasLowerCase(userPwd)) pwderrors.push("密碼至少需要一個小寫英文字母")
             if (!hasNumber(userPwd)) pwderrors.push("密碼至少需要一個數字")
             if (userPwd.length < 8) pwderrors.push("密碼至少需要八個字")
-            console.log(pwderrors)
             setPwdError(pwderrors)
             if (!re.test(userPwd) && pwderrors.length === 0) {
                 let lcs = window.localStorage

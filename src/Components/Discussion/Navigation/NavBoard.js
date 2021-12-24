@@ -12,7 +12,7 @@ const MainBoard = ({ mode }) => {
 
     const [isLoading, setIsLoading] = useState(true)
     const [titleText, setTitleText] = useState("")
-    const [tracks, setTracks] = useState("")
+    const [tracks, setTracks] = useState([])
     const [searchKw, setSearchKw] = useState("")
     const [smallScreen, setSmallScreen] = useState(true)
     const [errorOccured, setErrorOccured] = useState(false)
@@ -58,7 +58,6 @@ const MainBoard = ({ mode }) => {
             let searchData = {}
             if (keyword !== null) searchData['keyword'] = keyword
             if (tags !== null) searchData['tags'] = tags
-            console.log(searchData)
             if (keyword !== null || tags !== null) {
                 fetch('http://127.0.0.1:8000/api/search/', {
                     method: 'POST',
@@ -76,9 +75,9 @@ const MainBoard = ({ mode }) => {
                         setTracks(response.map((board) => {
                             return {
                                 "title": board.title,
-                                "tags": board.tags.replaceAll(",", ";l2"),
+                                "tags": board.tags,
                                 "content": board.brief,
-                                "link": `../discussions/${board.boardId}`,
+                                "boardid": board.boardid,
                                 "saved": board.saved
                             }
                         }))
@@ -93,7 +92,7 @@ const MainBoard = ({ mode }) => {
             }
         }
         else if (mode === "collections") {
-            fetch('http://127.0.0.1:5500/collections', {
+            fetch('http://127.0.0.1:8000/api/user/collection/', {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -103,7 +102,7 @@ const MainBoard = ({ mode }) => {
                 .then(response => { return response.json() })
                 .then(response => {
                     setTitleText("您的收藏")
-                    setTracks(response.cards.replaceAll("'", '"'))
+                    setTracks(response)
                     setIsLoading(false)
                 })
                 .catch(error => {
@@ -138,8 +137,8 @@ const MainBoard = ({ mode }) => {
                         }
                         {(mode === "collections" && !isLoading) &&
                             <div className="w-11/12 mx-auto flex flex-col gap-4">
-                                {tracks.split(";l1").map((track, i) => {
-                                    return (<WideNavCard key={i} carddata={JSON.parse(`{${track}}`)} />)
+                                {tracks.map((track, i) => {
+                                    return (<WideNavCard key={i} carddata={track} />)
                                 })}
                             </div>
                         }
