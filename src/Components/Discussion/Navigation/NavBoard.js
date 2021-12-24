@@ -31,7 +31,7 @@ const MainBoard = ({ mode }) => {
 
         setSearchKw("")
         if (mode === "home") {
-            fetch('http://127.0.0.1:8000/api/userhome', {
+            fetch('http://127.0.0.1:8000/api/user/home', {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
