@@ -2,6 +2,7 @@ const SaveBoard = (boardid, saveStat) => {
     fetch('http://127.0.0.1:8000/api/boards/save/', {
         method: 'PUT',
         headers: {
+            'Authorization': localStorage.getItem("AuthToken"),
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },

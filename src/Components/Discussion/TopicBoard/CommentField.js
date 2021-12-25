@@ -20,6 +20,7 @@ const CommentField = ({ boardId, onSide }) => {
             fetch(`http://localhost:8000/api/comments/${boardId}/${onside}`, {
                 method: 'GET',
                 headers: {
+                    'Authorization': localStorage.getItem("AuthToken"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Start-Pos': start,
@@ -71,6 +72,7 @@ const CommentField = ({ boardId, onSide }) => {
         await fetch(`http://localhost:8000/api/comments/${boardId}/${onside}/${commentid}`, {
             method: 'POST',
             headers: {
+                'Authorization': localStorage.getItem("AuthToken"),
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -148,6 +150,7 @@ const CommentField = ({ boardId, onSide }) => {
             await fetch(`http://localhost:8000/api/comments/${boardId}/${onside}`, {
                 method: 'POST',
                 headers: {
+                    'Authorization': localStorage.getItem("AuthToken"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },

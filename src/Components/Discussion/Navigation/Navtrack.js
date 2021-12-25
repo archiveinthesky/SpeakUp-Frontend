@@ -8,6 +8,7 @@ const Navtrack = ({ title, cardsUrl }) => {
         fetch(`http://127.0.0.1:8000/api/tracks/${cardsUrl}`, {
             method: 'GET',
             headers: {
+                'Authorization': localStorage.getItem("AuthToken"),
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             }

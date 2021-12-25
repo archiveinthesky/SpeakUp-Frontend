@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./Routing/ProtectedRoute";
 
 import LandingPage from "./Info/Landing/LandingPage";
 import LoginPage from "./Info/Landing/LoginPage";
@@ -17,10 +18,12 @@ function App() {
         <Route path={"/"} element={<LandingPage />} />
         <Route path={"/login"} element={<LoginPage />} />
         <Route path={"/signup"} element={<SignupPage />} />
-        <Route path={"/home"} element={<NavBoard mode="home" />} />
-        <Route path={"/search"} element={<NavBoard mode="search" />} />
-        <Route path={"/collections"} element={<NavBoard mode="collections" />} />
-        <Route path={"/discussions/:boardId"} element={<MainBoard />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path={"/home"} element={<NavBoard mode="home" />} />
+          <Route path={"/search"} element={<NavBoard mode="search" />} />
+          <Route path={"/collections"} element={<NavBoard mode="collections" />} />
+          <Route path={"/discussions/:boardId"} element={<MainBoard />} />
+        </Route>
         <Route path={"*"} element={<Error404 />} />
       </Routes>
     </Router>

@@ -19,15 +19,16 @@ const SignInForm = () => {
         fetch('http://localhost:8000/api/auth/login/', {
             method: 'POST',
             headers: {
+                'Authorization': localStorage.getItem("AuthToken"),
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 "username": userEmail,
                 "password": userPwd
             })
-        }).then(response => {
+        }).then(async response => {
             if (response.status === 200) {
-                let data = response.json()
+                let data = await response.json()
                 localStorage.setItem("AuthToken", "Token " + data.Token)
                 window.location.href = "/home"
             }

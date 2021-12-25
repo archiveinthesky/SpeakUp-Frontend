@@ -53,6 +53,7 @@ const SignUpForm = ({ updateRegStage }) => {
             fetch("http://localhost:8000/api/auth/reg/email/", {
                 method: 'POST',
                 headers: {
+                    'Authorization': localStorage.getItem("AuthToken"),
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(
@@ -180,6 +181,7 @@ const SignUpForm = ({ updateRegStage }) => {
             fetch("http://localhost:8000/api/auth/reg/validate/", {
                 method: 'POST',
                 headers: {
+                    'Authorization': localStorage.getItem("AuthToken"),
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -198,6 +200,7 @@ const SignUpForm = ({ updateRegStage }) => {
                     if (data.Error === "Validation Token Invalid") setErrorMsg("發生錯誤，請重新註冊")
                     else if (data.Error === "Validation Failed") setErrorMsg("驗證碼錯誤，請再試一次")
                     else setErrorMsg(data.Error)
+                    setValcode("")
                 } else if (response.status === 429) {
                     setErrorMsg("您輸入過多錯誤的驗證碼，請重新註冊")
                 }
@@ -349,7 +352,7 @@ const SignUpForm = ({ updateRegStage }) => {
 
     return (
         <div className='w-full h-full overflow-y-auto sm:px-14 '>
-            <h2 className='my-3 text-4xl text-black font-rounded'>{regStage === 1 ? "歡迎回來" : regStage === 2 ? "信箱驗證" : "您的資料"}</h2>
+            <h2 className='my-3 text-4xl text-black font-rounded'>{regStage === 1 ? "歡迎加入Speakup!" : regStage === 2 ? "信箱驗證" : "您的資料"}</h2>
             {regStage === 1 &&
                 <>
                     <p className='text-lg text-black'>已經有帳號了？<Link className='text-blue-600' to="../login">登入</Link></p>

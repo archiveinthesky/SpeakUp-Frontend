@@ -18,6 +18,21 @@ const Header = ({ accprofile = dfprofile }) => {
         }
     }
 
+    const logout = () => {
+        fetch("http://127.0.0.1:8000/api/auth/logout/", {
+            method: 'POST',
+            headers: {
+                'Authorization': localStorage.getItem("AuthToken")
+            }
+        }).then(response => {
+            console.log(response)
+            if (response.status === 204) {
+                localStorage.removeItem("AuthToken")
+                window.location.href = "/"
+            }
+        })
+    }
+
     const AccountOptions = () => {
         function classNames(...classes) {
             return classes.filter(Boolean).join(' ')
@@ -46,7 +61,7 @@ const Header = ({ accprofile = dfprofile }) => {
                                 {({ active }) => (
                                     <a className={classNames(
                                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm'
-                                    )} onClick={() => { }}>
+                                    )} onClick={logout}>
                                         登出
                                     </a>
                                 )}

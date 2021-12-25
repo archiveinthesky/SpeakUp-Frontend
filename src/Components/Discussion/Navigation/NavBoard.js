@@ -34,6 +34,7 @@ const MainBoard = ({ mode }) => {
             fetch('http://127.0.0.1:8000/api/user/home', {
                 method: 'GET',
                 headers: {
+                    'Authorization': localStorage.getItem("AuthToken"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 }
@@ -62,6 +63,7 @@ const MainBoard = ({ mode }) => {
                 fetch('http://127.0.0.1:8000/api/search/', {
                     method: 'POST',
                     headers: {
+                        'Authorization': localStorage.getItem("AuthToken"),
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
                     },
@@ -95,6 +97,7 @@ const MainBoard = ({ mode }) => {
             fetch('http://127.0.0.1:8000/api/user/collection/', {
                 method: 'GET',
                 headers: {
+                    'Authorization': localStorage.getItem("AuthToken"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 }

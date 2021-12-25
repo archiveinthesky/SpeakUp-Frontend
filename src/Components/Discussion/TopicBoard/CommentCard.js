@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReportContent from './ReportContent'
+import ProfileImg from '../../../Assets/Common/defualtprofile.png'
 
 const CommentCard = ({
     boardId, onSide,
@@ -47,6 +48,7 @@ const CommentCard = ({
             fetch(`http://localhost:8000/api/comments/${boardId}/${onside}${motherComment !== null && "/" + motherComment}/${cmtdata.id}`, {
                 method: 'PUT',
                 headers: {
+                    'Authorization': localStorage.getItem("AuthToken"),
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
@@ -193,7 +195,7 @@ const CommentCard = ({
         <>
             <div className=" w-11/12 mx-auto my-2 border-2 border-gray-200 rounded-3xl duration-300" ref={thiscard}>
                 <div className="w-full px-4 2xl:px-8 mx-auto mt-2 flex justify-start">
-                    <img className="p-2 rounded-full overflow-hidden w-14 h-14" src={cmtdata.accPic} alt="Profile" />
+                    <img className="p-2 rounded-full overflow-hidden w-14 h-14" src={ProfileImg} alt="Profile" />
                     <div className="my-auto pl-2"><h3 className=" text-black text-2xl">{cmtdata.accName}</h3></div>
                 </div>
                 <p className="w-full px-8 2xl:px-16 mt-2 mb-4 mx-auto text-xl">{cmtdata.cmtContent}</p>

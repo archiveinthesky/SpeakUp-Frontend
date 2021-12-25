@@ -14,7 +14,11 @@ const DiscussionHeader = ({ boardid }) => {
 
     useEffect(() => {
         fetch(`http://localhost:8000/api/boards/${boardid}`, {
-            'content-type': 'application/json'
+            method: 'GET',
+            headers: {
+                'Authorization': localStorage.getItem("AuthToken"),
+                'Content-Type': 'application/json'
+            }
         })
             .then(response => {
                 return response.json()

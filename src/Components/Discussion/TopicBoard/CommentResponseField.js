@@ -16,6 +16,7 @@ const CommentResponseField = ({ boardId, onSide, commentId, hasComments }) => {
         fetch(`http://localhost:8000/api/comments/${boardId}/${onside}/${commentId}`, {
             method: 'GET',
             headers: {
+                'Authorization': localStorage.getItem("AuthToken"),
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 "Start-Pos": 1,

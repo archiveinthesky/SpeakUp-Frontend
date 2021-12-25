@@ -16,6 +16,7 @@ const ReportContent = ({ rHeader, rQuestions, closeReportContent, boardId, mothe
         fetch(reporturl, {
             method: 'POST',
             headers: {
+                'Authorization': localStorage.getItem("AuthToken"),
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
