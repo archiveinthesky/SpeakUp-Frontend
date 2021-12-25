@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import LoginTopic from './LoginTopic'
 import closedEye from './Images/closed-eye.svg'
@@ -8,23 +8,51 @@ const SignInForm = () => {
     const [userEmail, setUserEmail] = useState("")
     const [userPwd, setUserPwd] = useState("")
     const [showPwd, setShowPwd] = useState(false)
+    const [authFailed, setAuthFailed] = useState(false)
+
+    useEffect(() => {
+        setUserPwd("")
+    }, [authFailed])
 
     const onEmailReg = (e) => {
         e.preventDefault()
+        fetch('http://localhost:8000/api/auth/login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "username": userEmail,
+                "password": userPwd
+            })
+        }).then(response => {
+            if (response.status === 200) {
+                let data = response.json()
+                localStorage.setItem("AuthToken", "Token " + data.Token)
+                window.location.href = "/home"
+            }
+            else setAuthFailed(true)
+        })
+            .then(setUserPwd(""))
+            .catch(errors => {
+                console.log(errors)
+            })
     }
 
     return (
         <div className='w-full h-full overflow-y-auto xl:pl-6 pr-2 2xl:px-14 '>
             <h2 className='my-3 text-4xl text-black font-rounded'>歡迎回來Speakup！</h2>
             <p className='text-lg text-black'>還沒有帳號嗎？現在<Link className='text-blue-600' to="../signup">註冊</Link>一個</p>
+            {authFailed && <p className='mt-2 text-2xl text-red-500'>帳號/密碼錯誤</p>}
             <form onSubmit={onEmailReg}>
                 <input type='email'
+                    value={userEmail} required
                     onChange={(e) => { setUserEmail(e.target.value) }}
                     className="w-full h-16 my-3 px-6 border-2 border-black rounded-3xl text-black text-2xl hover:drop-shadow-lg" placeholder='您的電子郵件'
                 />
                 <div className='relative'>
                     <input type={showPwd ? 'text' : 'password'}
-                        value={userPwd}
+                        value={userPwd} required
                         onChange={(e) => { setUserPwd(e.target.value) }}
                         className='w-full h-16 my-3 px-6 border-2 border-black rounded-3xl text-black text-2xl shrink-0 hover:drop-shadow-lg' placeholder='您的密碼'
                     >

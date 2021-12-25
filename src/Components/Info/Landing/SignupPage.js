@@ -9,7 +9,8 @@ const SignUpForm = ({ updateRegStage }) => {
 
     const [regStage, setRegStage] = useState(1);
     const [regEmail, setRegEmail] = useState("")
-    const [stage1data, setStage1data] = useState([])
+    const [prefilledData, setPrefilledData] = useState([])
+    const [errorMsg, setErrorMsg] = useState(null)
 
     useEffect(() => {
         let searchparams = new URLSearchParams(location.search)
@@ -19,7 +20,7 @@ const SignUpForm = ({ updateRegStage }) => {
             let email = lcs.getItem('usremail')
             let pwd = lcs.getItem('usrpwd')
             if (email !== null && pwd !== null) {
-                setStage1data([email, pwd])
+                setPrefilledData([email, pwd])
             } else {
                 window.location.href = "/signup"
             }
@@ -39,19 +40,47 @@ const SignUpForm = ({ updateRegStage }) => {
         const [disableReg, setDisableReg] = useState(false)
 
         useEffect(() => {
-            if (stage1data.length !== 0) {
-                setUserEmail(stage1data[0])
-                setUserPwd(stage1data[1])
+            if (prefilledData.length !== 0) {
                 setDisableReg(true)
-                // postRegData()
-                setTimeout(() => { postRegData() }, 2000)
+                setUserEmail(prefilledData[0])
+                setUserPwd(prefilledData[1])
+                postRegData(prefilledData)
             }
         }, [])
 
-        const postRegData = () => {
+        const postRegData = (prefilled = null) => {
             setDisableReg(true)
-            setRegEmail(userEmail)
-            setRegStage(2)
+            fetch("http://localhost:8000/api/auth/reg/email/", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    (prefilled !== null) ? {
+                        "email": prefilledData[0],
+                        "password": prefilledData[1]
+                    } : {
+                        "email": userEmail,
+                        "password": userPwd
+                    }
+                )
+            }).then(async response => {
+                console.log(response.status)
+                if (response.status === 201) {
+                    let data = await response.json()
+                    localStorage.setItem("valtoken", data.valtoken)
+                    setErrorMsg(null)
+                    setRegStage(2)
+                } else if (response.status === 409) {
+                    setErrorMsg("此帳號已被註冊過")
+                    setRegEmail(userEmail)
+                }
+                localStorage.removeItem("usremail")
+                localStorage.removeItem("usrpwd")
+                setPrefilledData([])
+            }).catch(error => {
+                console.log(error)
+            })
         }
 
         const onEmailReg = (e) => {
@@ -81,6 +110,7 @@ const SignUpForm = ({ updateRegStage }) => {
         return (
             <>
                 <form onSubmit={onEmailReg}>
+                    {(errorMsg !== null) && <p className='mt-2 text-xl text-red-500'>{errorMsg}</p>}
                     <input type='email'
                         value={userEmail}
                         onChange={(e) => { setUserEmail(e.target.value) }}
@@ -135,22 +165,45 @@ const SignUpForm = ({ updateRegStage }) => {
         const [valcode, setValcode] = useState("")
         const [valcodeError, setValcodeError] = useState(false)
         const [resendCd, setResendCd] = useState(30)
+        const [errorMsg, setErrorMsg] = useState(null)
 
         useEffect(() => {
-            if (stage1data.length !== 0) {
-                let lcs = window.localStorage
-                lcs.removeItem("usremail")
-                lcs.removeItem("usrpwd")
-                setStage1data([])
+            if (prefilledData.length !== 0) {
+                localStorage.removeItem("usremail")
+                localStorage.removeItem("usrpwd")
+                setPrefilledData([])
             }
         }, [])
 
         const submitValcode = (e) => {
             e.preventDefault()
-            if (valcode.length !== 6) setValcode(true)
-            else setValcode(false)
-
-            setRegStage(3)
+            fetch("http://localhost:8000/api/auth/reg/validate/", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "valcode": valcode,
+                    "valtoken": localStorage.getItem("valtoken")
+                })
+            }).then(async response => {
+                console.log(response.status)
+                if (response.status === 200) {
+                    let data = await response.json()
+                    localStorage.setItem("AuthToken", "Token " + data.Token)
+                    setErrorMsg(null)
+                    setRegStage(3)
+                } else if (response.status === 400) {
+                    let data = await response.json()
+                    if (data.Error === "Validation Token Invalid") setErrorMsg("發生錯誤，請重新註冊")
+                    else if (data.Error === "Validation Failed") setErrorMsg("驗證碼錯誤，請再試一次")
+                    else setErrorMsg(data.Error)
+                } else if (response.status === 429) {
+                    setErrorMsg("您輸入過多錯誤的驗證碼，請重新註冊")
+                }
+            }).catch(error => {
+                console.log(error)
+            })
         }
 
         const resendValCode = () => {
@@ -169,6 +222,7 @@ const SignUpForm = ({ updateRegStage }) => {
                 <p className='my-2 text-xl font-rounded'>
                     未收到驗證信？{resendCd > 0 ? `請於${resendCd}秒後重試一次` : <button className='text-blue-500' onClick={resendValCode}>重新寄送</button>}
                 </p>
+                {(errorMsg !== null) && <p className='mt-2 text-xl text-red-500'>{errorMsg}</p>}
                 <form onSubmit={submitValcode}>
                     <input type='text'
                         onChange={(e) => { setValcode(e.target.value) }}
@@ -194,6 +248,7 @@ const SignUpForm = ({ updateRegStage }) => {
         const [gender, setGender] = useState("gender")
         const [genderError, setGenderError] = useState(false)
 
+
         const validateUserName = () => {
             let usernameerrors = []
             if (userName.length < 2) usernameerrors.push("請輸入兩個字以上的使用者名稱")
@@ -215,7 +270,32 @@ const SignUpForm = ({ updateRegStage }) => {
                 setGenderError(true)
                 cansubmit = false
             }
-            if (cansubmit === true) window.location.href = "/home"
+            if (cansubmit === true) {
+                fetch("http://localhost:8000/api/auth/reg/info/", {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': localStorage.getItem("AuthToken"),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "username": userName,
+                        "ageRange": ageRange,
+                        "gender": gender
+                    })
+                }).then(async response => {
+                    console.log(response.status)
+                    if (response.status === 200) {
+                        window.location.href = "/home"
+                    } else if (response.status === 400) {
+                        let data = await response.json()
+                        if (data.Error === "Username taken") setUserNameError(["此使用者名稱已被註冊"])
+                        if (data.Error === "Unauthed") setUserNameError("發生錯誤，請重新註冊")
+                        else setErrorMsg(data.Error)
+                    }
+                }).catch(error => {
+                    console.log(error)
+                })
+            }
         }
 
         return (
@@ -250,10 +330,10 @@ const SignUpForm = ({ updateRegStage }) => {
                         className="w-full h-16 mt-3 mb-2 px-6 border-2 border-black rounded-3xl text-black text-2xl hover:drop-shadow-lg"
                     >
                         <option value={"gender"} disabled>您的性別</option>
-                        <option value={"male"}>男性</option>
-                        <option value={"female"}>女性</option>
-                        <option value={"neither"}>非二元性別</option>
-                        <option value={"noexpress"}>不願透露</option>
+                        <option value={"1"}>男性</option>
+                        <option value={"2"}>女性</option>
+                        <option value={"3"}>非二元性別</option>
+                        <option value={"4"}>不願透露</option>
                     </select>
                     {genderError && <p className='font-rounded text-red-500 text-lg'>請選擇您的性別</p>}
                     <button className='w-full h-16 my-3 bg-blue-600 rounded-3xl transition-colors duration-150 hover:drop-shadow-lg disabled:bg-blue-300 disabled:drop-shadow-none'
