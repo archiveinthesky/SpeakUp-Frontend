@@ -28,10 +28,9 @@ const MainBoard = ({ mode }) => {
     }, [])
 
     useEffect(() => {
-
         setSearchKw("")
         if (mode === "home") {
-            fetch('http://127.0.0.1:8000/api/user/home', {
+            fetch('http://127.0.0.1:8000/api/user/home/', {
                 method: 'GET',
                 headers: {
                     'Authorization': localStorage.getItem("AuthToken"),
@@ -39,7 +38,13 @@ const MainBoard = ({ mode }) => {
                     'Content-Type': 'application/json',
                 }
             })
-                .then(response => { return response.json() })
+                .then(response => {
+                    if (response.status === 200) return response.json()
+                    else if (response.status === 401) {
+                        localStorage.removeItem("AuthToken")
+                        window.location.href = "/login"
+                    }
+                })
                 .then(response => {
                     let d = new Date()
                     let timegreeting = (d.getHours() > 19 || d.getHours() <= 4) ? "晚安" : (d.getHours() < 12) ? "早安" : "午安"

@@ -1,19 +1,17 @@
-import React, { useState, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
 import logo from '../../../Assets/Common/logo.svg'
 import magnifer from '../../../Assets/Common/magnifier.png'
 import dfprofile from '../../../Assets/Common/defualtprofile.png'
 
 
 const Header = ({ accprofile = dfprofile }) => {
-    const [showAccOptions, setShowAccOptions] = useState(false)
 
     const searchSubmit = (e) => {
         e.preventDefault()
         let keyword = e.target[0].value
         if (keyword !== null) {
-            if (keyword.charAt(0) == "#") window.location.href = `/search?tags=${keyword.substring(1)}`
+            if (keyword.charAt(0) === "#") window.location.href = `/search?tags=${keyword.substring(1)}`
             else window.location.href = `/search?keyword=${keyword}`
         }
     }
@@ -25,7 +23,6 @@ const Header = ({ accprofile = dfprofile }) => {
                 'Authorization': localStorage.getItem("AuthToken")
             }
         }).then(response => {
-            console.log(response)
             if (response.status === 204) {
                 localStorage.removeItem("AuthToken")
                 window.location.href = "/"

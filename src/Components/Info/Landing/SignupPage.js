@@ -66,12 +66,14 @@ const SignUpForm = ({ updateRegStage }) => {
                     }
                 )
             }).then(async response => {
-                console.log(response.status)
                 if (response.status === 201) {
                     let data = await response.json()
                     localStorage.setItem("valtoken", data.valtoken)
                     setErrorMsg(null)
                     setRegStage(2)
+                } else if (response.status === 403) {
+                    setErrorMsg("封測階段僅開放靜心高中信箱註冊")
+                    setRegEmail(userEmail)
                 } else if (response.status === 409) {
                     setErrorMsg("此帳號已被註冊過")
                     setRegEmail(userEmail)
@@ -86,7 +88,7 @@ const SignUpForm = ({ updateRegStage }) => {
 
         const onEmailReg = (e) => {
             e.preventDefault()
-            let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             setEmailError(!re.test(userEmail))
             let pwderrors = [];
             function hasUpperCase(str) {
@@ -126,7 +128,7 @@ const SignUpForm = ({ updateRegStage }) => {
                         >
                         </input>
                         <button type='button' onClick={() => { setShowPwd(!showPwd) }} className="absolute top-7 right-6">
-                            <img className="w-7 h-7" src={showPwd ? openEye : closedEye}></img>
+                            <img className="w-7 h-7" src={showPwd ? openEye : closedEye} alt=""></img>
                         </button>
                     </div>
                     {pwdError.length !== 0 &&
@@ -142,7 +144,7 @@ const SignUpForm = ({ updateRegStage }) => {
                         </div>
                     </button>
                 </form>
-                <div className='w-full my-3 flex justify-center items-center'>
+                {/* <div className='w-full my-3 flex justify-center items-center'>
                     <hr className='w-48 bg-black h-[2px]' />
                     <p className='mx-2 text-black text-2xl font-rounded'>或</p>
                     <hr className='w-48 bg-black h-[2px]' />
@@ -157,14 +159,13 @@ const SignUpForm = ({ updateRegStage }) => {
                         </svg>
                         <p className='mx-4 my-auto text-center text-black text-xl'>Continue with Google</p>
                     </div>
-                </button>
+                </button> */}
             </>
         )
     }
 
     const RegStage2 = () => {
         const [valcode, setValcode] = useState("")
-        const [valcodeError, setValcodeError] = useState(false)
         const [resendCd, setResendCd] = useState(30)
         const [errorMsg, setErrorMsg] = useState(null)
 
@@ -189,7 +190,6 @@ const SignUpForm = ({ updateRegStage }) => {
                     "valtoken": localStorage.getItem("valtoken")
                 })
             }).then(async response => {
-                console.log(response.status)
                 if (response.status === 200) {
                     let data = await response.json()
                     localStorage.setItem("AuthToken", "Token " + data.Token)
@@ -231,7 +231,6 @@ const SignUpForm = ({ updateRegStage }) => {
                         onChange={(e) => { setValcode(e.target.value) }}
                         className="w-full h-16 my-3 px-6 border-2 border-black rounded-3xl text-black text-2xl hover:drop-shadow-lg" placeholder='六位數驗證碼'
                     />
-                    {valcodeError && <p className='font-rounded text-red-500 text-lg'>驗證碼錯誤，請再次確認</p>}
                     <button className='w-full h-16 my-3 bg-blue-600 rounded-3xl transition-colors duration-150 hover:drop-shadow-lg disabled:bg-blue-300 disabled:drop-shadow-none'
                         type='submit' disabled={valcode.length !== 6} >
                         <div className='m-auto'>
@@ -286,7 +285,6 @@ const SignUpForm = ({ updateRegStage }) => {
                         "gender": gender
                     })
                 }).then(async response => {
-                    console.log(response.status)
                     if (response.status === 200) {
                         window.location.href = "/home"
                     } else if (response.status === 400) {
@@ -351,7 +349,7 @@ const SignUpForm = ({ updateRegStage }) => {
     }
 
     return (
-        <div className='w-full h-full overflow-y-auto sm:px-14 '>
+        <div className='w-full h-full overflow-y-auto xl:pl-6 pr-2 2xl:px-14 '>
             <h2 className='my-3 text-4xl text-black font-rounded'>{regStage === 1 ? "歡迎加入Speakup!" : regStage === 2 ? "信箱驗證" : "您的資料"}</h2>
             {regStage === 1 &&
                 <>

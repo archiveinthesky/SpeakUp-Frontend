@@ -5,7 +5,6 @@ import SaveBoard from '../Common/SaveBoards'
 
 const WideNavCard = ({ carddata }) => {
 
-    console.log(carddata)
     const [isSaved, setIsSaved] = useState(carddata.saved)
 
     const toggleSaved = () => {

@@ -59,7 +59,7 @@ const SignInForm = () => {
                     >
                     </input>
                     <button type='button' onClick={() => { setShowPwd(!showPwd) }} className="absolute top-7 right-6">
-                        <img className="w-7 h-7" src={showPwd ? openEye : closedEye}></img>
+                        <img className="w-7 h-7" src={showPwd ? openEye : closedEye} alt=""></img>
                     </button>
                 </div>
                 <button className='w-full h-16 my-3 bg-blue-600 rounded-3xl hover:drop-shadow-lg' type='submit' >
@@ -68,7 +68,7 @@ const SignInForm = () => {
                     </div>
                 </button>
             </form>
-            <div className='w-full my-3 flex justify-center items-center'>
+            {/* <div className='w-full my-3 flex justify-center items-center'>
                 <hr className='w-48 bg-black h-[2px]' />
                 <p className='mx-2 text-black text-2xl font-rounded'>或</p>
                 <hr className='w-48 bg-black h-[2px]' />
@@ -83,7 +83,7 @@ const SignInForm = () => {
                     </svg>
                     <p className='mx-4 my-auto text-center text-black text-xl'>Continue with Google</p>
                 </div>
-            </button>
+            </button> */}
         </div>
     )
 }

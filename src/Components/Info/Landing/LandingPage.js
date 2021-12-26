@@ -49,7 +49,7 @@ const LandingPage = () => {
         }
 
         return (
-            <div className='hidden xl:block xl:w-11/12 2xl:w-5/6 h-[520px] overflow-y-auto px-14 py-8 rounded-[60px] bg-sky-500 justify-self-end'>
+            <div className='hidden xl:block xl:w-11/12 2xl:w-5/6 overflow-y-auto px-14 py-8 rounded-[60px] bg-sky-500 justify-self-end'>
                 <h2 className='my-3 text-4xl text-white font-rounded'>註冊一個帳號</h2>
                 <form onSubmit={onEmailReg}>
                     <input type='email'
@@ -82,7 +82,7 @@ const LandingPage = () => {
                         </div>
                     </button>
                 </form>
-                <div className='w-full my-3 flex justify-center items-center'>
+                {/* <div className='w-full my-3 flex justify-center items-center'>
                     <hr className='w-48 h-[2px] bg-white' />
                     <p className='mx-2 text-white text-2xl font-rounded'>或</p>
                     <hr className='w-48 h-[2px] bg-white' />
@@ -97,7 +97,7 @@ const LandingPage = () => {
                         </svg>
                         <p className='mx-4 my-auto text-center text-black text-xl'>Continue with Google</p>
                     </div>
-                </button>
+                </button> */}
             </div>
         )
     }
@@ -181,12 +181,12 @@ const LandingPage = () => {
                     </div>
 
                     <div className='w-screen h-56 lg:h-80 bg-gray-100'>
-                        <div className='mx-auto w-11/12 md:w-10/12 h-full grid grid-cols-2'>
+                        <div className='mx-auto w-11/12 md:w-10/12 h-full grid grid-cols-2 items-center'>
                             <div className='font-rounded self-center'>
                                 <h1 className='text-3xl lg:text-4xl 2xl:text-5xl my-2 lg:my-4 text-gray-500'>Speakup</h1>
                                 <h1 className='text-md lg:text-2xl xl:text-3xl 2xl:text-4xl my-2 lg:my-4 text-gray-500'>致力於創造一個更理性的討論空間</h1>
                             </div>
-                            <div className='mt-8 lg:mt-16 flex gap-10 lg:gap-16 xl:gap-24'>
+                            {/* <div className='mt-8 lg:mt-16 flex gap-10 lg:gap-16 xl:gap-24'>
                                 <div>
                                     <h2 className='text-gray-400 lg:text-2xl 2xl:text-3xl'>平台簡介</h2>
                                     <ul className='mt-6 font-rounded xl:text-xl 2xl:text-2xl'>
@@ -210,15 +210,16 @@ const LandingPage = () => {
                                         <li className='my-4 text-gray-500'>篩選流程</li>
                                     </ul>
                                 </div>
-                            </div>
-                        </div>
+                            </div> */}
+                            <h2 className='w-full text-right text-base lg:text-xl text-gray-500'>&copy; 2021 Speakup開發團隊 版權所有</h2>
 
-                        <hr className='w-screen border-t-2 border-gray-500 bg-gray-100 pt-3 pb-2 h-[1px]' />
+                        </div>
+                        {/* <hr className='w-screen border-t-2 border-gray-500 bg-gray-100 pt-3 pb-2 h-[1px]' />
 
                         <div className='w-screen pb-4 lg:pt-4 lg:pb-6 bg-gray-100'>
                             <h2 className='w-full text-center text-base lg:text-lg text-gray-500'>&copy; 2021 Speakup開發團隊 版權所有</h2>
                         </div>
-                        <div className='h-1'></div>
+                        <div className='h-1'></div> */}
                     </div>
                 </div >
             }
