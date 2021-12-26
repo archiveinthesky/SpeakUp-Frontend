@@ -45,7 +45,7 @@ const CommentCard = ({
         else if (onSide === "反對方") onside = "agn"
         else if (onSide === null) onside = "all"
         if (!firstRender.current) {
-            fetch(`http://localhost:8000/api/comments/${boardId}/${onside}${motherComment !== null && "/" + motherComment}/${cmtdata.id}`, {
+            fetch(`http://localhost:8000/api/comments/${boardId}/${onside}${(motherComment !== null) ? "/" + motherComment : ""}/${cmtdata.id}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': localStorage.getItem("AuthToken"),
