@@ -8,7 +8,7 @@ const LoginTopic = ({ title = null, contents = null }) => {
 
     useEffect(() => {
         if (title === null || contents === null) {
-            fetch("http://127.0.0.1:8000/api/boards/randomtopic/")
+            fetch("http://localhost:8000/api/boards/randomtopic/")
                 .then(response => { return response.json() })
                 .then((response) => {
                     setTopicTitle(response.title)

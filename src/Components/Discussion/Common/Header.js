@@ -17,7 +17,7 @@ const Header = ({ accprofile = dfprofile }) => {
     }
 
     const logout = () => {
-        fetch("http://127.0.0.1:8000/api/auth/logout/", {
+        fetch("http://localhost:8000/api/auth/logout/", {
             method: 'POST',
             headers: {
                 'Authorization': localStorage.getItem("AuthToken")

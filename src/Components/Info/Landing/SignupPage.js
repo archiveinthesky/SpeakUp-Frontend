@@ -167,6 +167,7 @@ const SignUpForm = ({ updateRegStage }) => {
     const RegStage2 = () => {
         const [valcode, setValcode] = useState("")
         const [resendCd, setResendCd] = useState(30)
+        const [resent, setResent] = useState(false)
         const [errorMsg, setErrorMsg] = useState(null)
 
         useEffect(() => {
@@ -182,7 +183,6 @@ const SignUpForm = ({ updateRegStage }) => {
             fetch("http://localhost:8000/api/auth/reg/validate/", {
                 method: 'POST',
                 headers: {
-                    'Authorization': localStorage.getItem("AuthToken"),
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -210,7 +210,22 @@ const SignUpForm = ({ updateRegStage }) => {
         }
 
         const resendValCode = () => {
-            setResendCd(30)
+            console.log("resending")
+            setResent(true)
+            fetch("http://localhost:8000/api/auth/reg/resendemail/", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'valtoken': localStorage.getItem("valtoken")
+                })
+            }).then(response => {
+                if (response.status === 200) {
+                    setResendCd(30)
+                }
+                setResent(false)
+            })
         }
 
         useEffect(() => {
@@ -223,7 +238,10 @@ const SignUpForm = ({ updateRegStage }) => {
             <div>
                 <p className='my-2 text-2xl font-rounded'>我們已經將驗證碼傳送至{regEmail}，請輸入信件中的六位數驗證碼。若您未收到驗證信，請檢查您的垃圾郵件資料夾</p>
                 <p className='my-2 text-xl font-rounded'>
-                    未收到驗證信？{resendCd > 0 ? `請於${resendCd}秒後重試一次` : <button className='text-blue-500' onClick={resendValCode}>重新寄送</button>}
+                    未收到驗證信？{resendCd > 0 ?
+                        `請於${resendCd}秒後重試一次` :
+                        <button className='text-blue-500' disabled={resent} onClick={resendValCode}>重新寄送</button>
+                    }
                 </p>
                 {(errorMsg !== null) && <p className='mt-2 text-xl text-red-500'>{errorMsg}</p>}
                 <form onSubmit={submitValcode}>

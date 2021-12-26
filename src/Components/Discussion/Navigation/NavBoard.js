@@ -30,7 +30,7 @@ const MainBoard = ({ mode }) => {
     useEffect(() => {
         setSearchKw("")
         if (mode === "home") {
-            fetch('http://127.0.0.1:8000/api/user/home/', {
+            fetch('http://localhost:8000/api/user/home/', {
                 method: 'GET',
                 headers: {
                     'Authorization': localStorage.getItem("AuthToken"),
@@ -65,7 +65,7 @@ const MainBoard = ({ mode }) => {
             if (keyword !== null) searchData['keyword'] = keyword
             if (tags !== null) searchData['tags'] = tags
             if (keyword !== null || tags !== null) {
-                fetch('http://127.0.0.1:8000/api/search/', {
+                fetch('http://localhost:8000/api/search/', {
                     method: 'POST',
                     headers: {
                         'Authorization': localStorage.getItem("AuthToken"),
@@ -99,7 +99,7 @@ const MainBoard = ({ mode }) => {
             }
         }
         else if (mode === "collections") {
-            fetch('http://127.0.0.1:8000/api/user/collection/', {
+            fetch('http://localhost:8000/api/user/collection/', {
                 method: 'GET',
                 headers: {
                     'Authorization': localStorage.getItem("AuthToken"),
