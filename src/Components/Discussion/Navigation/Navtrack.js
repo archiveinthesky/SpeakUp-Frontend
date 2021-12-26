@@ -22,7 +22,7 @@ const Navtrack = ({ title, cardsUrl }) => {
     return (
         <div className="w-11/12 mx-auto" >
             <h1 className="text-3xl ml-2">{title}</h1>
-            <div className="mt-4 overflow-x-auto flex gap-6">
+            <div className="mt-4 overflow-x-auto overflow-y-hidden flex gap-6">
                 {cardsList.map((card, i) => {
                     return (
                         < Navcard key={i} carddata={card} />

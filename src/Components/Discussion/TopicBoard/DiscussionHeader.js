@@ -13,6 +13,7 @@ const DiscussionHeader = ({ boardid }) => {
     const [pageContent, setPageContent] = useState([]);
 
     useEffect(() => {
+        console.log(boardid)
         fetch(`http://localhost:8000/api/boards/${boardid}`, {
             method: 'GET',
             headers: {
