@@ -17,7 +17,7 @@ const CommentField = ({ boardId, onSide }) => {
             if (onSide === "支持方") onside = "sup"
             else if (onSide === "反對方") onside = "agn"
             else if (onSide === null) onside = "all"
-            fetch(`http://localhost:8000/api/comments/${boardId}/${onside}`, {
+            fetch(`${process.env.REACT_APP_BACKEND_URL}/api/comments/${boardId}/${onside}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': localStorage.getItem("AuthToken"),
@@ -69,7 +69,7 @@ const CommentField = ({ boardId, onSide }) => {
         let onside = ""
         if (onSide === "支持方") onside = "sup"
         else if (onSide === "反對方") onside = "agn"
-        await fetch(`http://localhost:8000/api/comments/${boardId}/${onside}/${commentid}`, {
+        await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/comments/${boardId}/${onside}/${commentid}`, {
             method: 'POST',
             headers: {
                 'Authorization': localStorage.getItem("AuthToken"),
@@ -147,7 +147,7 @@ const CommentField = ({ boardId, onSide }) => {
             let onside = ""
             if (cmtside === "支持方") onside = "sup"
             else if (cmtside === "反對方") onside = "agn"
-            await fetch(`http://localhost:8000/api/comments/${boardId}/${onside}`, {
+            await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/comments/${boardId}/${onside}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': localStorage.getItem("AuthToken"),

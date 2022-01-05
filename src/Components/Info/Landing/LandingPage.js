@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import Header from '../Common/Header'
 import PhoneLandingPage from './PhoneLandingPage'
 import logo from './Images/logomic.svg'
@@ -124,11 +125,11 @@ const LandingPage = () => {
                                     因此，我們決定創建一個自由的平台空間<br />
                                     讓所有人都能夠在此理性交流
                                 </p>
-                                <a href="/signup">
+                                <Link to="/signup">
                                     <button className='visible xl:invisible w-40 h-16 my-6 bg-blue-600 hover:drop-shadow-md rounded-[40px]'>
                                         <h1 className='m-auto text-white text-2xl font-rounded'>開始使用</h1>
                                     </button>
-                                </a>
+                                </Link>
                             </div>
                             <OnPageRegComponent />
                             <div className='hidden lg:block xl:hidden'>
@@ -172,11 +173,11 @@ const LandingPage = () => {
                             <h1 className='text-4xl xl:text-5xl my-auto text-white font-rounded leading-[48px] lg:leading-[60px] xl:leading-[72px]'>
                                 準備好了嗎？<br />
                                 馬上開始討論吧</h1>
-                            <a className='my-auto' href="/signup">
-                                <button className='w-44 h-16 xl:w-52 xl:h-20 bg-blue-600 hover:drop-shadow-md rounded-[40px]'>
+                            <Link className='my-auto' to="/signup">
+                                <div className='w-44 h-16 xl:w-52 xl:h-20 bg-blue-600 hover:drop-shadow-md rounded-[40px]'>
                                     <h1 className='m-auto text-white text-3xl xl:text-4xl font-rounded'>開始使用</h1>
-                                </button>
-                            </a>
+                                </div>
+                            </Link>
                         </div>
                     </div>
 

@@ -50,7 +50,7 @@ const SignUpForm = ({ updateRegStage }) => {
 
         const postRegData = (prefilled = null) => {
             setDisableReg(true)
-            fetch("http://localhost:8000/api/auth/reg/email/", {
+            fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/reg/email/`, {
                 method: 'POST',
                 headers: {
                     'Authorization': localStorage.getItem("AuthToken"),
@@ -180,7 +180,7 @@ const SignUpForm = ({ updateRegStage }) => {
 
         const submitValcode = (e) => {
             e.preventDefault()
-            fetch("http://localhost:8000/api/auth/reg/validate/", {
+            fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/reg/validate/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -212,7 +212,7 @@ const SignUpForm = ({ updateRegStage }) => {
         const resendValCode = () => {
             console.log("resending")
             setResent(true)
-            fetch("http://localhost:8000/api/auth/reg/resendemail/", {
+            fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/reg/resendemail/`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -291,7 +291,7 @@ const SignUpForm = ({ updateRegStage }) => {
                 cansubmit = false
             }
             if (cansubmit === true) {
-                fetch("http://localhost:8000/api/auth/reg/info/", {
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/reg/info/`, {
                     method: 'POST',
                     headers: {
                         'Authorization': localStorage.getItem("AuthToken"),

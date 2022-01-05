@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import homeIcon from './Images/homeIcon.png'
-import globeIcon from './Images/globeIcon.png'
-import collectionIcon from './Images/collectionIcon.png'
+import { Link } from 'react-router-dom'
+import homeIcon from '../../Assets/Discussion/homeIcon.png'
+import globeIcon from '../../Assets/Discussion/globeIcon.png'
+import collectionIcon from '../../Assets/Discussion/collectionIcon.png'
 
 const Sidebar = ({ defualtState = true, toggleIndent = null }) => {
     const [showSidebar, setShowSidebar] = useState(defualtState)
@@ -31,24 +32,24 @@ const Sidebar = ({ defualtState = true, toggleIndent = null }) => {
             <div className="h-6" />
             <div className="flex z-10">
                 <ul className="pl-10">
-                    <a href="/home">
+                    <Link to="/home">
                         <li className="flex list-none py-3 gap-4">
                             <img className='w-8 h-8 inline' src={homeIcon} alt="首頁"></img>
                             <p className="text-black text-2xl leading-8">首頁</p>
                         </li>
-                    </a>
-                    <a href="/search?tags=封測議題">
+                    </Link>
+                    <Link to="/search?tags=封測議題">
                         <li className="flex list-none py-3 gap-4">
                             <img className='w-8 h-8 inline' src={globeIcon} alt="封測議題"></img>
                             <p className="text-black text-2xl leading-8">封測議題</p>
                         </li>
-                    </a>
-                    <a href="/collections">
+                    </Link>
+                    <Link to="/collections">
                         <li className="flex list-none py-3 gap-4">
                             <img className='w-8 h-8 inline' src={collectionIcon} alt="首頁"></img>
                             <p className="text-black text-2xl leading-8">我的收藏</p>
                         </li>
-                    </a>
+                    </Link>
                     {/* <Link to="/search">
                         <li className="flex list-none py-3 gap-3">
                             <svg className="ml-1 w-8 h-8" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -65,9 +66,9 @@ const Sidebar = ({ defualtState = true, toggleIndent = null }) => {
             <ul className="list-none h-3/5 pl-24 overflow-auto">
                 {tags.map((tag, i) => {
                     return (
-                        <a href={`/search?tags=${tag}`} key={`link${i}`}>
+                        <Link to={`/search?tags=${tag}`} key={`link${i}`}>
                             <li key={i} className="py-2 text-xl">{tag}</li>
-                        </a>
+                        </Link>
                     )
                 })}
             </ul>

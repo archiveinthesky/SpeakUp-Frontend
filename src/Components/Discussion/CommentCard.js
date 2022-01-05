@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReportContent from './ReportContent'
-import ProfileImg from '../../../Assets/Common/defualtprofile.png'
+import ProfileImg from '../../Assets/General/defualtprofile.png'
 
 const CommentCard = ({
     boardId, onSide,
@@ -45,7 +45,7 @@ const CommentCard = ({
         else if (onSide === "反對方") onside = "agn"
         else if (onSide === null) onside = "all"
         if (!firstRender.current) {
-            fetch(`http://localhost:8000/api/comments/${boardId}/${onside}${(motherComment !== null) ? "/" + motherComment : ""}/${cmtdata.id}`, {
+            fetch(`${process.env.REACT_APP_BACKEND_URL}/api/comments/${boardId}/${onside}${(motherComment !== null) ? "/" + motherComment : ""}/${cmtdata.id}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': localStorage.getItem("AuthToken"),

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import Header from '../Common/Header'
 import logo from './Images/logomic.svg'
 import TopicSample from './Images/Topic-Sample.png'
@@ -23,11 +24,11 @@ const PhoneLandingPage = () => {
                         提供一個<br />
                         自由的空間
                     </h1>
-                    <a href="/signup">
-                        <button className='w-40 h-16 my-6 bg-blue-600 hover:drop-shadow-md rounded-[40px]'>
+                    <Link to="/signup">
+                        <div className='w-40 h-16 my-6 bg-blue-600 hover:drop-shadow-md rounded-[40px]'>
                             <h1 className='m-auto text-white text-2xl font-rounded'>開始使用</h1>
-                        </button>
-                    </a>
+                        </div>
+                    </Link>
                 </div>
                 <img className='absolute w-[600px] h-[600px] -right-40 top-[50vh]' src={logo} alt="" />
             </div>
@@ -64,11 +65,11 @@ const PhoneLandingPage = () => {
                             準備好了嗎？<br />
                             馬上開始討論吧</h1>
                         <div className='h-[15%]'></div>
-                        <a className='my-auto' href="/signup">
-                            <button className='w-44 h-16 bg-blue-600 hover:drop-shadow-md rounded-[40px]'>
+                        <Link className='my-auto' to="/signup">
+                            <div className='w-44 h-16 bg-blue-600 hover:drop-shadow-md rounded-[40px]'>
                                 <h1 className='m-auto text-white text-3xl font-rounded'>開始使用</h1>
-                            </button>
-                        </a>
+                            </div>
+                        </Link>
                     </div>
                     <h2 className='w-full pb-3 text-center text-lg text-white'>&copy; 2021 Speakup開發團隊 版權所有</h2>
                 </div>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import '../Styles/discussion.css'
 import Header from '../Common/Header'
 import Sidebar from '../Common/Sidebar'
 import Navtrack from './Navtrack'

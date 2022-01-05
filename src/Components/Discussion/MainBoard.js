@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useParams } from 'react-router-dom'
-import '../Styles/discussion.css'
+import './Styles/discussion.css'
 import Header from '../Common/Header'
 import Sidebar from '../Common/Sidebar'
 import CommentField from './CommentField'

@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import { Menu, Transition } from '@headlessui/react'
-import logo from '../../../Assets/Common/logo.svg'
-import magnifer from '../../../Assets/Common/magnifier.png'
-import dfprofile from '../../../Assets/Common/defualtprofile.png'
+import logo from '../../Assets/General/logo.svg'
+import magnifer from '../../Assets/General/magnifier.png'
+import dfprofile from '../../Assets/General/defualtprofile.png'
 
 
 const Header = ({ accprofile = dfprofile }) => {
@@ -17,7 +18,7 @@ const Header = ({ accprofile = dfprofile }) => {
     }
 
     const logout = () => {
-        fetch("http://localhost:8000/api/auth/logout/", {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/logout/`, {
             method: 'POST',
             headers: {
                 'Authorization': localStorage.getItem("AuthToken")
@@ -73,9 +74,9 @@ const Header = ({ accprofile = dfprofile }) => {
     return (
         <div className="fixed w-screen h-16 bg-accent-blue z-20 flex justify-between items-center">
             <div className="flex h-16 w-screen items-center">
-                <a href="/home">
+                <Link to="/home">
                     <img className="pl-8 xl:pl-14 my-auto h-14" src={logo} alt="logo" />
-                </a>
+                </Link>
                 <form className="pl-10 2xl:pl-24 my-auto h-11 invisible md:visible md:w-7/12 xl:w-5/12 max-w-2xl flex" onSubmit={searchSubmit}>
                     <input className="w-full bg-white rounded-3xl text-xl text-gray-500 pl-4" placeholder="搜尋你感興趣的議題" type="text" />
                     <button type="submit" className="relative -left-12">

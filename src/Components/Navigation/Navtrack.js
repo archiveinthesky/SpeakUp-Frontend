@@ -5,7 +5,7 @@ const Navtrack = ({ title, cardsUrl }) => {
     const [cardsList, setCardsList] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:8000/api/tracks/${cardsUrl}`, {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/tracks/${cardsUrl}`, {
             method: 'GET',
             headers: {
                 'Authorization': localStorage.getItem("AuthToken"),

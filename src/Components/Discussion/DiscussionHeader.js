@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import SaveBoard from '../Common/SaveBoards';
 import ReportContent from './ReportContent';
 
@@ -14,7 +15,7 @@ const DiscussionHeader = ({ boardid }) => {
 
     useEffect(() => {
         console.log(boardid)
-        fetch(`http://localhost:8000/api/boards/${boardid}`, {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/boards/${boardid}`, {
             method: 'GET',
             headers: {
                 'Authorization': localStorage.getItem("AuthToken"),
@@ -64,7 +65,7 @@ const DiscussionHeader = ({ boardid }) => {
                                 {
                                     pageContent[1].map((tag) => {
                                         return <div key={pageContent[1].indexOf(tag)} className="px-4 h-8 rounded-2xl bg-blue-300 bg-opacity-50">
-                                            <a href={`/search?tags=${tag}`}><p className="leading-8 text-center text-blue-500 font-bold">{`#${tag}`}</p></a>
+                                            <Link to={`/search?tags=${tag}`}><p className="leading-8 text-center text-blue-500 font-bold">{`#${tag}`}</p></Link>
                                         </div>
                                     })
                                 }

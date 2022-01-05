@@ -12,7 +12,7 @@ const ReportContent = ({ rHeader, rQuestions, closeReportContent, boardId, mothe
     }
 
     const ReportComment = () => {
-        let reporturl = `http://localhost:8000/api/report/comment/${boardId}${(motherComment !== null) ? "/" + motherComment : ""}/${commentid}`
+        let reporturl = `${process.env.REACT_APP_BACKEND_URL}/api/report/comment/${boardId}${(motherComment !== null) ? "/" + motherComment : ""}/${commentid}`
         fetch(reporturl, {
             method: 'POST',
             headers: {

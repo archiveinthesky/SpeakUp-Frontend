@@ -5,13 +5,11 @@ import ProtectedRoute from "./Routing/ProtectedRoute";
 import LandingPage from "./Info/Landing/LandingPage";
 import LoginPage from "./Info/Landing/LoginPage";
 import SignupPage from "./Info/Landing/SignupPage";
-import MainBoard from "./Discussion/TopicBoard/MainBoard";
-import NavBoard from "./Discussion/Navigation/NavBoard"
+import MainBoard from "./Discussion/MainBoard";
+import NavBoard from "./Navigation/NavBoard"
 import Error404 from "./Errors/Error404";
 
 function App() {
-
-
   return (
     <Router>
       <Routes>

@@ -13,7 +13,7 @@ const CommentResponseField = ({ boardId, onSide, commentId, hasComments }) => {
         if (onSide === "支持方") onside = "sup"
         else if (onSide === "反對方") onside = "agn"
         else if (onSide === null) onside = "all"
-        fetch(`http://localhost:8000/api/comments/${boardId}/${onside}/${commentId}`, {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/comments/${boardId}/${onside}/${commentId}`, {
             method: 'GET',
             headers: {
                 'Authorization': localStorage.getItem("AuthToken"),
