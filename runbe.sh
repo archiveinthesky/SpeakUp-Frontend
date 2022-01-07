@@ -1,0 +1,1 @@
+/Users/andrew/miniforge3/envs/webdev/bin/python3 /Users/andrew/Github/SpeakUp-Frontend/djangobe/manage.py runserver
