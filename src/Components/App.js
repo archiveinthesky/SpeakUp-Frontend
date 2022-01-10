@@ -11,6 +11,8 @@ import MainBoard from "./Discussion/MainBoard";
 import NavBoard from "./Navigation/NavBoard"
 
 import AdminPage from "./Admin/AdminPanel";
+import HomePanel from './Admin/Home/HomePanel'
+import BoardsPanel from './Admin/UserBoards/BoardsPanel'
 import ModPanel from "./Admin/CmtMod/ModPanel";
 
 import Error404 from "./Errors/Error404";
@@ -29,7 +31,8 @@ function App() {
           <Route path={"discussions/:boardId"} element={<MainBoard />} />
         </Route>
         <Route path={"/admin"} element={<AdminPage />} >
-          <Route path="/admin" element={<ModPanel />} />
+          <Route path="/admin" element={<HomePanel />} />
+          <Route path="userboards" element={<BoardsPanel />} />
           <Route path={"comments"} element={<ModPanel />} />
         </Route>
         <Route path={"*"} element={<Error404 />} />

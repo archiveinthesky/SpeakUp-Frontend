@@ -35,7 +35,7 @@ const Sidebar = ({ defualtState = true, toggleIndent = null }) => {
                             <p className="text-black text-2xl leading-8">首頁</p>
                         </li>
                     </Link>
-                    <Link to="/admin">
+                    <Link to="/admin/userboards">
                         <li className="flex list-none py-3 gap-4">
                             <img className='w-8 h-8 inline' src={userBoardsIcon} alt="封測議題"></img>
                             <p className="text-black text-2xl leading-8">您的議題</p>
