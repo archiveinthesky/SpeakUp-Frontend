@@ -11,12 +11,12 @@ module.exports = {
     fontFamily: {
       'sans': ['Helvetica', 'Arial', 'sans-serif'],
       'rounded': 'HiraginoMaru'
-    }
+    },
   },
   variants: {
     extend: {},
   },
   plugins: [
-
+    require('@tailwindcss/line-clamp'),
   ],
 }

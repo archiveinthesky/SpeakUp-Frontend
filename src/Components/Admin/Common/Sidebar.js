@@ -29,13 +29,13 @@ const Sidebar = ({ defualtState = true, toggleIndent = null }) => {
             <div className="h-6" />
             <div className="flex z-10">
                 <ul className="pl-10">
-                    <Link to="/home">
+                    <Link to="/admin">
                         <li className="flex list-none py-3 gap-4">
                             <img className='w-8 h-8 inline' src={homeIcon} alt="首頁"></img>
                             <p className="text-black text-2xl leading-8">首頁</p>
                         </li>
                     </Link>
-                    <Link to="/search?tags=封測議題">
+                    <Link to="/admin">
                         <li className="flex list-none py-3 gap-4">
                             <img className='w-8 h-8 inline' src={userBoardsIcon} alt="封測議題"></img>
                             <p className="text-black text-2xl leading-8">您的議題</p>
@@ -47,7 +47,7 @@ const Sidebar = ({ defualtState = true, toggleIndent = null }) => {
                             <p className="text-black text-2xl leading-8">留言管理</p>
                         </li>
                     </Link>
-                    <Link to="/search">
+                    <Link to="/admin">
                         <li className="flex list-none py-3 gap-4">
                             <img className='w-8 h-8 inline' src={userTasksIcon} alt="首頁"></img>
                             <p className="text-black text-2xl leading-8">您的任務</p>
