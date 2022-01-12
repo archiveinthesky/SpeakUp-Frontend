@@ -7,9 +7,11 @@ const Navcard = ({ carddata }) => {
     const [isSaved, setIsSaved] = useState(carddata.saved)
 
     const toggleSaved = () => {
-        SaveBoard(carddata.boardid, !isSaved)
+        SaveBoard(carddata.boardId, !isSaved)
         setIsSaved(!isSaved)
     }
+
+    console.log(carddata)
 
     return (
         <div className="w-96 h-48 relative flex-shrink-0 bg-white">

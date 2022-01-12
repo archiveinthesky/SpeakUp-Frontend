@@ -83,7 +83,7 @@ const MainBoard = ({ mode }) => {
                                 "title": board.title,
                                 "tags": board.tags,
                                 "content": board.brief,
-                                "boardid": board.boardId,
+                                "boardId": board.boardId,
                                 "saved": board.saved
                             }
                         }))

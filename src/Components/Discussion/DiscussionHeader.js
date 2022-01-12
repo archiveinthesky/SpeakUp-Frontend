@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import SaveBoard from '../Common/SaveBoards';
 import ReportContent from './ReportContent';
 
-const DiscussionHeader = ({ boardid }) => {
+const DiscussionHeader = ({ boardId }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [showStandpoint, setShowStandpoint] = useState(false);
     const [showReference, setShowReference] = useState(false);
@@ -14,8 +14,8 @@ const DiscussionHeader = ({ boardid }) => {
     const [pageContent, setPageContent] = useState([]);
 
     useEffect(() => {
-        console.log(boardid)
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/boards/${boardid}`, {
+        console.log(boardId)
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/boards/${boardId}`, {
             method: 'GET',
             headers: {
                 'Authorization': localStorage.getItem("AuthToken"),
@@ -43,10 +43,10 @@ const DiscussionHeader = ({ boardid }) => {
                 let errtxt = `獲取頁面資料時發生錯誤(${error.message})，請重新整理網頁。若錯誤持續發生，請稍待片刻，我們將盡快修復。`
                 setErrorOccured(errtxt)
             })
-    }, [boardid])
+    }, [boardId])
 
     const toggleSaved = () => {
-        SaveBoard(boardid, !userSaved)
+        SaveBoard(boardId, !userSaved)
         setUserSaved(!userSaved)
     }
 

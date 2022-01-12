@@ -1,4 +1,4 @@
-const SaveBoard = (boardid, saveStat) => {
+const SaveBoard = (boardId, saveStat) => {
     fetch('http://localhost:8000/api/boards/save/', {
         method: 'PUT',
         headers: {
@@ -7,7 +7,7 @@ const SaveBoard = (boardid, saveStat) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            "boardId": boardid,
+            "boardId": boardId,
             "save": saveStat
         })
     })

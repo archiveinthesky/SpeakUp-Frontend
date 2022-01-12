@@ -129,7 +129,7 @@ const MainBoard = () => {
                 <div>
                     <Sidebar defualtState={window.innerWidth >= 1280} toggleIndent={toggleIndent} />
                     <div className={`w-full pt-24 ${enableAnim ? "transition-padding" : "transition-none"} duration-1000 ease-out ${indentDiscussion ? "pl-72" : "pl-0"}`}>
-                        <DiscussionHeader boardid={boardId} />
+                        <DiscussionHeader boardId={boardId} />
                     </div>
                     <div className="w-11/12 mx-auto my-6 flex justify-end">
                         <DropdownSelector />

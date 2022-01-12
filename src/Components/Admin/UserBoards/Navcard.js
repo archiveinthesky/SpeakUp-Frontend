@@ -8,8 +8,8 @@ const Navcard = ({ carddata }) => {
 
     return (
         <div className="w-96 flex-shrink-0 bg-white rounded-xl">
-            <Link to={`../discussions/${carddata.boardid}`}>
-                <div className="h-full py-4 px-6" >
+            <Link to={`${carddata.boardId}`}>
+                <div className="h-full pt-4 pb-6 px-6" >
                     <h3 className="text-black text-2xl" ref={cardtitle}>{carddata.title}</h3>
                     <div className="flex my-2 justify-start gap-2">
                         <div className="flex items-center gap-1">

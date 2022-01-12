@@ -9,12 +9,12 @@ const WideNavCard = ({ carddata }) => {
 
     const toggleSaved = () => {
         setIsSaved(!isSaved)
-        SaveBoard(carddata.boardid, !isSaved)
+        SaveBoard(carddata.boardId, !isSaved)
     }
 
     return (
         <div className="w-full h-48 relative flex-shrink-0 bg-white"  >
-            <Link to={`../discussions/${carddata.boardid}`}>
+            <Link to={`../discussions/${carddata.boardId}`}>
                 <div className="h-40 pt-4 px-6" >
                     <h3 className=" text-black text-3xl">{carddata.title}</h3>
                     {carddata.tags != null &&

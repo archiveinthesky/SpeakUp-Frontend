@@ -34,7 +34,7 @@ function App() {
         <Route path={"/admin"} element={<AdminPage />} >
           <Route path="/admin" element={<HomePanel />} />
           <Route path={"userboards"} element={<BoardsPanel />} />
-          <Route path={"manageboard/:boardId"} element={<BoardPanel />} />
+          <Route path={"userboards/:boardId"} element={<BoardPanel />} />
           <Route path={"comments"} element={<ModPanel />} />
         </Route>
         <Route path={"*"} element={<Error404 />} />
