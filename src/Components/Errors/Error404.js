@@ -1,7 +1,7 @@
 
 const Error404 = () => {
     return (
-        <button onClick={() => { window.location.href = "home" }} className="w-screen h-screen relative bg-accent-blue">
+        <button onClick={() => { window.location.href = "/home" }} className="w-screen h-screen relative bg-accent-blue">
             <div className="absolute top-32 left-32">
                 <h1 className="w-min h-min text-[220px] leading-[280px] text-white text-left">404</h1>
                 <p className="text-7xl text-left text-white leading-[6rem]">
