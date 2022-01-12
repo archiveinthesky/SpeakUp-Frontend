@@ -80,7 +80,10 @@ const EditBoardContent = ({ initialData, submitFunction }) => {
             }
             submitFunction(submitPayload)
         }
+    }
 
+    const submitOriginalContent = () => {
+        submitFunction(initialData)
     }
 
     return (
@@ -199,7 +202,7 @@ const EditBoardContent = ({ initialData, submitFunction }) => {
                 </div>
                 <div className="flex gap-4">
                     <button className="px-5 py-2 bg-blue-500 text-white text-lg rounded-lg" onClick={submitContent}>儲存</button>
-                    <button className="px-5 py-2 bg-gray-300 text-gray-700 text-lg rounded-lg ">取消</button>
+                    <button className="px-5 py-2 bg-gray-300 text-gray-700 text-lg rounded-lg" onClick={submitOriginalContent}>取消</button>
                 </div>
             </div>
         </div>
