@@ -15,7 +15,7 @@ const CmtContext = ({ rHeight = 0, boardId, motherCmt }) => {
 
     useEffect(() => {
         setCommentsHeight(comments.current.clientHeight + 55)
-    })
+    }, [comments.current.clientHeight])
 
     return (
         <div style={{ height: (rHeight + 56 > commentsHeight) ? commentsHeight : rHeight + 56 }} className="absolute -top-14 w-11/12 p-6 overflow-y-scroll overflow-scrollbar-hide rounded-3xl border-2 border-gray-400">

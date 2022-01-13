@@ -22,7 +22,7 @@ const EditBoardContent = ({ initialData, submitFunction }) => {
         supArgRef.current.innerText = initialData.supArg
         agnArgRef.current.innerText = initialData.agnArg
         setRefDatas(initialData.refData)
-    }, [])
+    }, [initialData])
 
     const newTag = () => {
         setTags([...tags, newTagName])
@@ -59,7 +59,7 @@ const EditBoardContent = ({ initialData, submitFunction }) => {
 
         refdatas.every(element => {
             try {
-                let url = new URL(element)
+                new URL(element)
             } catch (_) {
                 errormessage.refdata = "延伸資料需要是完整的網址"
                 return false

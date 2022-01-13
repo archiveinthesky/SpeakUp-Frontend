@@ -28,7 +28,7 @@ const BoardComments = ({ boardId }) => {
 
     useEffect(() => {
         setTOSHeight(cmtSection.current.clientHeight)
-    })
+    }, [cmtSection.current.clientHeight])
 
     const toggleReplyThread = (showThread, commentId) => {
         if (showThread) setCurReplyThread(commentId)

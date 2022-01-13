@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useInView } from 'react-intersection-observer';
 
 import CommentCard from './CommentCard'
@@ -17,7 +17,7 @@ const CommentField = ({ boardId, onSide }) => {
 
     const { ref: lastCardRef, inView: lastCardInView, entry } = useInView()
 
-    const fetchComments = async (start, end) => {
+    const fetchComments = useCallback(async (start, end) => {
         if (canFetchMoreCmt) {
             setIsLoading(true)
             let onside = ""
@@ -53,13 +53,13 @@ const CommentField = ({ boardId, onSide }) => {
                     setErrorOccured(errtxt)
                 })
         }
-    }
+    }, [boardId, canFetchMoreCmt, comments, onSide])
 
-    const fetchMoreComments = () => {
+    const fetchMoreComments = useCallback(() => {
         if (canFetchMoreCmt && !isLoading) {
             fetchComments(furthestCmt + 1, furthestCmt + 10)
         }
-    }
+    }, [canFetchMoreCmt, isLoading, fetchComments, furthestCmt])
 
     const postReply = async (commentid, cmtcontent) => {
         let onside = ""
