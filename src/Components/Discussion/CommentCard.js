@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, forwardRef } from 'react'
 import ReportContent from './ReportContent'
 import ProfileImg from '../../Assets/General/defualtprofile.png'
 
-const CommentCard = ({
+const CommentCard = forwardRef(({
     boardId, onSide,
     cmtdata,
     isLast,
     motherComment = null, APIPostReply,
     fetchComments
-}) => {
+}, ref) => {
 
     const [supported, setSupported] = useState(cmtdata.userSupported)
     const [liked, setLiked] = useState(cmtdata.userLiked)
@@ -22,22 +22,6 @@ const CommentCard = ({
     const thiscard = useRef(null)
     const cardmenu = useRef(null)
 
-    //eslint-disable-next-line
-    var incd = false;
-
-    useEffect(() => {
-        if (isLast) {
-            const loadCmtCheck = () => {
-                if (window.innerHeight - thiscard.current.getBoundingClientRect().y > 0 && !incd) {
-                    incd = true
-                    fetchComments()
-                    setInterval(() => { incd = false }, 1000)
-                }
-            }
-            document.getElementById("scrollTrigger").addEventListener('click', loadCmtCheck)
-            return () => { try { document.getElementById("scrollTrigger").removeEventListener('click', loadCmtCheck) } catch { } }
-        }
-    }, [isLast])
 
     useEffect(() => {
         let onside
@@ -193,7 +177,7 @@ const CommentCard = ({
 
     return (
         <>
-            <div className=" w-11/12 mx-auto my-2 border-2 border-gray-200 rounded-3xl duration-300" ref={thiscard}>
+            <div className=" w-11/12 mx-auto my-2 border-2 border-gray-200 rounded-3xl duration-300" ref={ref}>
                 <div className="w-full px-4 2xl:px-8 mx-auto mt-2 flex justify-start">
                     <img className="p-2 rounded-full overflow-hidden w-14 h-14" src={ProfileImg} alt="Profile" />
                     <div className="my-auto pl-2"><h3 className=" text-black text-2xl">{cmtdata.accName}</h3></div>
@@ -283,6 +267,6 @@ const CommentCard = ({
             {showReplyBox && <ReplyTextField />}
         </>
     )
-}
+})
 
 export default CommentCard
