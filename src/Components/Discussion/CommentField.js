@@ -143,9 +143,7 @@ const CommentField = ({ boardId, onSide }) => {
             {errorOccured === false ?
                 <div className="bg-white" >
                     <div className="h-1" />
-                    <div className="mx-auto mt-4 mb-2 w-11/12 flex justify-between">
-                        <CmtFieldHeader boardId={boardId} onSide={onSide} addUserComment={addUserComment} />
-                    </div>
+                    <CmtFieldHeader boardId={boardId} onSide={onSide} addUserComment={addUserComment} />
                     <div className="w-full mb-4 flex flex-col">
                         {[...userComments, ...comments].map((cmt, i) => {
                             return (
