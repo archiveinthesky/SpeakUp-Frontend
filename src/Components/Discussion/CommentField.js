@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useInView } from 'react-intersection-observer';
+
 import CommentCard from './CommentCard'
 import CommentResponseField from './CommentResponseField';
 import LoadingSkeleton from './Comments/LoadingSkeleton'
 import CmtFieldHeader from './Comments/CmtFieldHeader';
+
 
 const CommentField = ({ boardId, onSide }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -12,15 +15,7 @@ const CommentField = ({ boardId, onSide }) => {
     const [canFetchMoreCmt, setCanFetchMoreCmt] = useState(true)
     const [errorOccured, setErrorOccured] = useState(false)
 
-    const observerCallback = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                observer.unobserve(entry.target)
-            }
-        })
-    }
-
-    const observer = new IntersectionObserver(observerCallback)
+    const { ref: lastCardRef, inView: lastCardInView, entry } = useInView()
 
     const fetchComments = async (start, end) => {
         if (canFetchMoreCmt) {
@@ -61,11 +56,8 @@ const CommentField = ({ boardId, onSide }) => {
     }
 
     const fetchMoreComments = () => {
-        if (canFetchMoreCmt) {
-            setIsLoading(true)
-            if (!isLoading) {
-                fetchComments(furthestCmt + 1, furthestCmt + 10)
-            }
+        if (canFetchMoreCmt && !isLoading) {
+            fetchComments(furthestCmt + 1, furthestCmt + 10)
         }
     }
 
@@ -113,6 +105,15 @@ const CommentField = ({ boardId, onSide }) => {
     }
 
     useEffect(() => {
+        if (entry !== undefined) {
+            if (entry.isIntersecting) {
+                fetchMoreComments()
+            }
+        }
+    }, [lastCardInView])
+
+
+    useEffect(() => {
         setCanFetchMoreCmt(true)
         setUserComments([])
         setComments([])
@@ -155,7 +156,7 @@ const CommentField = ({ boardId, onSide }) => {
                                         cmtdata={cmt}
                                         APIPostReply={postReply}
                                         fetchComments={fetchMoreComments}
-                                        ref={element => { if (i + 1 === comments.length && element !== null) observer.observe(element) }}
+                                        ref={i + 1 === comments.length ? lastCardRef : null}
                                     />
                                     {cmt.cmtReplies > 0 &&
                                         <CommentResponseField
