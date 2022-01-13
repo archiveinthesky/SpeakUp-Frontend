@@ -6,7 +6,7 @@ const CommentResponseField = ({ boardId, onSide, commentId, hasComments }) => {
 
     useEffect(() => {
         getResponses()
-    }, [onSide])
+    }, [onSide, hasComments])
 
     const getResponses = () => {
         let onside

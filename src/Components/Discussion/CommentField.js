@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useInView } from 'react-intersection-observer';
 
 import CommentCard from './CommentCard'
@@ -76,8 +76,8 @@ const CommentField = ({ boardId, onSide }) => {
                 "cmtContent": cmtcontent
             })
         })
-            .then((response) => { return response.json() })
             .then((response) => {
+
                 if (userComments.some(cmt => cmt.id === commentid)) {
                     let newCmts = userComments.map((x) => JSON.parse(JSON.stringify(x)))
                     for (let i = 0; i < newCmts.length; i++) {
