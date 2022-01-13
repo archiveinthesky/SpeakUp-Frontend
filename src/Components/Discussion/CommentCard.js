@@ -1,14 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, forwardRef } from 'react'
 import ReportContent from './ReportContent'
 import ProfileImg from '../../Assets/General/defualtprofile.png'
 
-const CommentCard = ({
-    boardId, onSide,
-    cmtdata,
-    isLast,
-    motherComment = null, APIPostReply,
-    fetchComments
-}) => {
+import { ArrowCircleUpIcon, ReplyIcon, XIcon } from '@heroicons/react/solid'
+
+
+const CommentCard = forwardRef(({ boardId, onSide, cmtdata, motherComment = null, APIPostReply, }, ref) => {
 
     const [supported, setSupported] = useState(cmtdata.userSupported)
     const [liked, setLiked] = useState(cmtdata.userLiked)
@@ -19,25 +16,7 @@ const CommentCard = ({
     const [enableAnim, setEnableAnim] = useState(false)
 
     const firstRender = useRef(true)
-    const thiscard = useRef(null)
     const cardmenu = useRef(null)
-
-    //eslint-disable-next-line
-    var incd = false;
-
-    useEffect(() => {
-        if (isLast) {
-            const loadCmtCheck = () => {
-                if (window.innerHeight - thiscard.current.getBoundingClientRect().y > 0 && !incd) {
-                    incd = true
-                    fetchComments()
-                    setInterval(() => { incd = false }, 1000)
-                }
-            }
-            document.getElementById("scrollTrigger").addEventListener('click', loadCmtCheck)
-            return () => { try { document.getElementById("scrollTrigger").removeEventListener('click', loadCmtCheck) } catch { } }
-        }
-    }, [isLast])
 
     useEffect(() => {
         let onside
@@ -64,7 +43,7 @@ const CommentCard = ({
 
                 })
         }
-    }, [supported, liked, disliked])
+    }, [boardId, cmtdata.id, motherComment, onSide, supported, liked, disliked])
 
     useEffect(() => { firstRender.current = false }, [])
 
@@ -157,43 +136,39 @@ const CommentCard = ({
 
 
     const ReplyTextField = () => {
-        const [replyData, setReplyData] = useState("")
+        const replyFieldRef = useRef(null)
 
-        const typeReplyUpdate = (e) => {
-            setReplyData(e.target.value)
-        }
-
-        const postReply = (e) => {
-            e.preventDefault()
+        const postReply = () => {
+            APIPostReply(cmtdata.id, replyFieldRef.current.innerText)
+            replyFieldRef.current.innerText = ""
             setShowReplyBox(false)
-            APIPostReply(cmtdata.id, replyData)
-            setReplyData("")
         }
 
         return (
-            <form className="w-11/12 ml-10 flex" onSubmit={postReply} >
-                <input
-                    className={`w-full h-14 my-auto pl-5 pr-14 py-3 text-xl border-2 border-gray-500 rounded-3xl resize-none `}
-                    placeholder="回覆"
-                    onChange={typeReplyUpdate}
-                    value={replyData}
+            <div className="w-11/12 ml-10 flex items-center" >
+                <div
+                    className={`w-full my-auto pl-5 pr-14 py-3 text-xl border-2 border-gray-500 rounded-3xl resize-none `}
+                    contentEditable={true}
+                    onKeyPress={e => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault()
+                            postReply()
+                        }
+                    }}
+                    ref={replyFieldRef}
                 >
-                </input>
-                <button className={`relative -left-12 self-end pb-2`} >
-                    <svg className="w-7 h-7"
-                        fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <line x1="22" x2="11" y1="2" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
-                    </svg>
+                </div>
+                <button className={`relative right-12 -bottom-1 pb-2`} onClick={postReply} >
+                    <ReplyIcon className='w-7 h-7' />
                 </button>
-            </form>
+            </div>
         )
     }
 
 
     return (
         <>
-            <div className=" w-11/12 mx-auto my-2 border-2 border-gray-200 rounded-3xl duration-300" ref={thiscard}>
+            <div className=" w-11/12 mx-auto my-2 border-2 border-gray-200 rounded-3xl duration-300" ref={ref}>
                 <div className="w-full px-4 2xl:px-8 mx-auto mt-2 flex justify-start">
                     <img className="p-2 rounded-full overflow-hidden w-14 h-14" src={ProfileImg} alt="Profile" />
                     <div className="my-auto pl-2"><h3 className=" text-black text-2xl">{cmtdata.accName}</h3></div>
@@ -203,20 +178,18 @@ const CommentCard = ({
                     <div className="flex h-10">
                         <div className="flex min-w-max h-10 border-2 border-gray-200 rounded-3xl">
                             <div className="ml-2 my-1">
-                                <button onClick={() => { updateUserStatus("supported") }}>
-                                    <svg className={`inline mx-2 w-7 overflow-hidden ${supported ? "filter-blue " : "filter-none"}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.501 22.501">
-                                        <path className={`${supported & enableAnim && "animate-fly-up "}`} d="M.563,11.813a11.25,11.25,0,1,1,11.25,11.25A11.248,11.248,0,0,1,.563,11.813Zm6.514,1.311L10.361,9.7v8.284a1.086,1.086,0,0,0,1.089,1.089h.726a1.086,1.086,0,0,0,1.089-1.089V9.7l3.284,3.425a1.09,1.09,0,0,0,1.556.018l.494-.5a1.084,1.084,0,0,0,0-1.538l-6.015-6.02a1.084,1.084,0,0,0-1.538,0l-6.024,6.02a1.084,1.084,0,0,0,0,1.538l.494.5A1.1,1.1,0,0,0,7.077,13.124Z" transform="translate(-0.563 -0.563)" />
-                                    </svg>
-                                </button>
-                                <span className="align-middle"><p className="inline text-lg mr-2">{cmtdata.cmtSupport + (supported ? 1 : 0)}</p></span>
-                            </div>
-                            <div className="ml-2 my-1">
                                 <button onClick={() => { updateUserStatus("liked") }}>
                                     <svg className={`inline mx-2 w-7 ${(liked && enableAnim) && "animate-jump-up"} ${liked ? "filter-green ease-in" : "filter-none"}`} xmlns="http://www.w3.org/2000/svg" width="25.149" height="25.501" viewBox="0 0 25.149 25.501">
                                         <path id="Icon_feather-thumbs-up" data-name="Icon feather-thumbs-up" d="M16.5,10.875v-4.5A3.375,3.375,0,0,0,13.125,3l-4.5,10.125V25.5h12.69a2.25,2.25,0,0,0,2.25-1.913l1.553-10.125a2.25,2.25,0,0,0-2.25-2.588ZM8.625,25.5H5.25A2.25,2.25,0,0,1,3,23.251V15.375a2.25,2.25,0,0,1,2.25-2.25H8.625" transform="translate(-1.5 -1.5)" fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
                                     </svg>
                                 </button>
                                 <span className="align-middle"><p className="inline text-lg mr-2">{cmtdata.cmtLikes + (liked ? 1 : 0)}</p></span>
+                            </div>
+                            <div className="ml-2 my-1 flex items-center">
+                                <button className='w-8 h-8 mx-2 overflow-hidden' onClick={() => { updateUserStatus("supported") }}>
+                                    <ArrowCircleUpIcon className={`inline w-8 overflow-hidden ${supported ? "text-blue-600 " : "text-blue"} ${supported & enableAnim && "animate-fly-up "}`} />
+                                </button>
+                                <p className="inline text-lg mr-2">{cmtdata.cmtSupport + (supported ? 1 : 0)}</p>
                             </div>
                             <div className="mx-2 my-1">
                                 <button onClick={() => { updateUserStatus("disliked") }}>
@@ -229,40 +202,7 @@ const CommentCard = ({
                         </div>
                         {motherComment === null &&
                             <button className=" invisible 2xl:visible my-auto ml-4" onClick={() => { setShowReplyBox(!showReplyBox) }}>
-                                {showReplyBox ?
-                                    <svg className="w-7 h-7 inline" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <g filter="url(#filter0_d_15_475)">
-                                            <path d="M2 11L11.8995 1.10051" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
-                                        </g>
-                                        <g filter="url(#filter1_d_15_475)">
-                                            <path d="M2 1.00001L11.8995 10.8995" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
-                                        </g>
-                                        <defs>
-                                            <filter id="filter0_d_15_475" x="0.5" y="0.60051" width="12.8995" height="12.8995" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                                                <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                                                <feOffset dy="1" />
-                                                <feGaussianBlur stdDeviation="0.5" />
-                                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0" />
-                                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_15_475" />
-                                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_15_475" result="shape" />
-                                            </filter>
-                                            <filter id="filter1_d_15_475" x="0.5" y="0.500008" width="12.8995" height="12.8995" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                                                <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                                                <feOffset dy="1" />
-                                                <feGaussianBlur stdDeviation="0.5" />
-                                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0" />
-                                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_15_475" />
-                                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_15_475" result="shape" />
-                                            </filter>
-                                        </defs>
-                                    </svg>
-                                    :
-                                    <svg className="w-7 h-7 inline" xmlns="http://www.w3.org/2000/svg" width="33.38" height="27.817" viewBox="0 0 33.38 27.817">
-                                        <path id="Icon_material-reply" data-name="Icon material-reply" d="M17.481,14.918V7.5L4.5,20.481,17.481,33.462v-7.6c9.272,0,15.763,2.967,20.4,9.458C36.025,26.044,30.462,16.772,17.481,14.918Z" transform="translate(-4.5 -7.5)" />
-                                    </svg>}
-                                <h3 className="text-gray-400 pl-1 inline">{showReplyBox ? "取消" : "回覆"}</h3>
+                                {showReplyBox ? <XIcon className='w-7 h-7 inline' /> : <ReplyIcon className='w-7 h-7 inline' />}
                             </button>
                         }
                     </div>
@@ -283,6 +223,6 @@ const CommentCard = ({
             {showReplyBox && <ReplyTextField />}
         </>
     )
-}
+})
 
 export default CommentCard

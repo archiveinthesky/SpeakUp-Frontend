@@ -123,7 +123,7 @@ const MainBoard = () => {
     }
 
     return (
-        <div className="w-screen h-screen overflow-x-hidden overflow-y-auto bg-gray-50" onScroll={() => { document.getElementById("scrollTrigger").click() }}>
+        <div className="w-screen h-screen overflow-x-hidden overflow-y-auto bg-gray-50" >
             <Header />
             {boardId != null &&
                 <div>
