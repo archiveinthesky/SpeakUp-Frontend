@@ -2,16 +2,17 @@ import React, { useState, useEffect, useRef, forwardRef } from 'react'
 import ReportContent from './ReportContent'
 import ProfileImg from '../../Assets/General/defualtprofile.png'
 
-import { ArrowCircleUpIcon, ReplyIcon, XIcon } from '@heroicons/react/solid'
+import { ArrowCircleUpIcon, ReplyIcon, XIcon, FlagIcon } from '@heroicons/react/solid'
+import { TrashIcon } from '@heroicons/react/outline'
 
 
-const CommentCard = forwardRef(({ boardId, onSide, cmtdata, motherComment = null, APIPostReply, }, ref) => {
+const CommentCard = forwardRef(({ boardId, onSide, cmtdata, motherComment = null, APIPostReply, delComment }, ref) => {
 
     const [supported, setSupported] = useState(cmtdata.userSupported)
     const [liked, setLiked] = useState(cmtdata.userLiked)
     const [disliked, setDisliked] = useState(cmtdata.userDisliked)
     const [showReportMenu, setShowReportMenu] = useState(false)
-    const [showReportBtn, setshowReportBtn] = useState(false)
+    const [showExtendedMenu, setShowExtendedMenu] = useState(false)
     const [showReplyBox, setShowReplyBox] = useState(false)
     const [enableAnim, setEnableAnim] = useState(false)
 
@@ -71,62 +72,57 @@ const CommentCard = forwardRef(({ boardId, onSide, cmtdata, motherComment = null
 
     }
 
-    const ReportButton = () => {
+    const deleteComment = () => {
+        let onside
+        if (onSide === "支持方") onside = "sup"
+        else if (onSide === "反對方") onside = "agn"
+        else if (onSide === null) onside = "all"
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/comments/delete/${boardId}/${onside}${(motherComment !== null) ? "/" + motherComment : ""}/${cmtdata.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': localStorage.getItem("AuthToken"),
+            }
+        })
+            .then(response => {
+                if (response.status === 204) {
+                    delComment(cmtdata.id)
+                }
+            })
+            .catch((error) => { })
+
+    }
+
+    const ExtendedMenu = () => {
         return (
-            <span className="absolute top-0 left-0 w-screen h-screen" onClick={() => { setshowReportBtn(false) }}>
+            <span className="absolute top-0 left-0 w-screen h-screen" onClick={() => { setShowExtendedMenu(false) }}>
                 <div className="absolute flex flex-col"
-                    style={{ top: cardmenu.current.getBoundingClientRect().y + 15, left: cardmenu.current.getBoundingClientRect().x + 15 }}>
+                    style={{ top: cardmenu.current.getBoundingClientRect().y + 15, left: cardmenu.current.getBoundingClientRect().x + 15 }}
+                >
                     <button
                         className=" bg-white hover:bg-gray-200 px-4 py-2 filter drop-shadow-md transition-colors duration-200 z-10"
                         onClick={() => { setShowReportMenu(true) }}
                     >
-                        <svg className="w-7 h-7 inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 33">
-                            <g id="Icon_feather-flag" data-name="Icon feather-flag" transform="translate(-4.5 -1.5)">
-                                <path id="Path_5" data-name="Path 5" d="M6,22.5S7.5,21,12,21s7.5,3,12,3,6-1.5,6-1.5V4.5S28.5,6,24,6,16.5,3,12,3,6,4.5,6,4.5Z" fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
-                                <path id="Path_6" data-name="Path 6" d="M6,33V22.5" fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
-                            </g>
-                        </svg>
+                        <FlagIcon className='w-7 h-7 inline' />
                         <h3 className="text-gray-400 pl-1 inline">檢舉</h3>
                     </button>
+
+                    {true &&
+                        <button
+                            className=" bg-white hover:bg-gray-200 px-4 py-2 filter drop-shadow-md transition-colors duration-200 z-10"
+                            onClick={deleteComment}
+                        >
+                            <TrashIcon className='w-7 h-7 inline' />
+                            <h3 className="text-gray-400 pl-1 inline">刪除</h3>
+                        </button>
+
+                    }
 
                     {motherComment === null &&
                         <button
                             className="visible 2xl:hidden bg-white hover:bg-gray-200 px-4 py-2 filter drop-shadow-md transition-colors duration-200 z-10"
                             onClick={() => { setShowReplyBox(!showReplyBox) }}
                         >
-                            {showReplyBox ?
-                                <svg className="w-7 h-7 inline" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g filter="url(#filter0_d_15_475)">
-                                        <path d="M2 11L11.8995 1.10051" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
-                                    </g>
-                                    <g filter="url(#filter1_d_15_475)">
-                                        <path d="M2 1.00001L11.8995 10.8995" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
-                                    </g>
-                                    <defs>
-                                        <filter id="filter0_d_15_475" x="0.5" y="0.60051" width="12.8995" height="12.8995" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                                            <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                                            <feOffset dy="1" />
-                                            <feGaussianBlur stdDeviation="0.5" />
-                                            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0" />
-                                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_15_475" />
-                                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_15_475" result="shape" />
-                                        </filter>
-                                        <filter id="filter1_d_15_475" x="0.5" y="0.500008" width="12.8995" height="12.8995" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                                            <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                                            <feOffset dy="1" />
-                                            <feGaussianBlur stdDeviation="0.5" />
-                                            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0" />
-                                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_15_475" />
-                                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_15_475" result="shape" />
-                                        </filter>
-                                    </defs>
-                                </svg>
-                                :
-                                <svg className="w-7 h-7 inline" xmlns="http://www.w3.org/2000/svg" width="33.38" height="27.817" viewBox="0 0 33.38 27.817">
-                                    <path id="Icon_material-reply" data-name="Icon material-reply" d="M17.481,14.918V7.5L4.5,20.481,17.481,33.462v-7.6c9.272,0,15.763,2.967,20.4,9.458C36.025,26.044,30.462,16.772,17.481,14.918Z" transform="translate(-4.5 -7.5)" />
-                                </svg>}
+                            {showReplyBox ? <XIcon className='w-7 h-7 inline' /> : <ReplyIcon className='w-7 h-7 inline' />}
                             <h3 className="text-gray-400 pl-1 inline">{showReplyBox ? "取消" : "回覆"}</h3>
                         </button>}
                 </div>
@@ -207,8 +203,8 @@ const CommentCard = forwardRef(({ boardId, onSide, cmtdata, motherComment = null
                         }
                     </div>
                     <div>
-                        <button className="text-3xl" onClick={() => { setshowReportBtn(true) }} ref={cardmenu}> ⋮ </button>
-                        {showReportBtn && <ReportButton />}
+                        <button className="text-3xl" onClick={() => { setShowExtendedMenu(true) }} ref={cardmenu}> ⋮ </button>
+                        {showExtendedMenu && <ExtendedMenu />}
                     </div>
                     {showReportMenu && <ReportContent
                         rHeader="請問此留言有什麼問題？"

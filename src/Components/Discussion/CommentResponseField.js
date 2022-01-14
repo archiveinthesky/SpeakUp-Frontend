@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { cloneDeep } from 'lodash'
 import CommentCard from './CommentCard'
 
 const CommentResponseField = ({ boardId, onSide, commentId, hasComments }) => {
@@ -33,6 +34,14 @@ const CommentResponseField = ({ boardId, onSide, commentId, hasComments }) => {
             })
     }
 
+    const delComment = (commentid) => {
+        let newCmts = cloneDeep(comments)
+        for (let i = 0; i < newCmts.length; i++) {
+            if (newCmts[i].id === commentid) newCmts.splice(i, 1)
+        }
+        setComments(newCmts)
+    }
+
     return (
         <div className="w-11/12 bg-white ml-auto flex flex-col">
             {comments.map((cmt) => {
@@ -42,7 +51,9 @@ const CommentResponseField = ({ boardId, onSide, commentId, hasComments }) => {
                     key={"r" + commentId.toString() + "-" + comments.indexOf(cmt).toString()}
                     cmtdata={cmt}
                     motherComment={commentId}
-                    replyFunction={null} />
+                    replyFunction={null}
+                    delComment={delComment}
+                />
             })}
         </div >
     )

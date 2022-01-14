@@ -5,6 +5,7 @@ import CommentCard from './CommentCard'
 import CommentResponseField from './CommentResponseField';
 import LoadingSkeleton from './Comments/LoadingSkeleton'
 import CmtFieldHeader from './Comments/CmtFieldHeader';
+import { cloneDeep } from 'lodash';
 
 
 const CommentField = ({ boardId, onSide }) => {
@@ -79,7 +80,7 @@ const CommentField = ({ boardId, onSide }) => {
             .then((response) => {
 
                 if (userComments.some(cmt => cmt.id === commentid)) {
-                    let newCmts = userComments.map((x) => JSON.parse(JSON.stringify(x)))
+                    let newCmts = cloneDeep(userComments)
                     for (let i = 0; i < newCmts.length; i++) {
                         if (newCmts[i].id === commentid) {
                             newCmts[i].cmtReplies += 1
@@ -89,7 +90,7 @@ const CommentField = ({ boardId, onSide }) => {
                     setUserComments(newCmts)
                 }
                 else {
-                    let newCmts = comments.map((x) => JSON.parse(JSON.stringify(x)))
+                    let newCmts = cloneDeep(comments)
                     for (let i = 0; i < newCmts.length; i++) {
                         if (newCmts[i].id === commentid) {
                             newCmts[i].cmtReplies += 1
@@ -138,6 +139,23 @@ const CommentField = ({ boardId, onSide }) => {
         setUserComments([commentContent, ...userComments])
     }
 
+    const delComment = (commentid) => {
+        if (userComments.some(cmt => cmt.id === commentid)) {
+            let newCmts = cloneDeep(userComments)
+            for (let i = 0; i < newCmts.length; i++) {
+                if (newCmts[i].id === commentid) newCmts.splice(i, 1)
+            }
+            setUserComments(newCmts)
+        }
+        else {
+            let newCmts = cloneDeep(comments)
+            for (let i = 0; i < newCmts.length; i++) {
+                if (newCmts[i].id === commentid) newCmts.splice(i, 1)
+            }
+            setComments(newCmts)
+        }
+    }
+
     return (
         <>
             {errorOccured === false ?
@@ -155,6 +173,7 @@ const CommentField = ({ boardId, onSide }) => {
                                         APIPostReply={postReply}
                                         fetchComments={fetchMoreComments}
                                         ref={i + 1 === comments.length ? lastCardRef : null}
+                                        delComment={delComment}
                                     />
                                     {cmt.cmtReplies > 0 &&
                                         <CommentResponseField
