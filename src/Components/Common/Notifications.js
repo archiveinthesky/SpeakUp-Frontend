@@ -34,7 +34,7 @@ const NotificationButton = () => {
                     {(notifyType === "warn") && <ExclamationIcon className='text-yellow-400' />}
                     {(notifyType === undefined) && <BellIcon className='text-gray-400' />}
                 </div>
-                <p className='flex-grow-0'>{notifyMessage}</p>
+                <p className='flex-grow-0 text-lg'>{notifyMessage}</p>
             </div>
         )
     }
@@ -61,8 +61,8 @@ const NotificationButton = () => {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className="origin-top-right absolute right-0 mt-2 w-80 max-h-[90vh] overflow-y-auto scrollbar-hide rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <h1 className='px-4 mt-3 text-xl'>您的通知</h1>
+                <Menu.Items className="origin-top-right absolute -right-14 md:right-0 mt-2 w-72 md:w-80 max-h-[90vh] overflow-y-auto scrollbar-hide rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <h1 className='px-4 mt-3 text-2xl'>您的通知</h1>
                     <div className="py-1 divide-y divide-gray-100">
                         {notifications.map((notification, i) =>
                             <Menu.Item>
