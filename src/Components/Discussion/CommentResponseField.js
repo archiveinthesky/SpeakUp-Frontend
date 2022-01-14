@@ -43,7 +43,7 @@ const CommentResponseField = ({ boardId, onSide, commentId, hasComments }) => {
     }
 
     return (
-        <div className="w-11/12 bg-white ml-auto flex flex-col">
+        <div className="w-[88%] md:w-11/12 lg:w-[88%] xl:w-11/12 bg-white ml-auto flex flex-col">
             {comments.map((cmt) => {
                 return <CommentCard
                     boardId={boardId}

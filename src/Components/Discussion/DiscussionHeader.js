@@ -57,14 +57,14 @@ const DiscussionHeader = ({ boardId }) => {
                     <div className="w-11/12 mx-auto my-6">
                         {isLoading ?
                             <div className="w-40 h-12 my-1 rounded-xl animate-pulse bg-gray-300"></div> :
-                            <h1 className="text-black text-5xl pb-4">{pageContent[0]}</h1>
+                            <h1 className="text-black text-5xl leading-[3.5rem] pb-4">{pageContent[0]}</h1>
                         }
                         {isLoading ?
                             <div className="w-20 h-8 my-1 rounded-xl animate-pulse bg-gray-300"></div> :
-                            <div className="flex justify-start gap-4">
+                            <div className="flex flex-wrap justify-start gap-4">
                                 {
                                     pageContent[1].map((tag) => {
-                                        return <div key={pageContent[1].indexOf(tag)} className="px-4 h-8 rounded-2xl bg-blue-300 bg-opacity-50">
+                                        return <div key={pageContent[1].indexOf(tag)} className="px-4 h-8 flex-shrink-0 rounded-2xl bg-blue-300 bg-opacity-50">
                                             <Link to={`/search?tags=${tag}`}><p className="leading-8 text-center text-blue-500 font-bold">{`#${tag}`}</p></Link>
                                         </div>
                                     })

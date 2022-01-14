@@ -3,14 +3,19 @@ import { useState, useEffect, useRef } from "react"
 const CmtFieldHeader = ({ boardId, onSide, addUserComment }) => {
 
     const [typingCmt, setTypingCmt] = useState(false)
+    const [inputPlaceholder, setInputPlaceholder] = useState("")
     const [newCmtSide, setNewCmtSide] = useState(onSide === null ? "支持方" : onSide)
     const [swtichedSides, setSwitchedSides] = useState(false)
     const cmtTextarea = useRef(null)
 
     useEffect(() => {
-        if (!typingCmt) cmtTextarea.current.innerText = "有想法嗎？提出來討論吧"
-        else if (cmtTextarea.current.innerText === "有想法嗎？提出來討論吧") cmtTextarea.current.innerText = ""
-    }, [typingCmt])
+        setInputPlaceholder(window.innerWidth > 768 ? "有想法嗎？提出來討論吧" : "提出你的想法")
+    }, [])
+
+    useEffect(() => {
+        if (!typingCmt) cmtTextarea.current.innerText = inputPlaceholder
+        else if (cmtTextarea.current.innerText === inputPlaceholder) cmtTextarea.current.innerText = ""
+    }, [typingCmt, inputPlaceholder])
 
     const postComment = async (cmtside, cmtcontent) => {
         if (cmtcontent === "" || cmtcontent === "有想法嗎？提出來討論吧") return false
@@ -40,11 +45,11 @@ const CmtFieldHeader = ({ boardId, onSide, addUserComment }) => {
     }
 
     return (
-        <div className="mx-auto mt-4 mb-2 w-11/12 flex justify-between gap-4">
+        <div className={`mx-auto mt-4 mb-2 w-11/12 flex ${onSide === null && typingCmt && 'flex-col md:flex-row'} justify-between gap-4`}>
             {onSide == null ? <> {typingCmt ?
-                <div className="flex flex-col justify-between gap-2 flex-shrink-0">
+                <div className="flex md:flex-col justify-between gap-2 flex-shrink-0">
                     <button
-                        className={`h-12 my-auto px-6 rounded-2xl bg-green-400 bg-opacity-50 flex justify-center ${newCmtSide === "支持方" && "border-4 border-green-600"}`}
+                        className={`h-12 flex-grow my-auto px-6 rounded-2xl bg-green-400 bg-opacity-50 flex justify-center ${newCmtSide === "支持方" && "border-4 border-green-600"}`}
                         onMouseDown={() => { setNewCmtSide("支持方"); setSwitchedSides(true) }}
                     >
                         <div className="my-auto">
@@ -52,7 +57,7 @@ const CmtFieldHeader = ({ boardId, onSide, addUserComment }) => {
                         </div>
                     </button>
                     <button
-                        className={`h-12 my-auto px-6 rounded-2xl bg-red-500 bg-opacity-50 flex justify-center ${newCmtSide === "反對方" && "border-4 border-red-500"}`}
+                        className={`h-12 flex-grow my-auto px-6 rounded-2xl bg-red-500 bg-opacity-50 flex justify-center ${newCmtSide === "反對方" && "border-4 border-red-500"}`}
                         onMouseDown={() => { setNewCmtSide("反對方"); setSwitchedSides(true) }}
                     >
                         <div className="my-auto">
@@ -66,8 +71,8 @@ const CmtFieldHeader = ({ boardId, onSide, addUserComment }) => {
                     </div>
                 </div>
             }</> :
-                <div className={`h-14 my-auto px-4 rounded-2xl ${onSide === "支持方" && "bg-green-400"} ${onSide === "反對方" && "bg-red-500"} bg-opacity-50 flex-shrink-0 flex justify-center`}>
-                    <div className="my-auto">
+                <div className={`${typingCmt ? 'hidden md:block' : ''} h-14 my-auto px-4 rounded-2xl ${onSide === "支持方" && "bg-green-400"} ${onSide === "反對方" && "bg-red-500"} bg-opacity-50 flex-shrink-0 flex justify-center`}>
+                    <div className="h-full flex items-center">
                         <h2 className={`text-3xl ${onSide === "支持方" && "text-green-600"} ${onSide === "反對方" && "text-red-500"}`}>{onSide}</h2>
                     </div>
                 </div>
@@ -75,10 +80,7 @@ const CmtFieldHeader = ({ boardId, onSide, addUserComment }) => {
 
             <div className="relative flex-grow overflow-x-hidden">
                 <div
-                    className={`w-[calc(100%)] h-full 
-                    my-auto pl-5 pr-14 py-3
-                    text-xl ${typingCmt ? "text-black" : "text-gray-500"} 
-                    border-2 border-gray-500 rounded-3xl`}
+                    className={`w-[calc(100%)] h-full my-auto pl-5 pr-14 py-3 text-xl ${typingCmt ? "text-black" : "text-gray-500"} border-2 border-gray-500 rounded-3xl`}
                     ref={cmtTextarea}
                     contentEditable={true}
                     onKeyPress={e => {

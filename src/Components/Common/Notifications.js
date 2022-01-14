@@ -65,7 +65,7 @@ const NotificationButton = () => {
                     <h1 className='px-4 mt-3 text-2xl'>您的通知</h1>
                     <div className="py-1 divide-y divide-gray-100">
                         {notifications.map((notification, i) =>
-                            <Menu.Item>
+                            <Menu.Item key={i}>
                                 {({ active }) =>
                                     <button className={`${active ? 'bg-gray-100 text-gray-900' : 'text-gray-700'} w-full px-4 py-2 text-sm text-left`}>
                                         <NotificationSlot notifyType={notification.type} notifyMessage={notification.message} />

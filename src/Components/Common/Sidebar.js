@@ -93,7 +93,7 @@ const Sidebar = ({ defualtState = true, toggleIndent = null }) => {
                 {toggleIndent !== null &&
                     <button className="absolute bg-accent-blue rounded-r-full w-8 h-16 flex"
                         onClick={smToggle}>
-                        <div className="absolute right-2.5 top-3.5 my-auto">
+                        <div className="absolute right-3 top-3.5 my-auto">
                             <svg className={`w-4 h-8 transform ${showSidebar ? "rotate-180" : "rotate-0"}`} viewBox="0 0 23.783 41.595">
                                 <path id="Icon_ionic-ios-arrow-forward" data-name="Icon ionic-ios-arrow-forward" d="M27.86,26.986,12.12,11.258a2.96,2.96,0,0,1,0-4.2,3,3,0,0,1,4.211,0L34.163,24.881a2.967,2.967,0,0,1,.087,4.1L16.343,46.925a2.973,2.973,0,1,1-4.211-4.2Z" transform="translate(-11.246 -6.196)" fill="#fff" />
                             </svg>
