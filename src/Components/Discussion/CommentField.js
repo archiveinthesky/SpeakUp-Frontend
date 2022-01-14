@@ -18,7 +18,7 @@ const CommentField = ({ boardId, onSide }) => {
 
     const { ref: lastCardRef, inView: lastCardInView, entry } = useInView()
 
-    const fetchComments = useCallback(async (start, end) => {
+    const fetchComments = async (start, end) => {
         if (canFetchMoreCmt) {
             setIsLoading(true)
             let onside = ""
@@ -54,13 +54,13 @@ const CommentField = ({ boardId, onSide }) => {
                     setErrorOccured(errtxt)
                 })
         }
-    }, [boardId, canFetchMoreCmt, comments, onSide])
+    }
 
-    const fetchMoreComments = useCallback(() => {
+    const fetchMoreComments = () => {
         if (canFetchMoreCmt && !isLoading) {
             fetchComments(furthestCmt + 1, furthestCmt + 10)
         }
-    }, [canFetchMoreCmt, isLoading, fetchComments, furthestCmt])
+    }
 
     const postReply = async (commentid, cmtcontent) => {
         let onside = ""
@@ -187,7 +187,7 @@ const CommentField = ({ boardId, onSide }) => {
                         })}
 
                         {isLoading && <LoadingSkeleton />}
-                        {(userComments.length + comments.length) === 0 && <NoCommentsDisplay />}
+                        {(userComments.length + comments.length) === 0 & !isLoading && <NoCommentsDisplay />}
                     </div >
                 </div > :
                 <div className="bg-red-200 w-full h-48 mx-auto py-3 flex rounded-xl">

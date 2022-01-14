@@ -44,7 +44,7 @@ const CommentCard = forwardRef(({ boardId, onSide, cmtdata, motherComment = null
 
                 })
         }
-    }, [boardId, cmtdata.id, motherComment, onSide, supported, liked, disliked])
+    }, [supported, liked, disliked])
 
     useEffect(() => { firstRender.current = false }, [])
 
@@ -106,7 +106,7 @@ const CommentCard = forwardRef(({ boardId, onSide, cmtdata, motherComment = null
                         <h3 className="text-gray-400 pl-1 inline">檢舉</h3>
                     </button>
 
-                    {true &&
+                    {cmtdata.isOwner &&
                         <button
                             className=" bg-white hover:bg-gray-200 px-4 py-2 filter drop-shadow-md transition-colors duration-200 z-10"
                             onClick={deleteComment}
