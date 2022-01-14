@@ -18,7 +18,7 @@ const CmtContext = ({ rHeight = 0, boardId, motherCmt }) => {
     }, [comments.current.clientHeight])
 
     return (
-        <div style={{ height: (rHeight + 56 > commentsHeight) ? commentsHeight : rHeight + 56 }} className="absolute -top-14 w-11/12 p-6 overflow-y-scroll overflow-scrollbar-hide rounded-3xl border-2 border-gray-400">
+        <div style={{ height: (rHeight + 56 > commentsHeight) ? commentsHeight : rHeight + 56 }} className="absolute -top-14 w-11/12 p-6 overflow-y-scroll scrollbar-hide rounded-3xl border-2 border-gray-400">
             <div ref={comments}>
                 <h3 className="text-xl mb-2">這則留言是一個回覆，該對話串如下</h3>
                 <h3 className="mb-2">{motherComment}</h3>

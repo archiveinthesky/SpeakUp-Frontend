@@ -13,6 +13,7 @@ const CmtFieldHeader = ({ boardId, onSide, addUserComment }) => {
     }, [typingCmt])
 
     const postComment = async (cmtside, cmtcontent) => {
+        if (cmtcontent === "" || cmtcontent === "有想法嗎？提出來討論吧") return false
         let onside = ""
         if (cmtside === "支持方") onside = "sup"
         else if (cmtside === "反對方") onside = "agn"
@@ -40,50 +41,44 @@ const CmtFieldHeader = ({ boardId, onSide, addUserComment }) => {
 
     return (
         <div className="mx-auto mt-4 mb-2 w-11/12 flex justify-between gap-4">
-            {onSide == null ?
-                <>
-                    {typingCmt ?
-                        <div className="flex flex-col justify-between gap-2">
-                            <button
-                                className={`h-12 my-auto px-6 rounded-2xl bg-green-400 bg-opacity-50 flex justify-center ${newCmtSide === "支持方" && "border-4 border-green-600"}`}
-                                onMouseDown={() => {
-                                    setNewCmtSide("支持方")
-                                    setSwitchedSides(true)
-                                }}
-                            >
-                                <div className="my-auto">
-                                    <h2 className="text-2xl text-green-600">支持方</h2>
-                                </div>
-                            </button>
-                            <button
-                                className={`h-12 my-auto px-6 rounded-2xl bg-red-500 bg-opacity-50 flex justify-center ${newCmtSide === "反對方" && "border-4 border-red-500"}`}
-                                onMouseDown={() => {
-                                    setNewCmtSide("反對方")
-                                    setSwitchedSides(true)
-                                }}
-                            >
-                                <div className="my-auto">
-                                    <h2 className="text-2xl text-red-500">反對方</h2>
-                                </div>
-                            </button>
-                        </div> :
-                        <div className={`px-6 h-14 my-auto rounded-2xl bg-gray-300 flex justify-center`}>
-                            <div className="my-auto">
-                                <h2 className="text-3xl">留言</h2>
-                            </div>
+            {onSide == null ? <> {typingCmt ?
+                <div className="flex flex-col justify-between gap-2 flex-shrink-0">
+                    <button
+                        className={`h-12 my-auto px-6 rounded-2xl bg-green-400 bg-opacity-50 flex justify-center ${newCmtSide === "支持方" && "border-4 border-green-600"}`}
+                        onMouseDown={() => { setNewCmtSide("支持方"); setSwitchedSides(true) }}
+                    >
+                        <div className="my-auto">
+                            <h2 className="text-2xl text-green-600">支持方</h2>
                         </div>
-                    }
-                </> :
-                <div className={`h-14 my-auto px-4 rounded-2xl ${onSide === "支持方" && "bg-green-400"} ${onSide === "反對方" && "bg-red-500"} bg-opacity-50 flex justify-center`}>
+                    </button>
+                    <button
+                        className={`h-12 my-auto px-6 rounded-2xl bg-red-500 bg-opacity-50 flex justify-center ${newCmtSide === "反對方" && "border-4 border-red-500"}`}
+                        onMouseDown={() => { setNewCmtSide("反對方"); setSwitchedSides(true) }}
+                    >
+                        <div className="my-auto">
+                            <h2 className="text-2xl text-red-500">反對方</h2>
+                        </div>
+                    </button>
+                </div> :
+                <div className={`px-6 h-14 my-auto rounded-2xl bg-gray-300 flex-shrink-0 flex justify-center`}>
+                    <div className="my-auto">
+                        <h2 className="text-3xl">留言</h2>
+                    </div>
+                </div>
+            }</> :
+                <div className={`h-14 my-auto px-4 rounded-2xl ${onSide === "支持方" && "bg-green-400"} ${onSide === "反對方" && "bg-red-500"} bg-opacity-50 flex-shrink-0 flex justify-center`}>
                     <div className="my-auto">
                         <h2 className={`text-3xl ${onSide === "支持方" && "text-green-600"} ${onSide === "反對方" && "text-red-500"}`}>{onSide}</h2>
                     </div>
                 </div>
             }
 
-            <div className="relative flex-grow flex items-center">
+            <div className="relative flex-grow overflow-x-hidden">
                 <div
-                    className={`w-full h-full my-auto pl-5 pr-14 py-3 text-xl ${typingCmt ? "text-black" : "text-gray-500"} border-2 border-gray-500 rounded-3xl resize-none`}
+                    className={`w-[calc(100%)] h-full 
+                    my-auto pl-5 pr-14 py-3
+                    text-xl ${typingCmt ? "text-black" : "text-gray-500"} 
+                    border-2 border-gray-500 rounded-3xl`}
                     ref={cmtTextarea}
                     contentEditable={true}
                     onKeyPress={e => {

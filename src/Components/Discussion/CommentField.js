@@ -187,7 +187,7 @@ const CommentField = ({ boardId, onSide }) => {
                         })}
 
                         {isLoading && <LoadingSkeleton />}
-                        {(userComments.length + comments.length) === 0 & !isLoading && <NoCommentsDisplay />}
+                        {(userComments.length + comments.length) === 0 && !isLoading && <NoCommentsDisplay />}
                     </div >
                 </div > :
                 <div className="bg-red-200 w-full h-48 mx-auto py-3 flex rounded-xl">
