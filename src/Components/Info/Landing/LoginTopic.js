@@ -28,7 +28,7 @@ const LoginTopic = ({ title = null, contents = null }) => {
     return (
         <div className='relative w-full h-4/6'>
             <img className='absolute -top-24 left-0 w-60' src={LogoAqua} alt="Speakup Logo"></img>
-            <div className='w-11/12 h-[45vh] mt-24 px-10 py-9 overflow-y-auto overflow-scrollbar-hide bg-logo-aqua rounded-[40px]'>
+            <div className='w-11/12 h-[45vh] mt-24 px-10 py-9 overflow-y-auto scrollbar-hide bg-logo-aqua rounded-[40px]'>
                 <h1 className='text-4xl text-white font-rounded'>{(topicTitle !== null) && topicTitle}</h1>
                 <hr className='mt-4 w-full h-[1px] bg-white' />
                 {topicContents !== null &&

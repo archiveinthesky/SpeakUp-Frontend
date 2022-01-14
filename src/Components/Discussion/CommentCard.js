@@ -141,9 +141,9 @@ const CommentCard = forwardRef(({ boardId, onSide, cmtdata, motherComment = null
         }
 
         return (
-            <div className="w-11/12 ml-10 flex items-center" >
+            <div className="w-11/12 ml-10 flex items-center overflow-x-hidden" >
                 <div
-                    className={`w-full my-auto pl-5 pr-14 py-3 text-xl border-2 border-gray-500 rounded-3xl resize-none `}
+                    className={`w-full my-auto pl-5 pr-14 py-3 flex-grow-0 text-xl border-2 border-gray-500 rounded-3xl`}
                     contentEditable={true}
                     onKeyPress={e => {
                         if (e.key === 'Enter') {
