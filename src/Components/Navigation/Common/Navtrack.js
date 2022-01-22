@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import { ArrowSmRightIcon } from '@heroicons/react/solid'
 import Navcard from './Navcard'
 
 const Navtrack = ({ title, cardsUrl }) => {
     const [cardsList, setCardsList] = useState([])
+
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_BACKEND_URL}/api/tracks/${cardsUrl}`, {
@@ -20,16 +22,17 @@ const Navtrack = ({ title, cardsUrl }) => {
     }, [cardsUrl])
 
     return (
-        <div className="w-11/12 mx-auto" >
-            <h1 className="text-3xl ml-2">{title}</h1>
-            <div className="mt-4 overflow-x-auto overflow-y-hidden flex gap-6">
-                {cardsList.map((card, i) => {
-                    return (
-                        < Navcard key={i} carddata={card} />
-                    )
-                })}
+        <div className="w-11/12 mx-auto py-6" >
+            <div className='flex items-center'>
+                <h1 className="text-3xl ml-2">{title}</h1>
+                <button className='ml-4 text-blue-500 flex items-center'>
+                    <p className='inline text-xl'>查看更多</p>
+                    <ArrowSmRightIcon className='inline w-6 h-6' />
+                </button>
             </div>
-            <div className="w-full my-4 border-t-2 border-gray-300"></div>
+            <div className="mt-4 h-auto overflow-x-auto flex gap-8">
+                {cardsList.slice(0, Math.floor(window.innerWidth / 360)).map((card, i) => <Navcard key={i} carddata={card} />)}
+            </div>
         </div >
     )
 }

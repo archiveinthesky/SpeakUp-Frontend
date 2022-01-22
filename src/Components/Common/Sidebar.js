@@ -9,7 +9,7 @@ const Sidebar = () => {
     //['娛樂', '環境', '司法', '國家發展', '經濟', '少數族群', '媒體', '醫藥', '道德', '政治', '教育', '家庭', '女性', '自由', '宗教', '科技', '社會政策', '社會運動', '體育'];
 
     return (<>
-        <div className={`hidden lg:flex w-20 hover:w-72 hover:xl:w-80 h-full flex-shrink-0 group bg-white border-r-2 border-gray-200 flex-col transition-width duration-700 delay-75 overflow-x-hidden ease-out`}>
+        <div className={`hidden lg:flex w-20 hover:w-72 hover:xl:w-80 h-full flex-shrink-0 group bg-white border-r-2 border-gray-200 flex-col transition-width duration-500 overflow-x-hidden ease-out`}>
             <div className="h-6" />
             <div className='w-full'>
                 <ul className="mx-auto w-8 group-hover:w-auto group-hover:pl-10">

@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import SaveBoard from '../Common/SaveBoards'
+import { BookmarkIcon } from '@heroicons/react/outline'
+
+import SaveBoard from '../../Common/SaveBoards'
 
 const WideNavCard = ({ carddata }) => {
 

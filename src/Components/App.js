@@ -8,7 +8,7 @@ import SignupPage from "./Info/Landing/SignupPage";
 
 import MainBoard from "./Discussion/MainBoard";
 
-import NavBoard from "./Navigation/NavBoard"
+import NavPanel from "./Navigation/NavPanel";
 
 import AdminPage from "./Admin/AdminPanel";
 import HomePanel from './Admin/Home/HomePanel'
@@ -26,9 +26,9 @@ function App() {
         <Route path={"login"} element={<LoginPage />} />
         <Route path={"signup"} element={<SignupPage />} />
         <Route element={<ProtectedRoute />}>
-          <Route path={"home"} element={<NavBoard mode="home" />} />
-          <Route path={"search"} element={<NavBoard mode="search" />} />
-          <Route path={"collections"} element={<NavBoard mode="collections" />} />
+          <Route path={"home"} element={<NavPanel mode="home" />} />
+          <Route path={"search"} element={<NavPanel mode="search" />} />
+          <Route path={"collections"} element={<NavPanel mode="collections" />} />
           <Route path={"discussions/:boardId"} element={<MainBoard />} />
         </Route>
         <Route path={"/admin"} element={<AdminPage />} >

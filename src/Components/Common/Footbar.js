@@ -3,7 +3,7 @@ import { HomeIcon, SearchIcon, BookmarkIcon, BellIcon, UserCircleIcon } from '@h
 
 const Footbar = () => {
     return (
-        <div className='lg:hidden fixed left-0 bottom-0 w-full h-16 bg-white border-t border-gray-400 flex justify-around items-center'>
+        <div className='lg:hidden fixed left-0 bottom-0 w-full h-16 bg-white border-t border-gray-400 z-20 flex justify-around items-center'>
             <Link to='/home'><HomeIcon className='w-8 h-8' /></Link>
             <Link to='/home'><SearchIcon className='w-8 h-8' /></Link>
             <Link to='/home'><BookmarkIcon className='w-8 h-8' /></Link>
