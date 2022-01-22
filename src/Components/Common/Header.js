@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 
-import AccountOptions from './AccountOptions'
-import NotificationButton from './Notifications'
+import AccountOptions from './HeaderComponents/AccountOptions'
+import NotificationButton from './HeaderComponents/Notifications'
+
+import { SearchIcon } from '@heroicons/react/outline'
 
 import logo from '../../Assets/General/logo.svg'
-import magnifer from '../../Assets/General/magnifier.png'
 import dfprofile from '../../Assets/General/defualtprofile.png'
 
 
@@ -28,7 +29,7 @@ const Header = ({ accprofile = dfprofile }) => {
                 <form className="pl-10 2xl:pl-24 my-auto h-11 invisible md:visible md:w-7/12 xl:w-5/12 max-w-2xl flex" onSubmit={searchSubmit}>
                     <input className="w-full bg-white rounded-3xl text-xl text-gray-500 pl-4" placeholder="搜尋你感興趣的議題" type="text" />
                     <button type="submit" className="relative -left-12">
-                        <img className="w-7 h-7" src={magnifer} alt="Search"></img>
+                        <SearchIcon className='w-7 h-7' />
                     </button>
                 </form>
             </div>
