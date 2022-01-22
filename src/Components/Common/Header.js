@@ -19,8 +19,8 @@ const Header = ({ accprofile = dfprofile }) => {
 
     useEffect(() => {
         let sepedUrl = location.pathname.split('/')
-        console.log(sepedUrl[sepedUrl.length - 2])
-        setShowReturnArrow(sepedUrl[sepedUrl.length - 2] === 'discussions')
+        console.log(sepedUrl[1])
+        setShowReturnArrow(['home', 'admin'].indexOf(sepedUrl[1]) === -1)
     }, [location])
 
 

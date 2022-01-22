@@ -37,7 +37,7 @@ const Sidebar = () => {
                 <div className="py-3">
                     <hr className="border-t-2 border-gray-300 w-5/6 mx-auto" />
                 </div>
-                <ul className="list-none h-3/5 pl-14 md:pl-20 xl:pl-24 overflow-auto">
+                <ul className="list-none h-3/5 pl-14 md:pl-20 xl:pl-24 overflow-x-hidden overflow-y-auto">
                     {tags.map((tag, i) => {
                         return (
                             <Link to={`/search?tags=${tag}`} key={`link${i}`}>

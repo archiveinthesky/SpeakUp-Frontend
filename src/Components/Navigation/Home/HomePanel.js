@@ -50,7 +50,7 @@ const HomePanel = () => {
 
     return (
         <div className='w-full pb-16'>
-            <h1 className="w-11/12 mx-auto mt-10 mb-4 text-4xl">{titleText}</h1>
+            <h1 className="w-11/12 mx-auto px-2 mt-10 mb-4 text-4xl">{titleText}</h1>
             <div className='md:hidden divide-y divide-gray-400'>
                 {tracks.map((track, i) =>
                     <Navshelf key={i} title={track.title} cardsUrl={track.endpoint} />
