@@ -29,32 +29,7 @@ const MainBoard = ({ mode }) => {
     useEffect(() => {
         setSearchKw("")
         if (mode === "home") {
-            fetch('http://localhost:8000/api/user/home/', {
-                method: 'GET',
-                headers: {
-                    'Authorization': localStorage.getItem("AuthToken"),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                }
-            })
-                .then(response => {
-                    if (response.status === 200) return response.json()
-                    else if (response.status === 401) {
-                        localStorage.removeItem("AuthToken")
-                        window.location.href = "/login"
-                    }
-                })
-                .then(response => {
-                    let d = new Date()
-                    let timegreeting = (d.getHours() > 19 || d.getHours() <= 4) ? "晚安" : (d.getHours() < 12) ? "早安" : "午安"
-                    setTitleText(`${response.username}${timegreeting}，以下是你有可能感興趣的議題`)
-                    setTracks(response.tracks)
-                    setIsLoading(false)
-                })
-                .catch(error => {
-                    let errtxt = `獲取頁面資料時發生錯誤(${error.message})，請重新整理網頁。若錯誤持續發生，請稍待片刻，我們將盡快修復。`
-                    setErrorOccured(errtxt)
-                })
+
         }
         else if (mode === "search") {
             let searchparams = new URLSearchParams(location.search)
