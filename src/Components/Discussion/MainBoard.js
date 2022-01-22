@@ -7,6 +7,7 @@ import CommentField from './CommentField'
 import DiscussionHeader from './DiscussionHeader'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
+import Footbar from '../Common/Footbar'
 
 const MainBoard = () => {
     const { boardId } = useParams()
@@ -93,23 +94,24 @@ const MainBoard = () => {
     }
 
     return (
-        <div className="w-screen h-screen overflow-x-hidden bg-gray-50" >
+        <div className="w-screen h-screen overflow-x-hidden bg-slate-200" >
             <Header />
             <div className='w-full h-full pt-16 flex'>
                 <Sidebar />
+                <Footbar />
 
                 {boardId != null &&
-                    <div className='overflow-y-auto scrollbar-hide'>
-                        <div className={`w-full mt-10 `}>
+                    <div className='w-11/12 mx-auto px-4 overflow-y-auto scrollbar-hide'>
+                        <div className='w-full mt-10'>
                             <DiscussionHeader boardId={boardId} />
                         </div>
-                        <div className="w-11/12 mx-auto my-6 flex justify-end">
+                        <div className="w-full mx-auto my-6 flex justify-end">
                             <DropdownSelector />
                         </div>
-                        <div className={`w-full`}>
+                        <div className='w-full'>
                             {flowDisplay === 3 ? <CommentField boardId={boardId} onSide={null} /> :
                                 <>{flowDisplay === 0 ?
-                                    <div className="grid grid-cols-2 gap-12 w-11/12 mx-auto">
+                                    <div className="grid grid-cols-2 gap-12 mx-auto">
                                         <CommentField boardId={boardId} onSide="支持方" />
                                         <CommentField boardId={boardId} onSide="反對方" />
                                     </div> :

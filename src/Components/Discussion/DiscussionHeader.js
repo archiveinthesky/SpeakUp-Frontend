@@ -53,7 +53,7 @@ const DiscussionHeader = ({ boardId }) => {
     return (
         <>
             {errorOccured === false ?
-                <div className="bg-white w-11/12 mx-auto py-3">
+                <div className="bg-white w-full mx-auto py-3">
                     <div className="w-11/12 mx-auto my-6">
                         {isLoading ?
                             <div className="w-40 h-12 my-1 rounded-xl animate-pulse bg-gray-300"></div> :

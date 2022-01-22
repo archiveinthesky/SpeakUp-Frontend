@@ -8,7 +8,8 @@ module.exports = {
         'logo-aqua': '#409CBE',
       },
       transitionProperty: {
-        'width': 'width'
+        'width': 'width',
+        'padding': 'padding'
       }
     },
     fontFamily: {
