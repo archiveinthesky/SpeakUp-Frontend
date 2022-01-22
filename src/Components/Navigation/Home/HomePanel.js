@@ -10,7 +10,7 @@ const HomePanel = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/user/home/', {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/home/`, {
             method: 'GET',
             headers: {
                 'Authorization': localStorage.getItem("AuthToken"),

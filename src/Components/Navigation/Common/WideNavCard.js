@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import { useState, forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 
 import { BookmarkIcon } from '@heroicons/react/outline'
 
 import SaveBoard from '../../Common/SaveBoards'
 
-const WideNavCard = ({ carddata }) => {
+const WideNavCard = forwardRef(({ carddata }, ref) => {
 
     const [isSaved, setIsSaved] = useState(carddata.saved)
 
@@ -15,7 +15,7 @@ const WideNavCard = ({ carddata }) => {
     }
 
     return (
-        <div className="w-full h-48 relative flex-shrink-0 bg-white"  >
+        <div className="w-full h-48 relative flex-shrink-0 bg-white" ref={ref} >
             <Link to={`../discussions/${carddata.boardId}`}>
                 <div className="h-40 pt-4 px-6" >
                     <h3 className=" text-black text-3xl">{carddata.title}</h3>
@@ -30,7 +30,7 @@ const WideNavCard = ({ carddata }) => {
                             }
                         </div>
                     }
-                    <p className="w-full mt-2 mb-4 mx-auto text-lg text-gray-600">{carddata.content}</p>
+                    <p className="w-full mt-2 mb-4 mx-auto text-lg text-gray-600 line-clamp-3 text-ellipsis">{carddata.content}</p>
                 </div>
             </Link>
 
@@ -44,6 +44,6 @@ const WideNavCard = ({ carddata }) => {
             </button>
         </div >
     )
-}
+})
 
 export default WideNavCard

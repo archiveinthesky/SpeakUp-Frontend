@@ -2,23 +2,26 @@ import { useState, useEffect } from 'react'
 import { ArrowSmRightIcon } from '@heroicons/react/solid'
 import WideNavCard from './WideNavCard'
 
-const Navshelf = ({ title, cardsUrl }) => {
+const Navshelf = ({ title, data, cardsUrl }) => {
     const [cardsList, setCardsList] = useState([])
 
-
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/tracks/${cardsUrl}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': localStorage.getItem("AuthToken"),
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        })
-            .then(response => { return response.json() })
-            .then(response => {
-                setCardsList(response)
+        if (data === undefined) {
+            fetch(`${process.env.REACT_APP_BACKEND_URL}/api/tracks/${cardsUrl}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': localStorage.getItem("AuthToken"),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
             })
+                .then(response => { return response.json() })
+                .then(response => {
+                    setCardsList(response)
+                })
+        } else {
+            setCardsList(data)
+        }
     }, [cardsUrl])
 
     return (
@@ -30,7 +33,7 @@ const Navshelf = ({ title, cardsUrl }) => {
                     <ArrowSmRightIcon className='inline w-6 h-6' />
                 </button>
             </div>
-            <div className="mt-4 flex flex-col divide-y divide-gray-400">
+            <div className="mt-4 flex flex-col divide-y-8 divide-slate-200">
                 {cardsList.map((card, i) => <WideNavCard key={i} carddata={card} />)}
             </div>
         </div >
