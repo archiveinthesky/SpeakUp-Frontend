@@ -6,6 +6,9 @@ module.exports = {
       colors: {
         'accent-blue': '#458ECC',
         'logo-aqua': '#409CBE',
+      },
+      transitionProperty: {
+        'width': 'width'
       }
     },
     fontFamily: {
