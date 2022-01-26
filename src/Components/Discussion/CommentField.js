@@ -162,7 +162,7 @@ const CommentField = ({ boardId, onSide }) => {
                 <div className="bg-white" >
                     <div className="h-1" />
                     <CmtFieldHeader boardId={boardId} onSide={onSide} addUserComment={addUserComment} />
-                    <div className="w-full mb-4 flex flex-col">
+                    <div className="w-full mb-4 flex flex-col divide-y divide-gray-300 lg:divide-y-0 ">
                         {[...userComments, ...comments].map((cmt, i) => {
                             return (
                                 <div key={i}>

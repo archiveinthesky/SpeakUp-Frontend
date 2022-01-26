@@ -34,7 +34,7 @@ const ReportContent = ({ rHeader, rQuestions, closeReportContent, boardId, mothe
     return (
         <div className="w-screen h-screen fixed top-0 left-0 grid align-middle z-30">
             <span className="w-screen h-screen absolute top-0 left-0 bg-black bg-opacity-50" onClick={() => { closeReportContent() }} />
-            <div className="w-4/12 m-auto bg-white rounded-xl flex flex-col flex-auto z-10">
+            <div className="w-11/12 max-w-sm m-auto bg-white rounded-xl flex flex-col flex-auto z-10">
                 <div className="mx-6 my-5">
                     <h1 className="text-black text-3xl">{cardHeader}</h1>
                     <form className="mx-2" onSubmit={reportSubmit}>

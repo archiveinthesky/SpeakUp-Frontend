@@ -9,7 +9,7 @@ const CmtFieldHeader = ({ boardId, onSide, addUserComment }) => {
     const cmtTextarea = useRef(null)
 
     useEffect(() => {
-        setInputPlaceholder(window.innerWidth > 1024 ? "有想法嗎？提出來討論吧" : "提出你的想法")
+        setInputPlaceholder(window.innerWidth > 1024 ? "有想法嗎？提出來討論吧" : window.innerWidth > 768 ? "提出你的想法" : "")
     }, [])
 
     useEffect(() => {

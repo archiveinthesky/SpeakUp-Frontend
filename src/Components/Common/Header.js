@@ -18,9 +18,9 @@ const Header = ({ accprofile = dfprofile }) => {
     const [showReturnArrow, setShowReturnArrow] = useState(false)
 
     useEffect(() => {
-        let sepedUrl = location.pathname.split('/')
+        let sepedUrl = `${location.pathname}${location.search}`.split('/')
         console.log(sepedUrl[1])
-        setShowReturnArrow(['home', 'admin'].indexOf(sepedUrl[1]) === -1)
+        setShowReturnArrow(['home', 'admin', 'search', 'collections'].indexOf(sepedUrl[1]) === -1)
     }, [location])
 
 

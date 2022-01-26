@@ -81,7 +81,7 @@ const SearchPanel = () => {
 
 
     return (
-        <div className='w-full pt-10 pb-24 lg:pb-16'>
+        <div className='w-full pt-6 pb-24 lg:pb-16'>
             <div className='w-11/12 mx-auto'>
                 <h1 className={`w-full text-4xl my-6`}>
                     {searchRes.length === 0 ? '很抱歉，找不到符合您搜尋條件的結果' :

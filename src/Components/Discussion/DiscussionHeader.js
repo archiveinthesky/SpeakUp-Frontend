@@ -55,10 +55,10 @@ const DiscussionHeader = ({ boardId }) => {
         <>
             {errorOccured === false ?
                 <div className="bg-white w-full mx-auto py-3">
-                    <div className="w-11/12 mx-auto my-6">
+                    <div className="w-11/12 mx-auto my-4 lg:my-6">
                         {isLoading ?
                             <div className="w-40 h-12 my-1 rounded-xl animate-pulse bg-gray-300"></div> :
-                            <h1 className="text-black text-5xl leading-[3.5rem] pb-4">{pageContent[0]}</h1>
+                            <h1 className="text-black text-3xl font-medium lg:text-5xl lg:leading-[3.5rem] pb-4">{pageContent[0]}</h1>
                         }
                         {isLoading ?
                             <div className="w-20 h-8 my-1 rounded-xl animate-pulse bg-gray-300"></div> :
@@ -72,14 +72,14 @@ const DiscussionHeader = ({ boardId }) => {
                                 }
                             </div>
                         }
-                        <div className="mt-8 grid grid-cols-1 md:grid-w-40-1fr content-start gap-x-8 gap-y-5">
+                        <div className="mt-8 grid grid-cols-1 md:grid-w-40-1fr content-start gap-x-8 gap-y-4">
                             <div className="w-20 h-10 rounded-3xl bg-gray-300 bg-opacity-50">
                                 <p className="leading-10 text-center text-black text-xl">內容</p>
                             </div>
                             <div >
                                 {isLoading ?
                                     <div className="w-full h-9 rounded-xl animate-pulse bg-gray-300"></div> :
-                                    <p className="text-black text-xl">{pageContent[2]}</p>
+                                    <p className="text-black text-xl font-light leading-[34px]">{pageContent[2]}</p>
                                 }
                             </div>
                             <div className="w-32 h-10 rounded-3xl bg-gray-300 bg-opacity-50">
@@ -88,10 +88,10 @@ const DiscussionHeader = ({ boardId }) => {
                             <div>
                                 {showStandpoint ?
                                     <div className="text-black">
-                                        <p className="font-medium text-2xl leading-8">支持者的立場</p>
-                                        <p className="text-xl leading-8">{pageContent[3]}</p>
-                                        <p className="font-medium text-2xl leading-8 pt-4">反對者的立場</p>
-                                        <p className="text-xl leading-8">{pageContent[4]}</p>
+                                        <p className="font-medium text-2xl leading-8 mb-2">支持者的立場</p>
+                                        <p className="text-xl leading-[34px] font-light">{pageContent[3]}</p>
+                                        <p className="font-medium text-2xl leading-8 pt-4 mb-2">反對者的立場</p>
+                                        <p className="text-xl leading-[34px] font-light">{pageContent[4]}</p>
                                         <button onClick={() => { setShowStandpoint(false) }}><p className="leading-10 text-gray-400 text-xl">收合</p></button>
                                     </div> :
                                     <div>

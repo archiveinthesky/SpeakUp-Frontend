@@ -94,15 +94,15 @@ const MainBoard = () => {
     }
 
     return (
-        <div className="w-screen h-screen overflow-x-hidden bg-slate-200" >
+        <div className="w-screen h-screen overflow-x-hidden bg-white lg:bg-slate-200" >
             <Header />
             <div className='w-full h-full pt-16 flex'>
                 <Sidebar />
                 <Footbar />
 
                 {boardId != null &&
-                    <div className='w-11/12 mx-auto px-4 overflow-y-auto scrollbar-hide'>
-                        <div className='w-full mt-10'>
+                    <div className='w-11/12 mx-auto lg:px-4 overflow-y-auto scrollbar-hide'>
+                        <div className='w-full mt-6 lg:mt-10'>
                             <DiscussionHeader boardId={boardId} />
                         </div>
                         <div className="w-full mx-auto my-6 flex justify-end">
