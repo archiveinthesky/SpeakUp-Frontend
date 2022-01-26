@@ -1,14 +1,18 @@
-import { Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import Header from "../Common/Header";
 import Sidebar from "../Common/Sidebar";
 import Footbar from "../Common/Footbar";
 
 import HomePanel from "./Home/HomePanel";
+import SearchUI from './Search/SearchUI'
 import SearchPanel from './Search/SearchPanel'
 import CollectionsPanel from './Collections/CollectionsPanel'
 
 const NavPanel = ({ mode }) => {
+    const { search: searchParam } = useLocation()
+
     return (
         <div className="w-screen h-screen overflow-x-hidden bg-slate-200" >
             <Header />
@@ -17,7 +21,9 @@ const NavPanel = ({ mode }) => {
                 <Footbar />
                 <div className="flex-grow overflow-y-auto scrollbar-hide">
                     {mode === "home" && <HomePanel />}
-                    {mode === "search" && <SearchPanel />}
+                    {mode === "search" && <>
+                        {searchParam === '' ? <SearchUI /> : <SearchPanel />}
+                    </>}
                     {mode === "collections" && <CollectionsPanel />}
                 </div>
             </div>

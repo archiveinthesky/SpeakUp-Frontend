@@ -5,7 +5,6 @@ import { useInView } from 'react-intersection-observer';
 import WideNavCard from '../Common/WideNavCard';
 
 const SearchPanel = () => {
-    const [titleText, setTitleText] = useState('')
     const [searchParams, setSearchParams] = useState({})
     const [searchRes, setSearchRes] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -17,6 +16,8 @@ const SearchPanel = () => {
 
     const navigate = useNavigate()
     const location = useLocation()
+
+
 
     const getSearchRes = (start, end) => {
         if (searchParams.keyword !== null || searchParams.tags !== null) {
@@ -33,7 +34,6 @@ const SearchPanel = () => {
             })
                 .then(response => { return response.json() })
                 .then(response => {
-                    if (response.length === 0) setTitleText("很抱歉，找不到符合您搜尋條件的結果")
                     setSearchRes([...searchRes, ...response.map((board) => {
                         if (board.lastResult === true) setHasMoreResults(false)
                         return {
@@ -82,7 +82,7 @@ const SearchPanel = () => {
 
     return (
         <div className='w-full pt-10 pb-24 lg:pb-16'>
-            <div className='w-5/6 mx-auto'>
+            <div className='w-11/12 mx-auto'>
                 <h1 className={`w-full text-4xl my-6`}>
                     {searchRes.length === 0 ? '很抱歉，找不到符合您搜尋條件的結果' :
                         <>以下是
