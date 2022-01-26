@@ -18,7 +18,7 @@ const WideNavCard = forwardRef(({ carddata }, ref) => {
         <div className="w-full relative flex-shrink-0 bg-white" ref={ref} >
             <Link to={`../discussions/${carddata.boardId}`}>
                 <div className="p-4 px-6" >
-                    <h3 className=" text-black text-3xl">{carddata.title}</h3>
+                    <h3 className=" text-black text-2xl lg:text-3xl">{carddata.title}</h3>
                     {carddata.tags != null &&
                         <div className="flex my-2 justify-start gap-2">
                             {
@@ -30,7 +30,7 @@ const WideNavCard = forwardRef(({ carddata }, ref) => {
                             }
                         </div>
                     }
-                    <p className="w-full my-2 mx-auto text-lg text-gray-600 line-clamp-3 text-ellipsis">{carddata.content}</p>
+                    <p className="w-full my-2 mx-auto text-lg text-gray-600 line-clamp-2 lg:line-clamp-3 text-ellipsis">{carddata.content}</p>
                 </div>
             </Link>
 

@@ -20,7 +20,7 @@ const Navcard = ({ carddata }) => {
             <>
                 <Link to={`../discussions/${carddata.boardid}`}>
                     <div className="pt-4 px-6" >
-                        <h3 className=" text-black text-2xl">{carddata.title}</h3>
+                        <h3 className=" text-black text-xl lg:text-2xl">{carddata.title}</h3>
                         {carddata.tags != null &&
                             <div className="flex my-1 justify-start gap-2">
                                 {
@@ -32,7 +32,7 @@ const Navcard = ({ carddata }) => {
                                 }
                             </div>
                         }
-                        <p className="w-full mt-2 mb-4 mx-auto text-lg text-gray-600 line-clamp-3 text-ellipsis ">{carddata.content}</p>
+                        <p className="w-full mt-2 mb-4 mx-auto text-base lg:text-lg text-gray-600 line-clamp-3 text-ellipsis ">{carddata.content}</p>
                     </div>
                 </Link>
 

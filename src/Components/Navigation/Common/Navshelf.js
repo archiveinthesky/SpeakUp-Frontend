@@ -24,7 +24,7 @@ const Navshelf = ({ title, cardsUrl }) => {
     return (
         <div className="w-11/12 mx-auto py-6" >
             <div className='flex items-center'>
-                <h1 className="text-3xl ml-2">{title}</h1>
+                <h1 className="text-3xl ml-2 whitespace-nowrap">{title}</h1>
                 <button className='ml-4 text-blue-500 flex items-center'>
                     <p className='inline text-xl'>查看更多</p>
                     <ArrowSmRightIcon className='inline w-6 h-6' />
