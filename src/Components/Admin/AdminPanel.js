@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom"
 import Header from './Common/Header'
 import Sidebar from './Common/Sidebar'
-import ModPanel from './CmtMod/ModPanel'
 
 const AdminPanel = () => {
     return (

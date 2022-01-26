@@ -1,4 +1,3 @@
-import { useEffect, useState, forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 
 import { HomeIcon, TrendingUpIcon, BookmarkIcon } from '@heroicons/react/outline'

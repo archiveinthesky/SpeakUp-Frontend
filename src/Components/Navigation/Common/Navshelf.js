@@ -2,26 +2,23 @@ import { useState, useEffect } from 'react'
 import { ArrowSmRightIcon } from '@heroicons/react/solid'
 import WideNavCard from './WideNavCard'
 
-const Navshelf = ({ title, data, cardsUrl }) => {
+const Navshelf = ({ title, cardsUrl }) => {
     const [cardsList, setCardsList] = useState([])
 
     useEffect(() => {
-        if (data === undefined) {
-            fetch(`${process.env.REACT_APP_BACKEND_URL}/api/tracks/${cardsUrl}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': localStorage.getItem("AuthToken"),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                }
+
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/tracks/${cardsUrl}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': localStorage.getItem("AuthToken"),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => { return response.json() })
+            .then(response => {
+                setCardsList(response)
             })
-                .then(response => { return response.json() })
-                .then(response => {
-                    setCardsList(response)
-                })
-        } else {
-            setCardsList(data)
-        }
     }, [cardsUrl])
 
     return (

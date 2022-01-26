@@ -55,7 +55,7 @@ const CollectionsPanel = () => {
 
     return (
         <div className='w-full pt-10 pb-24 lg:pb-16'>
-            <div className='w-5/6 mx-auto'>
+            <div className='w-11/12 mx-auto'>
                 <h1 className={`w-full text-4xl my-6`}>{titleText}</h1>
                 <div className="w-full mt-4 mx-auto flex flex-col gap-4">
                     {collections.map((card, i) =>
