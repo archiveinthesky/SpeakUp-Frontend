@@ -18,7 +18,7 @@ const Navcard = ({ carddata }) => {
     return (
         <div className="min-w-[320px] w-full relative bg-white">
             <>
-                <Link to={`../discussions/${carddata.boardid}`}>
+                <Link to={`../discussions/${carddata.boardId}`}>
                     <div className="pt-4 px-6" >
                         <h3 className=" text-black text-xl lg:text-2xl">{carddata.title}</h3>
                         {carddata.tags != null &&
